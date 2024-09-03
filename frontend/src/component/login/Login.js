@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const [formData, setFormData]= useState({
-        employeeId:"",
+        employeeID:"",
         password:"",
 
     });
@@ -12,6 +12,7 @@ function Login() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
+    // const departments =["Admin","HR","Sales","Finance","Marketing","BPO"]
 
     function handleChange(e){
         setFormData({
@@ -27,23 +28,29 @@ function Login() {
 
         try{
 
-          const resposne = await axios.post('http://localhost:8080/api/auth/login', formData);
-          if(resposne.status === 2000){
-            const {token} = resposne.data;
+          const response = await axios.post('http://localhost:8080/api/auth/login', formData);
+          //When you make an HTTP request using axios, the response typically contains several properties,
+          //  such as status, statusText, headers, and data.
+          //  The data property holds the actual content returned by the API, often in JSON format
+          if(response.status === 200){
+            // object destructuring
+            const {token} = response.data;
             
             // Storing token in localStorage
             localStorage.setItem("authToken", token)
 
 
             navigate("/")
+            
+            
 
           }
         }catch(err){
-          if(err.resposne){
+          if(err.response){
             // if server responded with status other than 200
-            setError(err.resposne.data.message || "Login failed")
+            setError(err.response.data.message || "Login failed")
           }else if(err.request){
-            // if resposne was made but getting no response 
+            // if response was made but getting no response 
             setError("Not getting response from server. Please try again later.")
           }else{
             setError("Somthing went wrong. Please try again later.")
@@ -63,8 +70,8 @@ function Login() {
           <input
             type="text"
             className="form-control border border-black"
-            name="employeeId"
-            value={formData.empId}
+            name="employeeID"
+            value={formData.employeeID}
             onChange={handleChange}
             required
           />
@@ -81,6 +88,25 @@ function Login() {
             required
           />
         </div>
+
+        {/* <div className="form-group">
+        <label>Department</label>
+        <select
+          className="form-control border border-black"
+          name="department"
+          value={formData.department}
+          onChange={handleChange}
+          required
+         
+        >
+          <option value="">Select Department</option>
+          {departments.map((dept) => (
+            <option key={dept} value={dept}>
+              {dept}
+            </option>
+          ))}
+        </select>
+      </div> */}
 
         <button type="submit" className="btn btn-primary mt-3">
           Login

@@ -5,7 +5,7 @@ import axios from "axios";
 function Register() {
   const [formData, setFormData] = useState({
     name:"",
-    employeeId:"",
+    employeeID:"",
     department:"",
     designation:"",
     password:"",
@@ -20,7 +20,7 @@ const [error,setError] = useState("")
 
   const departments =["HR","Sales","Finance","Marketing","BPO"]
   const designations = ["Supervisor","Workers"]
-  const shifts = ["Shift - A","Shift - B"]
+  const shifts = ["A","B"]
 
   const handleChange = (e) => {
     setFormData({
@@ -32,7 +32,7 @@ const [error,setError] = useState("")
   const handleSubmit = async(e) => {
     e.preventDefault();
     // console.log('Form Data Submitted:', formData);
-    // navigate("/login")
+    
     // setLoading(true);
     // setError(null);
     
@@ -45,6 +45,7 @@ const [error,setError] = useState("")
 
         setSuccess("Signup successful!");
         setError("");
+        navigate("/login");
       }
       // setFormData({
       //   name:"",
@@ -89,8 +90,8 @@ const [error,setError] = useState("")
         <input
           type="number"
           className="form-control border border-black"
-          name="employeeId"
-          value={formData.employeeId}
+          name="employeeID"
+          value={formData.employeeID}
           onChange={handleChange}
           required
          

@@ -3,10 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {NavLink} from "react-router-dom"
 
 
+
 const Header = () => {
   return (
-    <div>
-      <nav className="navbar bg-primary" data-bs-theme="dark">
+    <div style={{position:"sticky", top:"0"}}> 
+      <nav className="navbar " style={{backgroundColor: "#C9DABF"}} data-bs-theme="dark">
       <ul className="nav">
   <li className="nav-item">
     <NavLink className="nav-link active " aria-current="page" to="/">HomePage</NavLink>
@@ -19,6 +20,7 @@ const Header = () => {
   <li className="nav-item">
     <NavLink className="nav-link" to="/login">Login</NavLink>
   </li>
+ 
 </ul>
 </nav>
       
