@@ -1,12 +1,12 @@
 import React from 'react'
 
-import HrHeader from './HrHeader'
 import FileUpload from './FileUpload'
+import DeptHeader from '../../shared/DeptHeader'
 
 function HrHomePage() {
   return (
     <div>
-        <HrHeader header="HR Department"/>
+        <DeptHeader header="HR Department"/>
         <FileUpload/>
     </div>
   )

@@ -10,7 +10,7 @@ const Header = () => {
       <nav className="navbar " style={{backgroundColor: "#C9DABF"}} data-bs-theme="dark">
       <ul className="nav">
   <li className="nav-item">
-    <NavLink className="nav-link active " aria-current="page" to="/">HomePage</NavLink>
+    <NavLink className="nav-link active " aria-current="page" to="/login">Home Page</NavLink>
   </li>
   </ul>
       <ul className="nav justify-content-end">

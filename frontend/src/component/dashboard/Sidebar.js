@@ -2,13 +2,17 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import './sidebar.css'
 
+
 function Sidebar() {
   return (
     <div className='sidebar'>
       <h3>Admin Dashboard</h3>
       <ul>
         <li>
-          <NavLink to={"/hr"}>HR Department</NavLink>
+          <NavLink to={"/800"}>Dashboard</NavLink>
+        </li>
+        <li>
+          <NavLink to={"/520"}>HR Department</NavLink>
         </li>
         <li>
           <NavLink to={"/marketing"}>Marketing Department</NavLink>
@@ -19,8 +23,13 @@ function Sidebar() {
         <li>
           <NavLink to={"/sales"}>Sales Department</NavLink>
         </li>
+      <li className="nav-item">
+    <NavLink className="nav-link" to="/login">Logout</NavLink>
+  </li>
       </ul>
 
+
+ 
     </div>
   )
 }

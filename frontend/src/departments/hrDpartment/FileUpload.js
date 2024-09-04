@@ -1,9 +1,16 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useState } from 'react'
+import RecentFilesContext from '../../context/RecentFilesContext';
 
 function FileUpload() {
     const [files, setFiles] =useState([]);
     const [uploadedFiles, setUploadedFiles] =useState([]);
-  
+
+    const context = useContext(RecentFilesContext);
+    // console.log(context);
+    
+
+    const {addRecentFiles} = context;
+
     const containerStyle = {
         height :"200px",
         overflowY:"scroll",
@@ -24,7 +31,10 @@ function FileUpload() {
         //     name :file.name,
         //     lastModified: new Date(file.lastModified).toLocaleDateString(),
         // }));
+       
+        
         setFiles([ ...selectedFile])
+
        
     }
 
@@ -33,7 +43,20 @@ function FileUpload() {
         if(files.length>0){
             setUploadedFiles((prevFiles)=>[...prevFiles, ...files])
             // console.log(files);
-            setFiles([]); 
+           
+            files.forEach((file) =>{   
+                if (addRecentFiles) {  // Check if addRecentFile is defined
+               addRecentFiles({
+                 name: file.name,
+                 lastModified: new Date(file.lastModified).toLocaleDateString(),
+                 timestamp: new Date(),
+               });
+             } else {
+               console.error("addRecentFile is not defined");
+             }
+       });
+            
+            setFiles([]);  // // Clear files after upload
         }
         
     }
@@ -48,10 +71,24 @@ function FileUpload() {
         const newFiles = Array.from(e.target.files);
         setUploadedFiles((prevFiles)=>[...prevFiles, ...newFiles]);
 
+       
     }
 
     const handleUpdateFile = (index)=>{
         document.getElementById(`fileInput-${index}`).click();
+
+        uploadedFiles.forEach((file) =>{   
+            if (addRecentFiles) {  // Check if addRecentFile is defined
+           addRecentFiles({
+             name: file.name,
+             lastModified: new Date(file.lastModified).toLocaleDateString(),
+             timestamp: new Date(),
+           });
+         } else {
+           console.error("addRecentFile is not defined");
+         }
+   });
+
     }
 
     const handleViewFile = (file)=>{
@@ -82,7 +119,7 @@ function FileUpload() {
     <div style={{ marginTop: "2em", display: "flex", justifyContent: "center"}}>
         <form onSubmit={handleOnSubmit} style={{ border: "1px solid black",borderRadius: "25px", margin: "1em", padding: "1em"}}>
             <input type='file' 
-            onChange={handleOnChange}   ></input>
+            onChange={handleOnChange}  multiple ></input>
             <button type='submit' style={{borderRadius:"25px"}}>Upload</button>
         </form>
        

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
+import {jwtDecode} from "jwt-decode";
 
 function Login() {
     const [formData, setFormData]= useState({
@@ -12,7 +13,7 @@ function Login() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    // const departments =["Admin","HR","Sales","Finance","Marketing","BPO"]
+    const departments =["Admin","HR","Sales","Finance","Marketing","BPO"]
 
     function handleChange(e){
         setFormData({
@@ -29,22 +30,38 @@ function Login() {
         try{
 
           const response = await axios.post('http://localhost:8080/api/auth/login', formData);
+          // console.log(response.data);
+          
           //When you make an HTTP request using axios, the response typically contains several properties,
           //  such as status, statusText, headers, and data.
           //  The data property holds the actual content returned by the API, often in JSON format
+         
           if(response.status === 200){
-            // object destructuring
+            // object destructuring.
             const {token} = response.data;
-            
             // Storing token in localStorage
             localStorage.setItem("authToken", token)
-
-
-            navigate("/")
+            // navigate("/HR")
             
+            // Decode the token
+            const decodedToken = jwtDecode(token);
+            // console.log(decodedToken);
+            const designation = decodedToken.employeeID;
+            // console.log(designation);
             
+            navigate(`/${designation}`)
+
 
           }
+
+          // if(response.data.success){
+          //    const { token,department} = response.data;
+          //    localStorage.setItem("authToken", token)
+          //    navigate(`/${department}`)
+          // }else{
+          //   setError(response.data.message || "Login failed")
+          // }
+
         }catch(err){
           if(err.response){
             // if server responded with status other than 200

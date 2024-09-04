@@ -41,7 +41,7 @@ const [error,setError] = useState("")
       const resposne = await axios.post('http://localhost:8080/api/auth/signup',formData);
       console.log(resposne);
       
-      if(resposne.status === 200){
+      if(resposne.status === 201){
 
         setSuccess("Signup successful!");
         setError("");
