@@ -38,7 +38,7 @@ function FileUpload() {
     const formData = new FormData();
     files.forEach((file) => {
       formData.append('file', file);
-      formData.append('filename', file.name); // Use file name from the file itself
+      formData.append('filename', filename); // Use file name from the file itself
       formData.append('fileVersion', fileVersion);
       formData.append('filetype', filetype);
       formData.append('department', department);
@@ -54,7 +54,7 @@ function FileUpload() {
       });
        console.log(response);
        
-      if (response.status === 201) {
+      if (response.status === 200) {
         setMessage('File uploaded successfully');
         setUploadedFiles((prevFiles) => [...prevFiles, ...files]);
         setFiles([]); // Clear files after upload
@@ -118,7 +118,7 @@ function FileUpload() {
             borderRadius: '25px',
             margin: '2em 0',
             padding: '2em',
-            width: '400px',
+            width: '300px',
           }}
         >
           <h2>File Upload</h2>
