@@ -18,8 +18,8 @@ function Register() {
 const [success, setSuccess] = useState("");
 const [error,setError] = useState("")
 
-  const departments =["HR","Sales","Finance","Marketing","BPO"]
-  const designations = ["Supervisor","Workers"]
+  const departments =["Admin","HR","Sales","Finance","Marketing","BPO"]
+  const designations = ["Supervisor","Worker"]
   const shifts = ["A","B"]
 
   const handleChange = (e) => {
@@ -31,15 +31,17 @@ const [error,setError] = useState("")
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    // console.log('Form Data Submitted:', formData);
+    console.log('Form Data Submitted:', formData);
     
     // setLoading(true);
     // setError(null);
     
     try{
       
-      const resposne = await axios.post('http://localhost:8080/api/auth/signup',formData);
+      const resposne = await axios.post('http://localhost:8080/signup',formData);
       console.log(resposne);
+      console.log(resposne.data);
+      
       
       if(resposne.status === 201){
 
@@ -61,8 +63,6 @@ const [error,setError] = useState("")
       setSuccess("");
 
     }
-
-
    
   };
 

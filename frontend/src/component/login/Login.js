@@ -13,7 +13,7 @@ function Login() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const departments =["Admin","HR","Sales","Finance","Marketing","BPO"]
+    // const departments =["Admin","HR","Sales","Finance","Marketing","BPO"]
 
     function handleChange(e){
         setFormData({
@@ -29,38 +29,49 @@ function Login() {
 
         try{
 
-          const response = await axios.post('http://localhost:8080/api/auth/login', formData);
-          // console.log(response.data);
+          const response = await axios.post('http://localhost:8080/login', formData);
+          console.log(response.data);
           
           //When you make an HTTP request using axios, the response typically contains several properties,
           //  such as status, statusText, headers, and data.
           //  The data property holds the actual content returned by the API, often in JSON format
-         
-          if(response.status === 200){
-            // object destructuring.
-            const {token} = response.data;
-            // Storing token in localStorage
-            localStorage.setItem("authToken", token)
-            // navigate("/HR")
+        //  const data = await response.data;
+          // if(response.status === 200){
+          //   // object destructuring.
+          //   const {token} = response.data;
+          //   // Storing token in localStorage
+          //   localStorage.setItem("authToken", token)
+          //   // navigate("/HR")
+          //   console.log("Login successful");
             
-            // Decode the token
-            const decodedToken = jwtDecode(token);
-            // console.log(decodedToken);
-            const designation = decodedToken.employeeID;
-            // console.log(designation);
+          //   // // Decode the token
+          //   // const decodedToken = jwtDecode(token);
+          //   // console.log(decodedToken);
+          //   // const department = decodedToken.department;
+          //   // console.log(department);
             
-            navigate(`/${designation}`)
-
-
-          }
-
-          // if(response.data.success){
-          //    const { token,department} = response.data;
-          //    localStorage.setItem("authToken", token)
-          //    navigate(`/${department}`)
+          //   // navigate(`/${department}`)
+            
           // }else{
           //   setError(response.data.message || "Login failed")
           // }
+
+          if(response.status === 200){
+             const { token,department} = response.data;
+             localStorage.setItem("authToken", token)
+             console.log(department);
+             
+             navigate(`/${department}`)
+          // const {token} = response.data
+          // console.log(token);
+          
+          // localStorage.setItem("authToken", token)
+          // navigate("/HR")
+          console.log("Login successful");
+          
+          }else{
+            setError(response.data.message || "Login failed")
+          }
 
         }catch(err){
           if(err.response){

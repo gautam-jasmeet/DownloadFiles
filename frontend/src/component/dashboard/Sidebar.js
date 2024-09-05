@@ -9,10 +9,10 @@ function Sidebar() {
       <h3>Admin Dashboard</h3>
       <ul>
         <li>
-          <NavLink to={"/800"}>Dashboard</NavLink>
+          <NavLink to={"/"}>Dashboard</NavLink>
         </li>
         <li>
-          <NavLink to={"/520"}>HR Department</NavLink>
+          <NavLink to={"/HR"}>HR Department</NavLink>
         </li>
         <li>
           <NavLink to={"/marketing"}>Marketing Department</NavLink>

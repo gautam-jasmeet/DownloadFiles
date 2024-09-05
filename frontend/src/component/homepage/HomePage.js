@@ -25,11 +25,11 @@ const HomePage = () => {
       {/* <div style={{marginLeft:"220px", padding:"20px" ,width:"100%"}}> */}
       <Routes>
      
-      <Route path='/800' element={<Dashboard/>}></Route>
-        <Route path='/520' element={<HrHomePage/>}></Route>
-      <Route path='/it' element={<ItHomePage/>}></Route>
-      <Route path='/marketing' element={<MarketingHP/>}></Route>
-      <Route path='/sales' element={<SaleHP/>}></Route>
+      <Route path='/Admin' element={<Dashboard/>}></Route>
+        <Route path='/HR' element={<HrHomePage/>}></Route>
+      <Route path='/Finance' element={<ItHomePage/>}></Route>
+      <Route path='/Marketing' element={<MarketingHP/>}></Route>
+      <Route path='/Sales' element={<SaleHP/>}></Route>
     <Route path='/signup' element={<Register/>}></Route>
     <Route path='/login' element={<Login/>}></Route>
     <Route path='/logout' element={<Logout/>}></Route>
