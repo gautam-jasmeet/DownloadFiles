@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from "axios"
-import { useNavigate } from 'react-router-dom';
-import {jwtDecode} from "jwt-decode";
+import { useNavigate,NavLink } from 'react-router-dom';
+// import {jwtDecode} from "jwt-decode";
 
 function Login() {
     const [formData, setFormData]= useState({
@@ -140,6 +140,7 @@ function Login() {
           Login
         </button>
       </form>
+      <p>Don't have an account? <NavLink to="/signup">SignUp</NavLink></p>
     </div>
   )
   

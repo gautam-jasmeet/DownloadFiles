@@ -102,8 +102,8 @@ function FileUpload() {
 
   // View file
   const handleViewFile = (file) => {
-    const fileURL = "http://localhost:8080/uploads/1725622374527-765863524.pdf";
-    const fileType = file.type;
+    const fileURL = file.fileUrl || '';
+    const fileType = file.filetype || '';
 
     if (fileType.startsWith('image/')) {
       window.open(fileURL);
@@ -121,6 +121,9 @@ function FileUpload() {
     } else {
       alert('File type not supported for preview');
     }
+
+    console.log(file);
+    
   };
 
   return (
