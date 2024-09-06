@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import RecentFilesContext from '../../context/RecentFilesContext';
 import axios from 'axios';
 
@@ -12,11 +12,23 @@ function FileUpload() {
   const [message, setMessage] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
+  const [documents, setDocuments] = useState([]);
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      const response = await axios.get('http://localhost:8080/documents');
+      setDocuments(response.data);
+    };
+    fetchDocuments();
+  },[]);
+  console.log(documents);
+  
+
+
   const context = useContext(RecentFilesContext);
   const { addRecentFiles } = context;
 
   const containerStyle = {
-    // height: '200px',
+    height: '100vh',
     overflowY: 'scroll',
     border: '1px solid white',
     padding: '1rem',
@@ -86,7 +98,7 @@ function FileUpload() {
   // Delete file 
   const handleDelete = (index) => {
     const updatedFiles = uploadedFiles.filter((_, i) => i !== index);
-    setUploadedFiles(updatedFiles);
+    setDocuments(updatedFiles);
   };
 
   // View file
@@ -193,7 +205,7 @@ function FileUpload() {
       {/* List of uploaded files */}
       <div  style={{margin:"10px", padding:"10px", width:"100%", height:"100%"}}>
         <ol style={containerStyle}>
-          {uploadedFiles.map((file, index) => (
+          {documents.map((file, index) => (
             <li key={index} style={{ margin: '5px' }}>
               <div className="card w-50" style={{borderRadius:'15px 50px 30px'}}>
                 <div className="card-body">
