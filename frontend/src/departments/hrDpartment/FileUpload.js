@@ -7,7 +7,7 @@ function FileUpload() {
   const [filename, setFileName] = useState('');
   const [fileVersion, setFileVersion] = useState('');
   const [filetype, setFileType] = useState('');
-  const [department, setDepartment] = useState('');
+  // const [department, setDepartment] = useState('');
   const [status, setStatus] = useState('');
   const [message, setMessage] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -208,15 +208,20 @@ function FileUpload() {
           {documents.map((file, index) => (
             <li key={index} style={{ margin: '5px' }}>
               <div className="card w-50" style={{borderRadius:'15px 50px 30px'}}>
-                <div className="card-body">
-                  <h5 className="card-title">File name: {file.name}</h5>
-                  <p className="card-text">Last Modified: {new Date(file.lastModified).toLocaleDateString()}</p>
-                  <button className="btn btn-primary ms-1" onClick={() => handleDelete(index)}>
+                <div className="card-body" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <div>
+                  <p className="card-title"><b>File Name:</b> {file.filename}</p>
+                  <p className="card-text" style={{margin:"0"}}> <b>File Version:</b> {file.fileVersion}  </p>
+                  <p className="card-text" ><b>File Type:</b>  {file.filetype}</p>
+                  </div>
+                  <div>
+                  <button className="btn btn-primary ms-1 bs-" onClick={() => handleDelete(index)}>
                     Delete
                   </button>
                   <button className="btn btn-primary ms-1" onClick={() => handleViewFile(file)}>
                     View
                   </button>
+                  </div>
                 </div>
               </div>
             </li>
