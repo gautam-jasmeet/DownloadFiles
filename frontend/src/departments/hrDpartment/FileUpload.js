@@ -1,8 +1,6 @@
 
-
-
-import React, { useContext, useEffect, useState } from 'react';
-import RecentFilesContext from '../../context/RecentFilesContext';
+import React, {  useEffect, useState } from 'react';
+// import RecentFilesContext from '../../context/RecentFilesContext';
 import axios from 'axios';
 
 function FileUpload() {
@@ -10,7 +8,7 @@ function FileUpload() {
   const [filename, setFileName] = useState('');
   const [fileVersion, setFileVersion] = useState('');
   const [filetype, setFileType] = useState('');
-  const [status, setStatus] = useState('');
+  // const [status, setStatus] = useState('');
   const [message, setMessage] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
@@ -24,8 +22,8 @@ function FileUpload() {
     fetchDocuments();
   }, []);
 
-  const context = useContext(RecentFilesContext);
-  const { addRecentFiles } = context;
+  // const context = useContext(RecentFilesContext);
+  // const { addRecentFiles } = context;
 
   const containerStyle = {
     height: '100vh',
@@ -42,7 +40,7 @@ function FileUpload() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!files || !fileVersion || !filetype || !status) {
+    if (!files || !fileVersion || !filetype ) {
       setMessage('Please fill in all fields and select a file');
       return;
     }
@@ -53,7 +51,7 @@ function FileUpload() {
       formData.append('filename', filename); // Use file name from the file itself
       formData.append('fileVersion', fileVersion);
       formData.append('filetype', filetype);
-      formData.append('status', status);
+      // formData.append('status', status);
     });
 
     try {
@@ -66,7 +64,7 @@ function FileUpload() {
       if (response.status === 200) {
         setMessage('File uploaded successfully');
         setUploadedFiles((prevFiles) => [...prevFiles, ...files]);
-        addRecentFiles({ name: filename, timestamp: new Date() });
+        // addRecentFiles({ name: filename, timestamp: new Date() });
 
         // Fetch updated documents list
         const updatedDocuments = await axios.get('http://localhost:8080/documents');
@@ -104,7 +102,7 @@ function FileUpload() {
 
   // View file
   const handleViewFile = (file) => {
-    const fileURL = URL.createObjectURL(file);
+    const fileURL = "http://localhost:8080/uploads/1725622374527-765863524.pdf";
     const fileType = file.type;
 
     if (fileType.startsWith('image/')) {
@@ -173,7 +171,7 @@ function FileUpload() {
             />
           </div>
 
-          <div className="form-group">
+          {/* <div className="form-group">
             <label>Status:</label>
             <select
               className="form-control border border-black"
@@ -183,7 +181,7 @@ function FileUpload() {
               <option value="Approved">Approved</option>
               <option value="Rejected">Rejected</option>
             </select>
-          </div>
+          </div> */}
 
           <button className="btn btn-primary mt-3" type="submit">Upload</button>
           <div style={{ marginTop: '10px' }}>

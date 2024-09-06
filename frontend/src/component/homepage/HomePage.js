@@ -19,7 +19,7 @@ const HomePage = () => {
     
   <Router>
       <Header/>
-      
+      {/* <Login/> */}
       
     
       {/* <Sidebar/> */}
@@ -33,7 +33,7 @@ const HomePage = () => {
       <Route path='/Marketing' element={<MarketingHP/>}></Route>
       <Route path='/Sales' element={<SaleHP/>}></Route>
     <Route path='/signup' element={<Register/>}></Route>
-    <Route path='/login' element={<Login/>}></Route>
+    <Route path='/' element={<Login/>}></Route>
     <Route path='/logout' element={<Logout/>}></Route>
     </Routes>
     
