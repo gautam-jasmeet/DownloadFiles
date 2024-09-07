@@ -14,26 +14,37 @@ function FileUpload() {
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   const [documents, setDocuments] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
+
+
+
+  const categories = ['Policies', 'Forms Format', 'Work Instructions', 'SOP'];
   
 
   useEffect(() => {
     const fetchDocuments = async () => {
       const response = await axios.get('http://localhost:8080/documents');
       setDocuments(response.data);
+
     };
     fetchDocuments();
   }, []);
+  
+  
 
+
+  
+  
   // const context = useContext(RecentFilesContext);
   // const { addRecentFiles } = context;
 
-  const containerStyle = {
-    height: '100vh',
-    overflowY: 'scroll',
-    border: '1px solid white',
-    padding: '1rem',
-  };
+  // const containerStyle = {
+  //   height: '100vh',
+  //   overflowY: 'scroll',
+  //   border: '1px solid white',
+  //   padding: '1rem',
+  // };
 
   const handleOnChange = (e) => {
     const selectedFile = Array.from(e.target.files);
@@ -164,6 +175,31 @@ function FileUpload() {
     
   };
 
+  // to open files category wise
+  // const groupFilesByCategory = (files) => {
+  //   return files.reduce((acc, file) => {
+  //     if (!acc[file.category]) {
+  //       acc[file.category] = [];
+  //     }
+  //     acc[file.category].push(file);
+  //     return acc;
+  //   }, {});
+  // };
+
+  // const groupedFiles = groupFilesByCategory(documents);
+  // console.log(groupedFiles);
+
+  
+
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  }
+
+  const filteredDocuments = selectedCategory
+    ? documents.filter((doc) => doc.category === selectedCategory)
+    : documents;
+  
+
   return (
     <>
       <div style={{ display: 'flex' }}>
@@ -222,9 +258,37 @@ function FileUpload() {
         </form>
 
         {/* List of uploaded files */}
+        {/* Category Dropdown */}
         <div style={{ margin: "10px", padding: "10px", width: "100%", height: "100%" }}>
-          <ol style={containerStyle}>
-            {documents.map((file) => (
+        <div className='form-group'>
+          <label>Select Category:</label>
+          <select
+            className="form-control border border-black"
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+          >
+            <option value="">All Categories</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+
+        </div>
+
+
+       
+          {/* {Object.keys(groupedFiles).map((category) => (
+            <div key={category} style={{display: 'flex'}}>
+              <h3>{category}</h3> */}
+              
+           {/* style={containerStyle} */}
+          <ol >  
+          {filteredDocuments.length === 0 ? (
+            <p>No files available for the selected category.</p>
+          ) : (   
+            filteredDocuments.map((file) => (
               <li key={file._id} style={{ margin: '5px' }}>
                 <div className="card w-50" style={{ borderRadius: '15px 50px 30px' }}>
                   <div className="card-body" style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -245,13 +309,17 @@ function FileUpload() {
                   </div>
                 </div>
               </li>
-            ))}
+            )))}
           </ol>
+          </div>
+          {/* ))} */}
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 }
 
 export default FileUpload;
+
+
 

@@ -47,7 +47,7 @@ const [error,setError] = useState("")
 
         setSuccess("Signup successful!");
         setError("");
-        navigate("/login");
+        navigate("/");
       }
       // setFormData({
       //   name:"",
