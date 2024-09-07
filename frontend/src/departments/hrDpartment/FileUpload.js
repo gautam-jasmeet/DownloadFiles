@@ -7,12 +7,15 @@ function FileUpload() {
   const [files, setFiles] = useState([]);
   const [filename, setFileName] = useState('');
   const [fileVersion, setFileVersion] = useState('');
-  const [filetype, setFileType] = useState('');
+  // const [filetype, setFileType] = useState('');
+  const [category, setCategory] = useState("");
   // const [status, setStatus] = useState('');
   const [message, setMessage] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   const [documents, setDocuments] = useState([]);
+
+  
 
   useEffect(() => {
     const fetchDocuments = async () => {
@@ -40,7 +43,7 @@ function FileUpload() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!files || !fileVersion || !filetype ) {
+    if (!files || !fileVersion || !category ) {
       setMessage('Please fill in all fields and select a file');
       return;
     }
@@ -50,8 +53,8 @@ function FileUpload() {
       formData.append('file', file);
       formData.append('filename', filename); // Use file name from the file itself
       formData.append('fileVersion', fileVersion);
-      formData.append('filetype', filetype);
-      // formData.append('status', status);
+      // formData.append('filetype', filetype);
+      formData.append('category', category);
     });
 
     try {
@@ -71,6 +74,9 @@ function FileUpload() {
         setDocuments(updatedDocuments.data);
 
         setFiles([]); // Clear files after upload
+        setFileName('');
+        setFileVersion('');
+        setCategory('')
       } else {
         setMessage('File upload failed');
       }
@@ -100,10 +106,42 @@ function FileUpload() {
     }
   };
 
+  // Get the file type from the file name e.g- image.png
+  const getFileType = (fileName) => {
+    const extension = fileName.split('.').pop().toLowerCase();
+    
+    switch(extension) {
+      case 'pdf':
+        return 'application/pdf';
+      case 'jpg':
+      case 'jpeg':
+      case 'png':
+        return 'image/*';
+      case 'mp4':
+        return 'video/mp4';
+      case 'doc':
+      case 'docx':
+        return 'application/msword';
+      case 'xls':
+      case 'xlsx':
+        return 'application/vnd.ms-excel';
+      case 'ppt':
+      case 'pptx':
+        return 'application/vnd.ms-powerpoint';
+      default:
+        return 'unknown';
+    }
+  }
+
+ 
+  
+
   // View file
   const handleViewFile = (file) => {
     const fileURL = file.fileUrl || '';
-    const fileType = file.filetype || '';
+    const fileType = getFileType(file.filename) || '';
+    console.log(fileType);
+    
 
     if (fileType.startsWith('image/')) {
       window.open(fileURL);
@@ -147,7 +185,8 @@ function FileUpload() {
 
           <div className="form-group">
             <label>File Name:</label>
-            <input className="form-control border border-black" type="text" value={filename} onChange={(e) => setFileName(e.target.value)} readOnly />
+            <input className="form-control border border-black" type="text" value={filename} 
+            onChange={(e) => setFileName(e.target.value)} readOnly />
           </div>
 
           <div className="form-group">
@@ -163,29 +202,19 @@ function FileUpload() {
           </div>
 
           <div className="form-group">
-            <label>File Type:</label>
-            <input
-              className="form-control border border-black"
-              type="text"
-              value={filetype}
-              onChange={(e) => setFileType(e.target.value)}
-              placeholder="e.g. pdf video image excel doc"
-              required
-            />
-          </div>
+            <label>File Categories:</label>
+             <select
+            className="form-control border border-black" 
+            value={category} onChange={(e) => setCategory(e.target.value)} required>
+               <option value="">Select Category</option>
+               <option value="Policies">Policies</option>
+               <option value="Forms Format">Forms Format</option>
+               <option value="SOP">SOP</option>
+               <option value="Work Instructions">Work Instructions</option>
+             </select>
+           </div>
 
-          {/* <div className="form-group">
-            <label>Status:</label>
-            <select
-              className="form-control border border-black"
-              value={status} onChange={(e) => setStatus(e.target.value)} required>
-              <option value="">Select Status</option>
-              <option value="Pending">Pending</option>
-              <option value="Approved">Approved</option>
-              <option value="Rejected">Rejected</option>
-            </select>
-          </div> */}
-
+         
           <button className="btn btn-primary mt-3" type="submit">Upload</button>
           <div style={{ marginTop: '10px' }}>
             {message && <p className='alert alert-success'>{message}</p>}
@@ -203,6 +232,7 @@ function FileUpload() {
                       <p className="card-title"><b>File Name:</b> {file.filename}</p>
                       <p className="card-text" style={{ margin: "0" }}><b>File Version:</b> {file.fileVersion}</p>
                       <p className="card-text"><b>File Type:</b> {file.filetype}</p>
+                      <p className="card-text"><b>Status:</b> {file.status}</p>
                     </div>
                     <div>
                       <button className="btn btn-primary ms-1" onClick={() => handleDelete(file._id)}>
