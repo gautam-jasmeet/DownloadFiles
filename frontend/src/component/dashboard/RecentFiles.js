@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react'
 import axios from 'axios'
+import ViewFiles from './ViewFiles'
 
 function RecentFiles() {
     const [recentFiles, setRecentFiles] = useState([])
@@ -72,6 +73,7 @@ fetchRecentFiles()
               <div style={{ display: 'flex' }}>
               <button className="btn btn-primary ms-1" onClick={() => handleApprove(file._id)}>Approve</button>
            <button className="btn btn-primary ms-1" onClick={() => handleReject(file._id)}>Rejected</button>
+           <ViewFiles file={file} />
            </div>
             )}
           </div>

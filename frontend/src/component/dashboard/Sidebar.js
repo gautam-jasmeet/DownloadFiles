@@ -23,6 +23,9 @@ function Sidebar() {
         <li>
           <NavLink to={"/sales"}>Sales Department</NavLink>
         </li>
+        <li>
+          <NavLink to={"/signup"}>Sign Up</NavLink>
+        </li>
       <li className="nav-item">
     <NavLink className="nav-link" to="/">Logout</NavLink>
   </li>

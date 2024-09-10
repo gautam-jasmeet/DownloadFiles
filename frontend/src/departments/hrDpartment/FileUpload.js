@@ -3,6 +3,7 @@ import React, {  useEffect, useState } from 'react';
 // import RecentFilesContext from '../../context/RecentFilesContext';
 import axios from 'axios';
 
+
 function FileUpload() {
   const [files, setFiles] = useState([]);
   const [filename, setFileName] = useState('');
@@ -16,10 +17,31 @@ function FileUpload() {
   const [documents, setDocuments] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
+  const [userRole, setUserRole] = useState("");
+ const [accessibleCategories, setAccessibleCategories] = useState([]);
 
 
 
-  const categories = ['Policies', 'Forms Format', 'Work Instructions', 'SOP'];
+  // const categories = ['Policies', 'Forms Format', 'Work Instructions', 'SOP'];
+
+
+  useEffect(()=>{
+    const designation = localStorage.getItem("designation");
+    // console.log(designation);
+    setUserRole(designation);
+
+     // Define accessible categories based on role
+    const allowedCategories = designation === "Supervisor" ? ['Policies', 'Forms Format', 'Work Instructions', 'SOP']
+     :['Work Instructions', 'SOP'] ;
+
+      
+     setAccessibleCategories(allowedCategories)
+  },[])
+
+
+ 
+  console.log(accessibleCategories);
+  
   
 
   useEffect(() => {
@@ -32,6 +54,15 @@ function FileUpload() {
   }, []);
   
   
+// Filter the documents based on the selected category and accessible categories
+const filteredDocument = documents.filter((doc) => {
+  return accessibleCategories.includes(doc.category) &&
+    (!selectedCategory || doc.category === selectedCategory);
+});
+console.log(documents);
+
+console.log(filteredDocument);
+console.log(selectedCategory);
 
 
   
@@ -83,6 +114,8 @@ function FileUpload() {
         // Fetch updated documents list
         const updatedDocuments = await axios.get('http://localhost:8080/documents');
         setDocuments(updatedDocuments.data);
+        console.log(documents);
+        
 
         setFiles([]); // Clear files after upload
         setFileName('');
@@ -117,91 +150,66 @@ function FileUpload() {
     }
   };
 
-  // Get the file type from the file name e.g- image.png
-  const getFileType = (fileName) => {
-    const extension = fileName.split('.').pop().toLowerCase();
-    
-    switch(extension) {
-      case 'pdf':
-        return 'application/pdf';
-      case 'jpg':
-      case 'jpeg':
-      case 'png':
-        return 'image/*';
-      case 'mp4':
-        return 'video/mp4';
-      case 'doc':
-      case 'docx':
-        return 'application/msword';
-      case 'xls':
-      case 'xlsx':
-        return 'application/vnd.ms-excel';
-      case 'ppt':
-      case 'pptx':
-        return 'application/vnd.ms-powerpoint';
-      default:
-        return 'unknown';
-    }
-  }
-
+ 
  
   
 
   // View file
   const handleViewFile = (file) => {
-    const fileURL = file.fileUrl || '';
-    const fileType = getFileType(file.filename) || '';
-    console.log(fileType);
     
-
-    if (fileType.startsWith('image/')) {
+    const fileURL = `http://localhost:8080${file.fileUrl}`; // Ensure full path
+  const fileExtension = file.filename.split('.').pop().toLowerCase();
+  
+  console.log(fileURL);
+    console.log(fileExtension);
+  
+    if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
+      // Image files
       window.open(fileURL);
-    } else if (fileType.startsWith('video/')) {
+    } else if (['mp4', 'avi', 'mov', 'wmv', 'mkv'].includes(fileExtension)) {
+      // Video files
       window.open(fileURL);
-    } else if (fileType === 'application/pdf') {
+    } else if (fileExtension === 'pdf') {
+      // PDF files
       window.open(fileURL);
     } else if (
-      fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
-      fileType === 'application/msword' ||
-      fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
-      fileType === 'application/vnd.ms-excel'
+      ['doc', 'docx', 'xls', 'xlsx'].includes(fileExtension)
     ) {
+      // Word/Excel files
       window.open(fileURL);
     } else {
       alert('File type not supported for preview');
     }
-
+  
     console.log(file);
+   
+    
     
   };
 
-  // to open files category wise
-  // const groupFilesByCategory = (files) => {
-  //   return files.reduce((acc, file) => {
-  //     if (!acc[file.category]) {
-  //       acc[file.category] = [];
-  //     }
-  //     acc[file.category].push(file);
-  //     return acc;
-  //   }, {});
-  // };
-
-  // const groupedFiles = groupFilesByCategory(documents);
-  // console.log(groupedFiles);
-
+  
+  
+  
   
 
+  
+// To show files category wise
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   }
 
-  const filteredDocuments = selectedCategory
-    ? documents.filter((doc) => doc.category === selectedCategory)
-    : documents;
+  // const filteredDocuments = selectedCategory
+  //   ? documents.filter((doc) => doc.category === selectedCategory)
+  //   : documents;
+
+
+
+    
   
 
   return (
     <>
+    
       <div style={{ display: 'flex' }}>
         <form
           onSubmit={handleSubmit}
@@ -243,10 +251,15 @@ function FileUpload() {
             className="form-control border border-black" 
             value={category} onChange={(e) => setCategory(e.target.value)} required>
                <option value="">Select Category</option>
-               <option value="Policies">Policies</option>
+               {/* <option value="Policies">Policies</option>
                <option value="Forms Format">Forms Format</option>
                <option value="SOP">SOP</option>
-               <option value="Work Instructions">Work Instructions</option>
+               <option value="Work Instructions">Work Instructions</option> */}
+                {accessibleCategories.map((cat) => (
+                 <option key={cat} value={cat}>
+                   {cat}
+                 </option>
+               ))}
              </select>
            </div>
 
@@ -260,15 +273,16 @@ function FileUpload() {
         {/* List of uploaded files */}
         {/* Category Dropdown */}
         <div style={{ margin: "10px", padding: "10px", width: "100%", height: "100%" }}>
-        <div className='form-group'>
+        <div className='form-group' style={{display: 'flex' , width:"50%",marginBottom:"20px", 
+          position:"sticky", top:"130px",zIndex:"999"}}>
           <label>Select Category:</label>
           <select
             className="form-control border border-black"
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
-            <option value="">All Categories</option>
-            {categories.map((category) => (
+            {userRole === "Supervisor" && <option value="">All Categories</option>}
+            {accessibleCategories.map((category) => (
               <option key={category} value={category}>
                 {category}
               </option>
@@ -277,18 +291,13 @@ function FileUpload() {
 
         </div>
 
-
-       
-          {/* {Object.keys(groupedFiles).map((category) => (
-            <div key={category} style={{display: 'flex'}}>
-              <h3>{category}</h3> */}
               
            {/* style={containerStyle} */}
           <ol >  
-          {filteredDocuments.length === 0 ? (
+          {filteredDocument.length === 0 ? (
             <p>No files available for the selected category.</p>
           ) : (   
-            filteredDocuments.map((file) => (
+            filteredDocument.map((file) => (
               <li key={file._id} style={{ margin: '5px' }}>
                 <div className="card w-50" style={{ borderRadius: '15px 50px 30px' }}>
                   <div className="card-body" style={{ display: 'flex', justifyContent: 'space-between' }}>

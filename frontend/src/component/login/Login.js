@@ -32,6 +32,7 @@ function Login() {
           const response = await axios.post('http://localhost:8080/login', formData);
           console.log(response.data);
           
+          
           //When you make an HTTP request using axios, the response typically contains several properties,
           //  such as status, statusText, headers, and data.
           //  The data property holds the actual content returned by the API, often in JSON format
@@ -57,9 +58,10 @@ function Login() {
           // }
 
           if(response.status === 200){
-             const { token,department} = response.data;
+             const { token,department,designation} = response.data;
              localStorage.setItem("authToken", token)
-             console.log(department);
+             localStorage.setItem("designation",designation);
+            //  console.log(department);
              
              navigate(`/${department}`)
           // const {token} = response.data

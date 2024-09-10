@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import Sidebar from './Sidebar';
 import RecentFilesContext from '../../context/RecentFilesContext';
 import RecentFiles from './RecentFiles';
+import ViewFiles from './ViewFiles';
 
 function Dashboard() {
   // const {recentFiles} = useContext(RecentFilesContext);
@@ -11,6 +12,7 @@ function Dashboard() {
         <Sidebar />
       </div>
       <div style={{marginLeft:"220px", padding:"20px" }}>
+        {/* <ViewFiles /> */}
         <RecentFiles />
       </div>
       {/* <div style={{marginLeft:"220px", padding:"20px" }}>

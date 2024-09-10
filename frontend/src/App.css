@@ -1,11 +1,34 @@
-.App {
-  text-align: center;
+:root{
+  --primary-color: #0d6efd;
+  --secondary-color: #6c757d;
+  --success-color: #198754;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #0dcaf0;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+  --main-header-color:#5f7adb;
+  --main-header-color-2:#8E43ED;
+  --main-header-color-3:#4035;
+  --main-header-color-1:#5a0834;
+  --sidebar-color:#E7E8D8;
+  --sidebar-background-color:#a2b2ee;
+  --sidebar-background-color-1:#9d0b51;
 }
 
 
 
 
-.App-header {
+
+
+/* .App {
+  text-align: center;
+} */
+
+
+
+
+/* .App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -14,15 +37,8 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-
-
-/* @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 } */
+
+
+
+

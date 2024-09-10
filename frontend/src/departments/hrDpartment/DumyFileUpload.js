@@ -13,7 +13,27 @@ function DumyFileUpload() {
         return groupedFiles;
       };
   return (
-    <div>DumyFileUpload</div>
+    <div>
+      <div>
+      if (fileExtentiopn.startsWith('image/')) {
+      window.open(fileURL);
+    } else if (fileExtentiopn.startsWith('video/')) {
+      window.open(fileURL);
+    } else if (fileExtentiopn === 'application/pdf') {
+      window.open(fileURL);
+    } else if (
+      fileExtentiopn === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+      fileExtentiopn === 'application/msword' ||
+      fileExtentiopn === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+      fileExtentiopn === 'application/vnd.ms-excel'
+    ) {
+      window.open(fileURL);
+    } else {
+      alert('File type not supported for preview');
+    }
+
+      </div>
+    </div>
   )
 }
 

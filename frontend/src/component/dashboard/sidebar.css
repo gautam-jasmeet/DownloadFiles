@@ -2,7 +2,7 @@
 .sidebar{
     width: 200px;
     height: 100vh;
-    background-color: #E7E8D8 ;
+    background-color:var( --sidebar-background-color);
     padding: 20px;
     position: fixed;
 }
