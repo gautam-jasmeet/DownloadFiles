@@ -59,11 +59,13 @@ fetchRecentFiles()
   return (
     <div>
          <div>
-      <h3>Recently Added Files :</h3>
-      <ul className="list-group">
+      <h3
+      style={{fontSize:"1.7rem", fontWeight:"bold", color:"#333", marginBottom:"10px"}}
+      >Recently Added Files :</h3>
+      <ul className="list-group" >
         {recentFiles.map(file => (
-          <li key={file._id}  style={{ marginTop: '20px' }}>
-             <div className="card w-50" style={{ borderRadius: '15px' }}>
+          <li key={file._id}  style={{ marginTop: '20px', }}>
+             <div className="card w-50" style={{ borderRadius: '15px',boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',backgroundColor:"f9f9f9"  }}>
              <div className="card-body" style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div>
             <p className="card-text">

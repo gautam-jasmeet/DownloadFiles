@@ -151,49 +151,6 @@ console.log(selectedCategory);
     }
   };
 
- 
- 
-  
-
-  // View file
-  // const handleViewFile = (file) => {
-    
-  //   const fileURL = `http://localhost:8080${file.fileUrl}`; // Ensure full path
-  // const fileExtension = file.filename.split('.').pop().toLowerCase();
-  
-  // console.log(fileURL);
-  //   console.log(fileExtension);
-  
-  //   if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
-  //     // Image files
-  //     window.open(fileURL);
-  //   } else if (['mp4', 'avi', 'mov', 'wmv', 'mkv'].includes(fileExtension)) {
-  //     // Video files
-  //     window.open(fileURL);
-  //   } else if (fileExtension === 'pdf') {
-  //     // PDF files
-  //     window.open(fileURL);
-  //   } else if (
-  //     ['doc', 'docx', 'xls', 'xlsx'].includes(fileExtension)
-  //   ) {
-  //     // Word/Excel files
-  //     window.open(fileURL);
-  //   } else {
-  //     alert('File type not supported for preview');
-  //   }
-  
-  //   console.log(file);
-   
-    
-    
-  // };
-
-  
-  
-  
-  
-
-  
 // To show files category wise
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
@@ -202,11 +159,6 @@ console.log(selectedCategory);
   // const filteredDocuments = selectedCategory
   //   ? documents.filter((doc) => doc.category === selectedCategory)
   //   : documents;
-
-
-
-    
-  
 
   return (
     <>
@@ -284,16 +236,17 @@ console.log(selectedCategory);
         {/* Category Dropdown */}
         <div style={{ margin: "10px", padding: "10px", width: "100%", height: "100%" }}>
         <div className='form-group' style={{display: 'flex' , width:"50%",marginBottom:"20px", 
-          position:"sticky", top:"130px",zIndex:"999"}}>
-          <label>Select Category:</label>
+          position:"sticky", top:"130px",zIndex:"999", borderRadius:"30px",boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'}}>
+          <label><h5>Select Category:</h5></label>
           <select
             className="form-control border border-black"
+            style={{borderRadius:"30px"}}
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
             {userRole === "Supervisor" && <option value="">All Categories</option>}
             {accessibleCategories.map((category) => (
-              <option key={category} value={category}>
+              <option key={category} value={category} >
                 {category}
               </option>
             ))}
@@ -308,8 +261,9 @@ console.log(selectedCategory);
             <p>No files available for the selected category.</p>
           ) : (   
             filteredDocument.map((file) => (
-              <li key={file._id} style={{ margin: '5px' }}>
-                <div className="card w-50" style={{ borderRadius: '15px 50px 30px' }}>
+              <li key={file._id} style={{ margin: '10px' }}>
+                <div className="card w-50" style={{ borderRadius: '20px 30px'
+                  ,boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)', backgroundColor:"f9f9f9" }}>
                   <div className="card-body" style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div>
                       <p className="card-title"><b>File Name:</b> {file.filename}</p>

@@ -8,7 +8,7 @@ import  "../App.css"
 const Header = () => {
   return (
     <div style={{position:"sticky", top:"0",zIndex:"1000"}}> 
-      <nav className="navbar " style={{backgroundColor: 'var(--main-header-color-1)' }} data-bs-theme="dark">  
+      <nav className="navbar " style={{backgroundColor: 'var(--main-header-color-2)' }} data-bs-theme="dark">  
       <ul className="nav">
   <li className="nav-item">
     <NavLink className="nav-link active " aria-current="page" to="/">Home Page</NavLink>
