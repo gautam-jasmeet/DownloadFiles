@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from "axios"
-import { useNavigate,NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import {jwtDecode} from "jwt-decode";
 
 function Login() {
@@ -142,7 +142,7 @@ function Login() {
           Login
         </button>
       </form>
-      <p>Don't have an account? <NavLink to="/signup">SignUp</NavLink></p>
+      {/* <p>Don't have an account? <NavLink to="/signup">SignUp</NavLink></p> */}
     </div>
   )
   

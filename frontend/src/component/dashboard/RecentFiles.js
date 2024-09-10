@@ -22,6 +22,9 @@ fetchRecentFiles()
 
     },[])
 
+    console.log(recentFiles);
+    
+
     const changeDocumentStatus = async (documentId, status) => {
       try{
         const response = await axios.put(`http://localhost:8080/documents/${documentId}`, {status: status})
@@ -56,7 +59,7 @@ fetchRecentFiles()
   return (
     <div>
          <div>
-      <h2>Recently Added Files</h2>
+      <h3>Recently Added Files :</h3>
       <ul className="list-group">
         {recentFiles.map(file => (
           <li key={file._id}  style={{ marginTop: '20px' }}>
@@ -64,12 +67,21 @@ fetchRecentFiles()
              <div className="card-body" style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div>
             <p className="card-text">
-              {file.filename} - {new Date(file.createdAt).toLocaleString()}
+              <b>File Name: </b> {file.filename}
+            </p>
+            <p className="card-text" style={{margin:"0"}}>
+              <b>Department: </b> {file.department}
+            </p>
+            <p className="card-text" style={{margin:"0"}}>
+              <b>File Version: </b> {file.fileVersion}
+            </p>
+            <p className="card-text">
+              <b> Uploaded On:</b>  {new Date(file.createdAt).toLocaleString()}
             </p>
           </div>
              <div >
-            <label>Status:</label>
-            {file.status === "Approved" || file.status === "Rejected" ? (<span>{file.status}</span>) : (
+            <label><b>Status: </b></label>
+            {file.status === "Approved" || file.status === "Rejected" ? (<span> {file.status}</span>) : (
               <div style={{ display: 'flex' }}>
               <button className="btn btn-primary ms-1" onClick={() => handleApprove(file._id)}>Approve</button>
            <button className="btn btn-primary ms-1" onClick={() => handleReject(file._id)}>Rejected</button>

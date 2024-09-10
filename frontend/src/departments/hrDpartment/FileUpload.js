@@ -2,6 +2,7 @@
 import React, {  useEffect, useState } from 'react';
 // import RecentFilesContext from '../../context/RecentFilesContext';
 import axios from 'axios';
+import ViewFiles from '../../component/dashboard/ViewFiles';
 
 
 function FileUpload() {
@@ -155,37 +156,37 @@ console.log(selectedCategory);
   
 
   // View file
-  const handleViewFile = (file) => {
+  // const handleViewFile = (file) => {
     
-    const fileURL = `http://localhost:8080${file.fileUrl}`; // Ensure full path
-  const fileExtension = file.filename.split('.').pop().toLowerCase();
+  //   const fileURL = `http://localhost:8080${file.fileUrl}`; // Ensure full path
+  // const fileExtension = file.filename.split('.').pop().toLowerCase();
   
-  console.log(fileURL);
-    console.log(fileExtension);
+  // console.log(fileURL);
+  //   console.log(fileExtension);
   
-    if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
-      // Image files
-      window.open(fileURL);
-    } else if (['mp4', 'avi', 'mov', 'wmv', 'mkv'].includes(fileExtension)) {
-      // Video files
-      window.open(fileURL);
-    } else if (fileExtension === 'pdf') {
-      // PDF files
-      window.open(fileURL);
-    } else if (
-      ['doc', 'docx', 'xls', 'xlsx'].includes(fileExtension)
-    ) {
-      // Word/Excel files
-      window.open(fileURL);
-    } else {
-      alert('File type not supported for preview');
-    }
+  //   if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
+  //     // Image files
+  //     window.open(fileURL);
+  //   } else if (['mp4', 'avi', 'mov', 'wmv', 'mkv'].includes(fileExtension)) {
+  //     // Video files
+  //     window.open(fileURL);
+  //   } else if (fileExtension === 'pdf') {
+  //     // PDF files
+  //     window.open(fileURL);
+  //   } else if (
+  //     ['doc', 'docx', 'xls', 'xlsx'].includes(fileExtension)
+  //   ) {
+  //     // Word/Excel files
+  //     window.open(fileURL);
+  //   } else {
+  //     alert('File type not supported for preview');
+  //   }
   
-    console.log(file);
+  //   console.log(file);
    
     
     
-  };
+  // };
 
   
   
@@ -211,6 +212,7 @@ console.log(selectedCategory);
     <>
     
       <div style={{ display: 'flex' }}>
+      {userRole === "Supervisor" ? (
         <form
           onSubmit={handleSubmit}
           style={{
@@ -221,6 +223,9 @@ console.log(selectedCategory);
             width: '300px',
           }}
         >
+         
+
+         
           <h5>File Upload</h5>
           <div className="form-group">
             <label>Select File:</label>
@@ -270,6 +275,11 @@ console.log(selectedCategory);
           </div>
         </form>
 
+      ) :(
+        <p>You don't have permission to upload files.</p>
+        
+      )}
+
         {/* List of uploaded files */}
         {/* Category Dropdown */}
         <div style={{ margin: "10px", padding: "10px", width: "100%", height: "100%" }}>
@@ -304,16 +314,27 @@ console.log(selectedCategory);
                     <div>
                       <p className="card-title"><b>File Name:</b> {file.filename}</p>
                       <p className="card-text" style={{ margin: "0" }}><b>File Version:</b> {file.fileVersion}</p>
-                      <p className="card-text"><b>File Type:</b> {file.filetype}</p>
+                      {/* <p className="card-text"><b>File Type:</b> {file.filetype}</p> */}
                       <p className="card-text"><b>Status:</b> {file.status}</p>
                     </div>
-                    <div>
-                      <button className="btn btn-primary ms-1" onClick={() => handleDelete(file._id)}>
+                    <div >
+                      {userRole === "Supervisor" ? (
+                        
+                      
+                      <button className="btn btn-primary ms-1"
+                      style={{marginBottom:"10px"}}
+                       onClick={() => handleDelete(file._id)}>
                         Delete
                       </button>
-                      <button className="btn btn-primary ms-1" onClick={() => handleViewFile(file)}>
+                      ): (
+                        <></>
+                      )}
+                      {/* <button className="btn btn-primary ms-1" onClick={() => handleViewFile(file)}>
                         View
-                      </button>
+                      </button> */}
+                      
+                      <ViewFiles className="btn btn-primary ms-1" file={file} />
+                      
                     </div>
                   </div>
                 </div>

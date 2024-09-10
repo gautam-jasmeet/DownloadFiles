@@ -10,7 +10,7 @@ import Dashboard from '../dashboard/Dashboard'
 import ItHomePage from '../../departments/it/ItHomePage'
 import MarketingHP from '../../departments/marketing/MarketingHP'
 import SaleHP from '../../departments/sales/SaleHP'
-import Sidebar from '../dashboard/Sidebar'
+
 
 
 const HomePage = () => {
@@ -18,12 +18,7 @@ const HomePage = () => {
     <>
     
   <Router>
-      <Header/>
-      {/* <Login/> */}
-      
-    
-      {/* <Sidebar/> */}
-        
+      <Header/> 
       {/* <div style={{marginLeft:"220px", padding:"20px" ,width:"100%"}}> */}
       <Routes>
      
@@ -31,6 +26,7 @@ const HomePage = () => {
         <Route path='/HR' element={<HrHomePage/>}></Route>
       <Route path='/Finance' element={<ItHomePage/>}></Route>
       <Route path='/Marketing' element={<MarketingHP/>}></Route>
+      <Route path='/it' element={<ItHomePage/>}></Route>
       <Route path='/Sales' element={<SaleHP/>}></Route>
     <Route path='/signup' element={<Register/>}></Route>
     <Route path='/' element={<Login/>}></Route>
