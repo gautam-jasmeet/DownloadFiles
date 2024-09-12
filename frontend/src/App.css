@@ -1,19 +1,15 @@
 :root{
-  --primary-color: #0d6efd;
-  --secondary-color: #6c757d;
+  --primary-color: #a20000;
+  --secondary-color: rgba(248,249,250,1);
+  --light-color: #f8f9fa;
   --success-color: #198754;
   --danger-color: #dc3545;
   --warning-color: #ffc107;
   --info-color: #0dcaf0;
-  --light-color: #f8f9fa;
-  --dark-color: #212529;
-  --main-header-color:#5f7adb;
-  --main-header-color-2:#034f84;
-  --main-header-color-3:#92a8d1;
-  --main-header-color-1:#c94c4c;
-  --sidebar-color:#E7E8D8;
-  --sidebar-background-color:#f7cac9;
-  --sidebar-background-color-1:#c2d4dd;
+  --dark-color: #000;
+  --main-header-color:#a20000;
+  --main-Dept-header-color:rgba(248,249,250,1);
+  
 }
 
 

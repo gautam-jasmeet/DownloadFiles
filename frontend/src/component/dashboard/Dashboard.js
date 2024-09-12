@@ -7,26 +7,15 @@ import ViewFiles from './ViewFiles';
 function Dashboard() {
   // const {recentFiles} = useContext(RecentFilesContext);
   return (
-    <>
+    <div style={{display:"flex"}}>
       <div>
         <Sidebar />
-      </div>
-      <div style={{marginLeft:"220px", padding:"20px" }}>
-        {/* <ViewFiles /> */}
+        </div>
+      <div style={{marginLeft:"50px", padding:"10px", height:"100%", width:"100%" }}>
         <RecentFiles />
       </div>
-      {/* <div style={{marginLeft:"220px", padding:"20px" }}>
-                <div>
-                    <h3>Recently Added Files</h3>
-                    <ul>
-                        {recentFiles.map((file, index) => (
-                            <li key={index}>{file.name} uploaded on {file.timestamp.toLocaleString()}</li>
-                        ))}
-                    </ul>
-                </div>
-
-            </div> */}
-          </>
+     
+          </div>
   )
 }
 

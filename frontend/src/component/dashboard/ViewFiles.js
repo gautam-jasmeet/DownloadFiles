@@ -1,4 +1,6 @@
 import React from 'react'
+import "./ViewFiles.css"
+
 
 function ViewFiles({file}) {
     const handleViewFile = (file) => {
@@ -6,8 +8,8 @@ function ViewFiles({file}) {
         const fileURL = `http://localhost:8080${file.fileUrl}`; // Ensure full path
       const fileExtension = file.filename.split('.').pop().toLowerCase();
       
-      console.log(fileURL);
-        console.log(fileExtension);
+      // console.log(fileURL);
+        // console.log(fileExtension);
       
         if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
           // Image files
@@ -27,14 +29,15 @@ function ViewFiles({file}) {
           alert('File type not supported for preview');
         }
       
-        console.log(file);
+        // console.log(file);
        
         
         
       };
   return (
     <div>
- <button className="btn btn-primary ms-1" onClick={() => handleViewFile(file)}>
+ <button className="btn btn-primary card_btn "
+ onClick={() => handleViewFile(file)}>
                         View
      </button>
     </div>

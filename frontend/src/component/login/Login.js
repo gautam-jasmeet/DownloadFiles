@@ -30,7 +30,7 @@ function Login() {
         try{
 
           const response = await axios.post('http://localhost:8080/login', formData);
-          console.log(response.data);
+          // console.log(response.data);
           
           
           //When you make an HTTP request using axios, the response typically contains several properties,
@@ -61,6 +61,7 @@ function Login() {
              const { token,department,designation} = response.data;
              localStorage.setItem("authToken", token)
              localStorage.setItem("designation",designation);
+             localStorage.setItem("department",department);
             //  console.log(department);
              
              navigate(`/${department}`)
@@ -69,7 +70,7 @@ function Login() {
           
           // localStorage.setItem("authToken", token)
           // navigate("/HR")
-          console.log("Login successful");
+          // console.log("Login successful");
           
           }else{
             setError(response.data.message || "Login failed")

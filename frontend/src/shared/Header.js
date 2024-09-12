@@ -7,11 +7,11 @@ import  "../App.css"
 
 const Header = () => {
   return (
-    <div style={{position:"sticky", top:"0",zIndex:"1000"}}> 
-      <nav className="navbar " style={{backgroundColor: 'var(--main-header-color-2)' }} data-bs-theme="dark">  
+    <div style={{position:"sticky", top:"0",zIndex:"1000" }}> 
+      <nav className="navbar " style={{backgroundColor: 'var(--main-header-color)' }} data-bs-theme="dark">  
       <ul className="nav">
   <li className="nav-item">
-    <NavLink className="nav-link active " aria-current="page" to="/">Home Page</NavLink>
+    <NavLink className="nav-link active " aria-current="page" to="/" style={{color:"var(--light-color)",fontWeight:"500"}}>Home Page</NavLink>
   </li>
   </ul>
       <ul className="nav justify-content-end">
@@ -19,7 +19,7 @@ const Header = () => {
     <NavLink className="nav-link" to="/signup">SignUp</NavLink>
   </li> */}
   <li className="nav-item">
-    <NavLink className="nav-link" to="/">Login</NavLink>
+    <NavLink className="nav-link" to="/"  style={{color:"var(--light-color)", fontWeight:"500"}}>Login</NavLink>
   </li>
  
 </ul>

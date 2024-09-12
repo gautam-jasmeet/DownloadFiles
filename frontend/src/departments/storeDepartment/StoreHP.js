@@ -2,12 +2,13 @@ import React from 'react'
 import DeptHeader from '../../shared/DeptHeader'
 import FileUpload from '../shared/FileUpload'
 
-function ItHomePage() {
+function StoreHP() {
   return (
-    <div><DeptHeader header="IT Department"/>
-    {/* <FileUpload/> */}
+    <div>
+        <DeptHeader header="Store Department"/>
+        <FileUpload/>
     </div>
   )
 }
 
-export default ItHomePage
+export default StoreHP
