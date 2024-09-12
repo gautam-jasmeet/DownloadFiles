@@ -18,9 +18,9 @@ const Header = () => {
   {/* <li className="nav-item">
     <NavLink className="nav-link" to="/signup">SignUp</NavLink>
   </li> */}
-  <li className="nav-item">
+  {/* <li className="nav-item">
     <NavLink className="nav-link" to="/"  style={{color:"var(--light-color)", fontWeight:"500"}}>Login</NavLink>
-  </li>
+  </li> */}
  
 </ul>
 </nav>

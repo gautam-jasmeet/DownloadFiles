@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 // import {jwtDecode} from "jwt-decode";
+import "../dashboard/ViewFiles.css"
+
 
 function Login() {
     const [formData, setFormData]= useState({
@@ -139,7 +141,9 @@ function Login() {
         </select>
       </div> */}
 
-        <button type="submit" className="btn btn-primary mt-3">
+        <button type="submit" className="btn btn-primary mt-3 card_btn" 
+        style={{ width:"25%"
+        }}>
           Login
         </button>
       </form>

@@ -161,7 +161,7 @@ const handleShowuploadbutton = ()=>{
         className='btn btn-primary form_btn'
         onClick={handleShowuploadbutton}
         >
-          {showUploadForm ? 'Hide Upload Form' : 'Show Upload Form'}
+          {showUploadForm ? 'Add Document' : 'Add Document'}
         </button>
        )}
 
