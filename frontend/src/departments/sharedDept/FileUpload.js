@@ -7,8 +7,9 @@ import './FileUpload.css'
 
 function FileUpload() {
   const [files, setFiles] = useState([]);
-  const [filename, setFileName] = useState('');
+  const [fileName, setFileName] = useState('');
   const [fileVersion, setFileVersion] = useState('');
+  const [fileNumber, setFileNumber] = useState('');
   const [category, setCategory] = useState("");
   const [message, setMessage] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -20,19 +21,23 @@ function FileUpload() {
  const [accessibleCategories, setAccessibleCategories] = useState([]);
  const [department, setDepartment] = useState("");
 
+ const [targetDepartment, setTargetDepartment] = useState(""); // Holds the department selected for upload (for Admin)
+
+
  const [showUploadForm, setShowUploadForm] = useState(false);
 
+ const departmentList = ["HR", "IT", "BPO", "Store"]; // Add all available departments
 
   useEffect(()=>{
     const designation = localStorage.getItem("designation");
     const departmentName = localStorage.getItem("department");
     // console.log(departmentName);
-    // console.log(designation);
+    console.log(designation);
     setUserRole(designation);
     setDepartment(departmentName);
 
      // Define accessible categories based on role
-    const allowedCategories = designation === "Supervisor" ? ['Policies', 'Forms Format', 'Work Instructions', 'SOP']
+    const allowedCategories = (designation === "Supervisor" || designation === "Admin" )? ['Policies', 'Forms Format', 'Work Instructions', 'SOP']
      :['Work Instructions', 'SOP'] ;
 
       
@@ -44,22 +49,41 @@ function FileUpload() {
 
   useEffect(() => {
     const fetchDocuments = async () => {
-      const response = await axios.get('http://localhost:8080/documents');
-      setDocuments(response.data);
-
+      try{
+        const role = localStorage.getItem("designation");
+        const endpoint = role === "Admin" ? "/documents" : `/documents/department`;
+        const response = await axios.get(`http://localhost:8080${endpoint}`,{
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
+        setDocuments(response.data);
+      }catch(err){
+        console.error('Error fetching documents', err);
+        setMessage(`Error fetching documents: ${err.message}`);
+      }
     };
     fetchDocuments();
-  }, []);
+  },[]);
   
+  console.log( documents);
   
 // Filter the documents based on the both category and department
 const filteredDocument = documents.filter((doc) => {
-  return  doc.department === department && accessibleCategories.includes(doc.category) &&
+  console.log("documents", doc);
+  
+  if (userRole === "Admin") {
+    return  doc.department === department && accessibleCategories.includes(doc.category) &&
     (!selectedCategory || doc.category === selectedCategory);
+  }else{
+    
+    return  doc.department === department && accessibleCategories.includes(doc.category) &&
+      (!selectedCategory || doc.category === selectedCategory);
+  }
 });
 // console.log(documents);
 
-// console.log(filteredDocument);
+console.log("filteredDocument:",filteredDocument);
 // console.log(selectedCategory);
 
 
@@ -72,7 +96,7 @@ const filteredDocument = documents.filter((doc) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!files || !fileVersion || !category ) {
+    if (!files || !fileVersion || !fileNumber || !category || (!targetDepartment && userRole === "Admin") ) {
       setMessage('Please fill in all fields and select a file');
       return;
     }
@@ -80,9 +104,9 @@ const filteredDocument = documents.filter((doc) => {
     const formData = new FormData();
     files.forEach((file) => {
       formData.append('file', file);
-      formData.append('filename', filename); // Use file name from the file itself
+      formData.append('filename', fileName); // Use file name from the file itself
       formData.append('fileVersion', fileVersion);
-      // formData.append('filetype', filetype);
+      formData.append('fileNo', fileNumber);
       formData.append('category', category);
       formData.append('department', department);
     });
@@ -100,7 +124,12 @@ const filteredDocument = documents.filter((doc) => {
         // addRecentFiles({ name: filename, timestamp: new Date() });
 
         // Fetch updated documents list
-        const updatedDocuments = await axios.get('http://localhost:8080/documents');
+        const updatedDocuments = await axios.get('http://localhost:8080/documents/department', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
+
         setDocuments(updatedDocuments.data);
         // console.log(documents);
         
@@ -108,6 +137,7 @@ const filteredDocument = documents.filter((doc) => {
         setFiles([]); // Clear files after upload
         setFileName('');
         setFileVersion('');
+        setFileNumber('');
         setCategory('')
       } else {
         setMessage('File upload failed');
@@ -120,12 +150,18 @@ const filteredDocument = documents.filter((doc) => {
 
   // Delete file
   const handleDelete = async (docId) => {
+    const confirmation = window.confirm('Are you sure you want to delete this document?');
+    if(!confirmation){
+      return;
+    }
     try {
       const response = await axios.delete(`http://localhost:8080/documents/${docId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('authToken')}`,
         },
       });
+      
+
       if (response.status === 200) {
         setDocuments((prevDocs) => prevDocs.filter((doc) => doc._id !== docId));
         setMessage('Document deleted successfully');
@@ -156,7 +192,7 @@ const handleShowuploadbutton = ()=>{
       <div style={{ display: 'flex' }}>
 
        <div className='form'>
-       {userRole === "Supervisor" && (
+       {(userRole === "Supervisor" || userRole === "Admin") && (
         <button
         className='btn btn-primary form_btn'
         onClick={handleShowuploadbutton}
@@ -165,7 +201,7 @@ const handleShowuploadbutton = ()=>{
         </button>
        )}
 
-      {showUploadForm && userRole === "Supervisor" ? (
+      {showUploadForm && (userRole === "Supervisor" || userRole === "Admin") ? (
         <form className='form_form'
           onSubmit={handleSubmit}
         >
@@ -180,7 +216,7 @@ const handleShowuploadbutton = ()=>{
 
           <div className="form-group">
             <label>File Name:</label>
-            <input className="form-control border border-black" type="text" value={filename} 
+            <input className="form-control border border-black" type="text" value={fileName} 
             onChange={(e) => setFileName(e.target.value)} readOnly />
           </div>
 
@@ -194,6 +230,18 @@ const handleShowuploadbutton = ()=>{
               placeholder="e.g. v1.0"
               required
             />
+          </div>
+          <div className="form-group">
+            <label>File Number:</label>
+            <input
+              className="form-control border border-black"
+              type="text"
+              value={fileNumber}
+              onChange={(e) => setFileNumber(e.target.value)}
+              placeholder="e.g.  AB-123 or 123"
+              required
+            />
+          </div>
              <div className="form-group">
             <label>File Categories:</label>
              <select
@@ -207,7 +255,7 @@ const handleShowuploadbutton = ()=>{
                ))}
              </select>
            </div> 
-          </div>
+          
           <button className="btn btn-primary form_btn_upload" type="submit">Upload</button>
         </form> 
 
@@ -227,26 +275,26 @@ const handleShowuploadbutton = ()=>{
   <div className="container-fluid cat-2">
     {/* <h6>Select Category:</h6> */}
     <ul className=" cat-ul">
-      {userRole === "Supervisor" && (
+      {(userRole === "Supervisor" || userRole === "Admin") && (
         <li className="nav-item cat-list ">
-          <a
-            href="#"
+          <button
             className={`nav-link ${selectedCategory === "" ? "active" : ""}`}
             onClick={() => handleCategoryChange({ target: { value: "" } })}
+            // role='button' //  Indicates that this anchor behaves like a button
           >
             All Categories
-          </a>
+          </button>
         </li>
       )}
       {accessibleCategories.map((category) => (
         <li className="nav-item cat-list" key={category}>
-          <a
-            href="#"
+          <button
+            // href="#"
             className={`nav-link ${selectedCategory === category ? "active" : ""}`}
             onClick={() => handleCategoryChange({ target: { value: category } })}
           >
             {category}
-          </a>
+          </button>
         </li>
       ))}
     </ul>

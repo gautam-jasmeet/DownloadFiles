@@ -1,6 +1,6 @@
 import React from 'react'
 import DeptHeader from '../../shared/DeptHeader'
-import FileUpload from '../shared/FileUpload'
+import FileUpload from '../sharedDept/FileUpload'
 
 function StoreHP() {
   return (

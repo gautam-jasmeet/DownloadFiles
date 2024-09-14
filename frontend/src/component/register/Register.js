@@ -3,42 +3,42 @@ import { useNavigate } from 'react-router-dom'
 import axios from "axios";
 
 function Register() {
-  const [formData, setFormData] = useState({
-    name:"",
-    employeeID:"",
-    department:"",
-    designation:"",
-    password:"",
-    shift:"",
-  })
+  const [name, setName] = useState('');
+  const [employeeID, setEmployeeId] = useState('');
+  const [department, setDepartment] = useState('');
+  const [designation, setDesignation] = useState('');
+  const [password, setPassword] = useState('');
+  const [shift, setShift] = useState('');
+
+  const [success, setSuccess] = useState("");
+  const [error,setError] = useState("")
+
 
   const navigate = useNavigate();
 
-// const [loading, setLoading] = useState(false);
-const [success, setSuccess] = useState("");
-const [error,setError] = useState("")
 
-  const departments =["Admin","HR","Store","Finance","Marketing","BPO"]
-  const designations = ["Supervisor","Worker"]
+  const departments =["Admin","HR","Store","Production","Machine","Maintance","SOP|WI","Logistics",
+    "Quality","Calibration","FQC","IQC","IPQC","EHS"]
+  const designations = ["Admin","Supervisor","Worker"]
   const shifts = ["A","B"]
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+ 
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    // console.log('Form Data Submitted:', formData);
-    
-    // setLoading(true);
-    // setError(null);
+  //  console.log(name,employeeID,department,designation,password,shift);
+   
     
     try{
       
-      const resposne = await axios.post('http://localhost:8080/signup',formData);
+      const resposne = await axios.post('http://localhost:8080/signup',{
+        name,
+        employeeID,
+        department,
+        designation,
+        password,
+        shift
+      });
       // console.log(resposne);
       // console.log(resposne.data);
       
@@ -49,14 +49,6 @@ const [error,setError] = useState("")
         setError("");
         navigate("/");
       }
-      // setFormData({
-      //   name:"",
-      //   employeeId:"",
-      //   department:"",
-      //   designation:"",
-      //   password:"",
-      //   shift:"",
-      // });
 
     }catch(err){
       setError("Signup failed. Please try again.")
@@ -78,8 +70,8 @@ const [error,setError] = useState("")
           type="text"
           className="form-control border border-black"
           name="name"
-          value={formData.name}
-          onChange={handleChange}
+          value={name}
+          onChange={(e)=>setName(e.target.value)}
           required
           
         />
@@ -91,8 +83,8 @@ const [error,setError] = useState("")
           type="number"
           className="form-control border border-black"
           name="employeeID"
-          value={formData.employeeID}
-          onChange={handleChange}
+          value={employeeID}
+          onChange={(e)=>setEmployeeId(e.target.value)}
           required
          
         />
@@ -103,8 +95,8 @@ const [error,setError] = useState("")
         <select
           className="form-control border border-black"
           name="department"
-          value={formData.department}
-          onChange={handleChange}
+          value={department}
+          onChange={(e)=>setDepartment(e.target.value)}
           required
          
         >
@@ -122,8 +114,8 @@ const [error,setError] = useState("")
         <select
           className="form-control border border-black"
           name="designation"
-          value={formData.designation}
-          onChange={handleChange}
+          value={designation}
+          onChange={(e)=>setDesignation(e.target.value)}
           required
           
         >
@@ -142,8 +134,8 @@ const [error,setError] = useState("")
           type="password"
           className="form-control border border-black"
           name="password"
-          value={formData.password}
-          onChange={handleChange}
+          value={password}
+          onChange={(e)=>setPassword(e.target.value)}
           required
           
         />
@@ -154,8 +146,8 @@ const [error,setError] = useState("")
         <select
           className="form-control border border-black"
           name="shift"
-          value={formData.shift}
-          onChange={handleChange}
+          value={shift}
+          onChange={(e)=>setShift(e.target.value)}
           required
          
         >

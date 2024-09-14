@@ -12,19 +12,40 @@ import Logout from "./component/logout/Logout";
 
 
 function App() {
+  const depart = localStorage.getItem("department");
+  const  role = localStorage.getItem("designation");
+  console.log(role);
+  
   return (
     <>
     <Router>
       <Header/>
+
     <Routes>
-    <Route path='/Admin' element={<Dashboard/>}></Route>
-    <Route path='/HR' element={<HrHomePage/>}></Route>
-    <Route path='/it' element={<ItHomePage/>}></Route>
-    <Route path='/Marketing' element={<MarketingHP/>}></Route>
-    <Route path='/Store' element={<StoreHP/>}></Route>
+
     <Route path='/signup' element={<Register/>}></Route>
     <Route path='/' element={<Login/>}></Route>
     <Route path='/logout' element={<Logout/>}></Route>
+
+     {/* Admin Access */}
+     {role === "Admin" && (
+      <>
+       <Route path='/Admin' element={<Dashboard/>}></Route>
+       <Route path='/HR' element={<HrHomePage/>}></Route>
+       <Route path='/Store' element={<StoreHP/>}></Route>
+      </>
+     )}
+
+     {/* Department Access */}
+     {depart === "HR" && (
+       <Route path='/HR' element={<HrHomePage/>}></Route>
+     )}
+    
+    {depart === "Store" && (
+
+    <Route path='/Store' element={<StoreHP/>}></Route>
+    )}
+   
     </Routes>
     </Router>
     

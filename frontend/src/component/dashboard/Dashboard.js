@@ -1,18 +1,16 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import Sidebar from './Sidebar';
-import RecentFilesContext from '../../context/RecentFilesContext';
-import RecentFiles from './RecentFiles';
-import ViewFiles from './ViewFiles';
+// import RecentFiles from './RecentFiles';
+
 
 function Dashboard() {
-  // const {recentFiles} = useContext(RecentFilesContext);
   return (
     <div style={{display:"flex"}}>
-      <div>
+      <div >
         <Sidebar />
         </div>
       <div style={{marginLeft:"50px", padding:"10px", height:"100%", width:"100%" }}>
-        <RecentFiles />
+        {/* <RecentFiles /> */}
       </div>
      
           </div>

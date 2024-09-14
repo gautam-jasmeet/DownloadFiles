@@ -15,12 +15,13 @@ const Header = () => {
   </li>
   </ul>
       <ul className="nav justify-content-end">
-  {/* <li className="nav-item">
+   {/* <li className="nav-item">
     <NavLink className="nav-link" to="/signup">SignUp</NavLink>
-  </li> */}
-  {/* <li className="nav-item">
-    <NavLink className="nav-link" to="/"  style={{color:"var(--light-color)", fontWeight:"500"}}>Login</NavLink>
-  </li> */}
+  </li>  */}
+  <li className="nav-item">
+    {/* <NavLink className="nav-link" to="/"  style={{color:"var(--light-color)", fontWeight:"500"}}>Logout</NavLink> */}
+    <NavLink to={"/signup"} >Signup</NavLink> 
+  </li> 
  
 </ul>
 </nav>

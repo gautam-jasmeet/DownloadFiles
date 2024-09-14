@@ -6,7 +6,7 @@ import './sidebar.css'
 function Sidebar() {
   return (
     <div className='sidebar'>
-      <h3>Admin Dashboard</h3>
+      <h3 className='title'>Admin Dashboard</h3>
       <ul>
         <li>
           <NavLink to={"/Admin"}>Dashboard</NavLink>
@@ -27,7 +27,7 @@ function Sidebar() {
           <NavLink to={"/Mentainance"}>Mentainance</NavLink>
         </li>
         <li>
-          <NavLink to={"/SOP"}>SOP | WI</NavLink>
+          <NavLink to={"/SOP|WI"}>SOP | WI</NavLink>
         </li>
         <li>
           <NavLink to={"/Logistic"}>Logistic</NavLink>
@@ -42,8 +42,18 @@ function Sidebar() {
           <NavLink to={"/Quality"}>Quality</NavLink>
         </li>
         <li>
+          <NavLink to={"/FOC"}>FOC</NavLink>
+        </li>
+        <li>
+          <NavLink to={"/IOC"}>IOC</NavLink>
+        </li>
+        <li>
+          <NavLink to={"/IPOC"}>IPOC</NavLink>
+        </li>
+        <li>
           <NavLink to={"/signup"}>Sign Up</NavLink>
         </li>
+        
       <li className="nav-item">
     <NavLink className="nav-link" to="/">Logout</NavLink>
   </li>

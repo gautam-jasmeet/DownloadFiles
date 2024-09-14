@@ -1,6 +1,6 @@
 import React from 'react'
 
-import FileUpload from '../shared/FileUpload'
+import FileUpload from '../sharedDept/FileUpload'
 import DeptHeader from '../../shared/DeptHeader'
 
 function HrHomePage() {
