@@ -17,7 +17,7 @@ function Register() {
   const navigate = useNavigate();
 
 
-  const departments =["Admin","HR","Store","Production","Machine","Maintance","SOP|WI","Logistics",
+  const departments =["HR","Store","Production","Machine","Maintance","SOP|WI","Logistics",
     "Quality","Calibration","FQC","IQC","IPQC","EHS"]
   const designations = ["Admin","Supervisor","Worker"]
   const shifts = ["A","B"]
