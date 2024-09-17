@@ -30,7 +30,7 @@ function Login() {
     console.log('Password:', password);
 
     try {
-      const response = await axios.post('http://localhost:8080/login', {
+      const response = await axios.post('http://localhost:8080/auth/login', {
         employeeID,
         password,
       });
@@ -42,6 +42,7 @@ function Login() {
         localStorage.setItem('department', department);
 
        // Redirecting  based on the role 
+       console.log('Navigating to:', designation === "Admin" ? '/Admin' : `/${department}`);
        if(designation === "Admin"){
         navigate('/Admin');
        }else{

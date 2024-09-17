@@ -12,43 +12,43 @@ function Sidebar() {
           <NavLink to={"/Admin"}>Dashboard</NavLink>
         </li>
         <li>
-          <NavLink to={"/HR"}>HR</NavLink>
+          <NavLink to={"/Admin/HR"}>HR</NavLink>
         </li>
         <li>
-          <NavLink to={"/Store"}>Store</NavLink>
+          <NavLink to={"/Admin/Store"}>Store</NavLink>
         </li>
         <li>
-          <NavLink to={"/Production"}>Production</NavLink>
+          <NavLink to={"/Admin/Production"}>Production</NavLink>
         </li>
         <li>
-          <NavLink to={"/Machine"}>Machine</NavLink>
+          <NavLink to={"/Admin/Machine"}>Machine</NavLink>
         </li>
         <li>
           <NavLink to={"/Mentainance"}>Mentainance</NavLink>
         </li>
         <li>
-          <NavLink to={"/SOP|WI"}>SOP | WI</NavLink>
+          <NavLink to={"/Admin/SOP|WI"}>SOP|WI</NavLink>
         </li>
         <li>
-          <NavLink to={"/Logistic"}>Logistic</NavLink>
+          <NavLink to={"/Admin/Logistics"}>Logistic</NavLink>
         </li>
         <li>
-          <NavLink to={"/Calibration"}>Calibration</NavLink>
+          <NavLink to={"/Admin/Calibration"}>Calibration</NavLink>
         </li>
         <li>
-          <NavLink to={"/EHS"}>EHS</NavLink>
+          <NavLink to={"/Admin/EHS"}>EHS</NavLink>
         </li>
         <li>
-          <NavLink to={"/Quality"}>Quality</NavLink>
+          <NavLink to={"/Admin/Quality"}>Quality</NavLink>
         </li>
         <li>
-          <NavLink to={"/FOC"}>FOC</NavLink>
+          <NavLink to={"/Admin/FQC"}>FQC</NavLink>
         </li>
         <li>
-          <NavLink to={"/IOC"}>IOC</NavLink>
+          <NavLink to={"/Admin/IQC"}>IQC</NavLink>
         </li>
         <li>
-          <NavLink to={"/IPOC"}>IPOC</NavLink>
+          <NavLink to={"/Admin/IPQC"}>IPQC</NavLink>
         </li>
         <li>
           <NavLink to={"/signup"}>Sign Up</NavLink>

@@ -31,7 +31,7 @@ function Register() {
     
     try{
       
-      const resposne = await axios.post('http://localhost:8080/signup',{
+      const resposne = await axios.post('http://localhost:8080/auth/signup',{
         name,
         employeeID,
         department,
@@ -40,7 +40,7 @@ function Register() {
         shift
       });
       // console.log(resposne);
-      // console.log(resposne.data);
+      console.log(resposne.data);
       
       
       if(resposne.status === 201){

@@ -5,7 +5,7 @@ import "./ViewFiles.css"
 function ViewFiles({file}) {
     const handleViewFile = (file) => {
     
-        const fileURL = `http://localhost:8080${file.fileUrl}`; // Ensure full path
+        const fileURL = `http://localhost:8080/${file.fileUrl}`; // Ensure full path
       const fileExtension = file.filename.split('.').pop().toLowerCase();
       
       // console.log(fileURL);

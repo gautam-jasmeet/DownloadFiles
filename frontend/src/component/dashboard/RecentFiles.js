@@ -4,16 +4,27 @@ import ViewFiles from './ViewFiles'
 import "./ViewFiles.css"
 
 function RecentFiles() {
-    const [recentFiles, setRecentFiles] = useState([])
+    const [recentFiles, setRecentFiles] = useState([]);
+    const [ message, setMessage ] = useState('');
     // const [status, setStatus] = useState('')
 
     useEffect(()=>{
         const fetchRecentFiles = async () => {
             try{
-            const response = await axios.get("http://localhost:8080/recent-files")
-            // console.log(response.data);
+            const response = await axios.get("http://localhost:8080/documents/",{
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+                },
+            })
+            console.log(response.data);
+             // Check if response.data is an array before setting it
+        if (Array.isArray(response.data)) {
+          setRecentFiles(response.data);  
+        } else {
+            setRecentFiles([]); // Fallback if it's not an array
+          }
             
-            setRecentFiles(response.data)
+            // setRecentFiles(response.data)
         }
     catch(err){
         console.error('Error fetching recent files', err);
@@ -28,22 +39,26 @@ fetchRecentFiles()
 
     const changeDocumentStatus = async (documentId, status) => {
       try{
-        const response = await axios.put(`http://localhost:8080/documents/${documentId}`, {status: status})
-        // console.log(response.data);
+        const response = await axios.put(`http://localhost:8080/documents/${documentId}`, {status: status},{
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        })
+        console.log(response.data);
 
         if(response.status === 200){
-          console.log("Document status updated successfully");
+          setMessage("Document status updated successfully");
           //   Updating the status in the local state to reflect it in the UI
           const updatedFiles = recentFiles.map((file)=>
 
-            file._id === documentId ? {...file,status:status} : file
+            file.id === documentId ? {...file,status:status} : file
         )
         setRecentFiles(updatedFiles)
           
         }
           
     }catch(err){
-        console.error('Error updating document status', err);
+        setMessage('Error updating document status', err);
     }
 
   }
@@ -61,12 +76,13 @@ fetchRecentFiles()
     <div>
          <div>
       <h3
-      style={{fontSize:"1.7rem", fontWeight:"bold", color:"#333", marginBottom:"10px"}}
+      style={{fontSize:"1.7rem", fontWeight:"bold", color:"#333",
+         marginBottom:"10px", position:"sticky", top:"4rem", zIndex:"999"}}
       >Recently Added Files :</h3>
       <ul className="list-group" >
         {recentFiles.map(file => (
-          <li key={file._id}  style={{ marginTop: '20px', }}>
-             <div className="card w-50" style={{ border: '1px solid var(--primary-color)',
+          <li key={file.id}  style={{ marginTop: '20px', }}>
+             <div className="card w-75" style={{ border: '1px solid var(--primary-color)',
              borderRadius: '15px',boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
               backgroundColor:"f9f9f9"  }}>
              <div className="card-body" style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -88,11 +104,12 @@ fetchRecentFiles()
             <label><b>Status: </b></label>
             {file.status === "Approved" || file.status === "Rejected" ? (<span> {file.status}</span>) : (
               <div style={{ display: 'flex' }}>
-              <button className="btn btn-primary  card_btn" onClick={() => handleApprove(file._id)}>Approve</button>
-           <button className="btn btn-primary  card_btn" onClick={() => handleReject(file._id)}>Rejected</button>
+              <button className="btn btn-primary  card_btn" onClick={() => handleApprove(file.id)}>Approve</button>
+           <button className="btn btn-primary  card_btn" onClick={() => handleReject(file.id)}>Rejected</button>
            <ViewFiles file={file} />
            </div>
             )}
+            {message && <p>{message}</p>}
           </div>
           </div>
           </div>

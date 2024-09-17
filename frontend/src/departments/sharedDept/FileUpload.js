@@ -21,23 +21,20 @@ function FileUpload() {
  const [accessibleCategories, setAccessibleCategories] = useState([]);
  const [department, setDepartment] = useState("");
 
- const [targetDepartment, setTargetDepartment] = useState(""); // Holds the department selected for upload (for Admin)
-
 
  const [showUploadForm, setShowUploadForm] = useState(false);
 
- const departmentList = ["HR", "IT", "BPO", "Store"]; // Add all available departments
 
   useEffect(()=>{
     const designation = localStorage.getItem("designation");
     const departmentName = localStorage.getItem("department");
     // console.log(departmentName);
-    console.log(designation);
+    // console.log(designation);
     setUserRole(designation);
     setDepartment(departmentName);
 
      // Define accessible categories based on role
-    const allowedCategories = (designation === "Supervisor" || designation === "Admin" )? ['Policies', 'Forms Format', 'Work Instructions', 'SOP']
+    const allowedCategories = designation === "Supervisor" ? ['Policies', 'Form Format', 'Work Instructions', 'SOP']
      :['Work Instructions', 'SOP'] ;
 
       
@@ -50,9 +47,7 @@ function FileUpload() {
   useEffect(() => {
     const fetchDocuments = async () => {
       try{
-        const role = localStorage.getItem("designation");
-        const endpoint = role === "Admin" ? "/documents" : `/documents/department`;
-        const response = await axios.get(`http://localhost:8080${endpoint}`,{
+        const response = await axios.get(`http://localhost:8080/documents/department`,{
           headers: {
             Authorization: `Bearer ${localStorage.getItem('authToken')}`,
           },
@@ -66,24 +61,18 @@ function FileUpload() {
     fetchDocuments();
   },[]);
   
-  console.log( documents);
+  // console.log( documents);
   
 // Filter the documents based on the both category and department
 const filteredDocument = documents.filter((doc) => {
-  console.log("documents", doc);
-  
-  if (userRole === "Admin") {
-    return  doc.department === department && accessibleCategories.includes(doc.category) &&
-    (!selectedCategory || doc.category === selectedCategory);
-  }else{
-    
+  // console.log("documents", doc);
+  if (documents.length > 0) {
     return  doc.department === department && accessibleCategories.includes(doc.category) &&
       (!selectedCategory || doc.category === selectedCategory);
   }
 });
-// console.log(documents);
 
-console.log("filteredDocument:",filteredDocument);
+// console.log("filteredDocument:",filteredDocument);
 // console.log(selectedCategory);
 
 
@@ -96,7 +85,7 @@ console.log("filteredDocument:",filteredDocument);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!files || !fileVersion || !fileNumber || !category || (!targetDepartment && userRole === "Admin") ) {
+    if (!files || !fileVersion || !fileNumber || !category || !department ) {
       setMessage('Please fill in all fields and select a file');
       return;
     }
@@ -112,7 +101,7 @@ console.log("filteredDocument:",filteredDocument);
     });
 
     try {
-      const response = await axios.post('http://localhost:8080/upload', formData, {
+      const response = await axios.post('http://localhost:8080/documents/upload', formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('authToken')}`,
           'Content-Type': 'multipart/form-data', // Ensure content type is set correctly
@@ -163,7 +152,8 @@ console.log("filteredDocument:",filteredDocument);
       
 
       if (response.status === 200) {
-        setDocuments((prevDocs) => prevDocs.filter((doc) => doc._id !== docId));
+         // Filter out the deleted document immediately in the state
+        setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id !== docId));
         setMessage('Document deleted successfully');
       } else {
         setMessage('Failed to delete document');
@@ -192,7 +182,7 @@ const handleShowuploadbutton = ()=>{
       <div style={{ display: 'flex' }}>
 
        <div className='form'>
-       {(userRole === "Supervisor" || userRole === "Admin") && (
+       {userRole === "Supervisor" && (
         <button
         className='btn btn-primary form_btn'
         onClick={handleShowuploadbutton}
@@ -201,7 +191,7 @@ const handleShowuploadbutton = ()=>{
         </button>
        )}
 
-      {showUploadForm && (userRole === "Supervisor" || userRole === "Admin") ? (
+      {showUploadForm && userRole === "Supervisor" ? (
         <form className='form_form'
           onSubmit={handleSubmit}
         >
@@ -275,8 +265,8 @@ const handleShowuploadbutton = ()=>{
   <div className="container-fluid cat-2">
     {/* <h6>Select Category:</h6> */}
     <ul className=" cat-ul">
-      {(userRole === "Supervisor" || userRole === "Admin") && (
-        <li className="nav-item cat-list ">
+      {(userRole === "Supervisor") && (
+        <li className="nav-item cat-list "  key="all-categories">
           <button
             className={`nav-link ${selectedCategory === "" ? "active" : ""}`}
             onClick={() => handleCategoryChange({ target: { value: "" } })}
@@ -311,7 +301,7 @@ const handleShowuploadbutton = ()=>{
             <p className='cat_ol-1'>No files available for the selected category.</p>
           ) : (   
             filteredDocument.map((file) => (
-              <li className='cat_ol-2' key={file._id} style={{ margin: '10px' }}>
+              <li className='cat_ol-2' key={file.id} style={{ margin: '10px' }}>
                 <div className="card w-50 cat_ol-3" >
                   <div className="card-body cat_ol-4" style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div>
@@ -325,7 +315,7 @@ const handleShowuploadbutton = ()=>{
                         
                       
                       <button className="btn btn-primary card_btn"
-                       onClick={() => handleDelete(file._id)}>
+                       onClick={() => handleDelete(file.id)}>
                         Delete
                       </button>
                       ): (
