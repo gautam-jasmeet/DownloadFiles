@@ -24,7 +24,7 @@ function Sidebar() {
           <NavLink to={"/Admin/Machine"}>Machine</NavLink>
         </li>
         <li>
-          <NavLink to={"/Mentainance"}>Mentainance</NavLink>
+          <NavLink to={"/Admin/Maintance"}>Maintance</NavLink>
         </li>
         <li>
           <NavLink to={"/Admin/SOP|WI"}>SOP|WI</NavLink>

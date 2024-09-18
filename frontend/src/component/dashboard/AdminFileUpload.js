@@ -14,7 +14,7 @@ function AdminFileUpload() {
     const [showUploadForm, setShowUploadForm] = useState(false);
 
     const accessibleCategories = ['Policies', 'Form Format', 'Work Instructions', 'SOP'];
-    const accessibleDepartments = ['Store', 'HR', 'Production', 'Machine', 'Maintenance', 'SOP|WI', 
+    const accessibleDepartments = ['Store', 'HR', 'Production', 'Machine', 'Maintance', 'SOP|WI', 
         'Logistics', 'Quality', 'Calibration', 'FQC', 'IQC', 'IPQC', 'EHS'];
 
 

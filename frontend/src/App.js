@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import "./App.css";
 import Header from "./shared/Header";
 import Dashboard from "./component/dashboard/Dashboard";
 import HrHomePage from "./departments/hrDpartment/HrHomePage";
@@ -20,12 +21,14 @@ import QualityHP from "./departments/Quality/QualityHP";
 import FocHP from "./departments/FOC/FocHP";
 import IocHP from "./departments/IOC/IocHP";
 import IpocHP from "./departments/IPOC/IpocHP";
+import Footer from "./shared/Footer";
 
 
 
 function App() {
   const depart = localStorage.getItem("department");
   const  role = localStorage.getItem("designation");
+
   // console.log(role);
   
   return (
@@ -92,7 +95,8 @@ function App() {
    
     {/* Default route */}
     {/* <Route path="*" element={<NotFound />} /> */}
-    </Routes>
+    </Routes >
+    {/* <Footer /> */}
     </Router>
     
   );

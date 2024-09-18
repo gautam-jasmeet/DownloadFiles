@@ -1,6 +1,7 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {NavLink} from "react-router-dom"
+import GSolarLogo from "../images/GSolarLogo.png"
 import  "../App.css"
 
 
@@ -11,7 +12,11 @@ const Header = () => {
       <nav className="navbar " style={{backgroundColor: 'var(--main-header-color)' }} data-bs-theme="dark">  
       <ul className="nav">
   <li className="nav-item">
-    <NavLink className="nav-link active " aria-current="page" to="/" style={{color:"var(--light-color)",fontWeight:"500"}}>Home Page</NavLink>
+    <NavLink className="nav-link active " aria-current="page" to="/" 
+    style={{ color:"var(--light-color)",fontWeight:"500"}}>
+      <img src={GSolarLogo} alt='Gautam Solar Logo' width={"15%"} 
+       />
+    </NavLink>
   </li>
   </ul>
       <ul className="nav justify-content-end">

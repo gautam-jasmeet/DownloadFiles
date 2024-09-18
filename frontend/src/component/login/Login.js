@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../dashboard/ViewFiles.css';
+import Footer from '../../shared/Footer';
 
 function Login() {
   const [employeeID, setEmployeeID] = useState('');
@@ -41,6 +42,10 @@ function Login() {
         localStorage.setItem('designation', designation);
         localStorage.setItem('department', department);
 
+        console.log('Response:', response.data);
+        console.log("Department:", department);
+        
+
        // Redirecting  based on the role 
        console.log('Navigating to:', designation === "Admin" ? '/Admin' : `/${department}`);
        if(designation === "Admin"){
@@ -63,7 +68,10 @@ function Login() {
   };
 
   return (
-    <div className="container mt-5 w-25 p-3">
+    <div>
+
+    
+    <div className="container mt-5 w-25 p-3" >
       <h2>Login</h2>
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={handleSubmit}>
@@ -89,10 +97,12 @@ function Login() {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary mt-3" style={{ width: '25%' }}>
+        <button type="submit" className="btn btn-primary mt-3 card_btn" style={{ width: '25%' }}>
           Login
         </button>
       </form>
+    </div>
+    <Footer/>
     </div>
   );
 }
