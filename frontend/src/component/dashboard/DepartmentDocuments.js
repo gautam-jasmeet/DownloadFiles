@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import ViewFiles from '../dashboard/ViewFiles';  // Import your ViewFiles component
 import DeptHeader from '../../shared/DeptHeader';
+import { AppContext } from '../../appContext/AppContext';
 import  '../../departments/sharedDept/FileUpload.css'; // If you're using a custom header
 
 const DepartmentDocuments = () => {
@@ -12,6 +13,8 @@ const DepartmentDocuments = () => {
   const [message, setMessage] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const accessibleCategories = ['Policies', 'Form Format', 'Work Instructions', 'SOP']; // Admin's categories
+
+  const { token } = useContext(AppContext);
  
 
   // Fetch all documents for the selected department
@@ -20,7 +23,7 @@ const DepartmentDocuments = () => {
       try {
         const response = await axios.get(`http://localhost:8080/documents/`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+            Authorization: `Bearer ${token}`,
           },
         });
         setDocuments(response.data);
@@ -57,7 +60,7 @@ const DepartmentDocuments = () => {
     try {
       const response = await axios.delete(`http://localhost:8080/documents/${docId}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       

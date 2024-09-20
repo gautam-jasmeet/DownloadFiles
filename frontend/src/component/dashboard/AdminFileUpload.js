@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState,useContext } from 'react'
 import axios from 'axios';
+import { AppContext } from '../../appContext/AppContext';
 import "../../departments/sharedDept/FileUpload.css"
 
 
-function AdminFileUpload() {
+function AdminFileUpload({onFileUpload}) {
     const [files, setFiles] = useState([]);
     const [fileName, setFileName] = useState('');
     const [fileVersion, setFileVersion] = useState('');
@@ -16,6 +17,8 @@ function AdminFileUpload() {
     const accessibleCategories = ['Policies', 'Form Format', 'Work Instructions', 'SOP'];
     const accessibleDepartments = ['Store', 'HR', 'Production', 'Machine', 'Maintance', 'SOP|WI', 
         'Logistics', 'Quality', 'Calibration', 'FQC', 'IQC', 'IPQC', 'EHS'];
+
+    const { token } = useContext(AppContext);
 
 
     // Handle file upload
@@ -45,7 +48,7 @@ const handleOnChange = (e) => {
     try {
       const response = await axios.post('http://localhost:8080/documents/upload', formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data', // Ensure content type is set correctly
         },
       });
@@ -60,6 +63,12 @@ const handleOnChange = (e) => {
         setFileNumber('');
         setCategory('')
         setDepartmentName('');
+
+           // Trigger the onFileUpload callback to refresh the list
+           if (onFileUpload) {
+            onFileUpload();  // Notify the parent component about the file upload
+          }
+          
       } else {
         setMessage('File upload failed');
       }

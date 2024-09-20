@@ -1,25 +1,29 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState,useContext} from 'react'
 import axios from 'axios'
 import ViewFiles from './ViewFiles'
+import { AppContext } from '../../appContext/AppContext'
 import "./ViewFiles.css"
 
-function RecentFiles() {
+function RecentFiles({refresh}) {
     const [recentFiles, setRecentFiles] = useState([]);
     const [ message, setMessage ] = useState('');
     // const [status, setStatus] = useState('')
+
+    const {token} = useContext(AppContext)
 
     useEffect(()=>{
         const fetchRecentFiles = async () => {
             try{
             const response = await axios.get("http://localhost:8080/documents/",{
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+                    Authorization: `Bearer ${token}`,
                 },
             })
-            console.log(response.data);
+            // console.log(response.data);
              // Check if response.data is an array before setting it
         if (Array.isArray(response.data)) {
-          setRecentFiles(response.data);  
+          setRecentFiles(response.data.reverse());  
+          // console.log(recentFiles);
         } else {
             setRecentFiles([]); // Fallback if it's not an array
           }
@@ -27,32 +31,35 @@ function RecentFiles() {
             // setRecentFiles(response.data)
         }
     catch(err){
-        console.error('Error fetching recent files', err);
+        setMessage('Error fetching recent files', err);
     }
 }
 fetchRecentFiles()
 
-    },[])
+    },[token,refresh])
 
     // console.log(recentFiles);
     
-
+// Changing the document status
     const changeDocumentStatus = async (documentId, status) => {
       try{
         const response = await axios.put(`http://localhost:8080/documents/${documentId}`, {status: status},{
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+            Authorization: `Bearer ${token}`,
           },
         })
-        console.log(response.data);
+        // console.log(response.data);
 
         if(response.status === 200){
           setMessage("Document status updated successfully");
           //   Updating the status in the local state to reflect it in the UI
-          const updatedFiles = recentFiles.map((file)=>
+          // const updatedFiles = recentFiles.map((file)=>
+          //   file.id === documentId ? {...file,status:status} : file )
 
-            file.id === documentId ? {...file,status:status} : file
-        )
+          //  // Filter out the updated file from the recent files list
+          const updatedFiles = recentFiles.filter((file)=>{
+              return file.id !== documentId;
+          })
         setRecentFiles(updatedFiles)
           
         }
@@ -80,7 +87,8 @@ fetchRecentFiles()
          marginBottom:"10px", position:"sticky", top:"4rem", zIndex:"999"}}
       >Recently Added Files :</h3>
       <ul className="list-group" >
-        {recentFiles.map(file => (
+        {recentFiles.filter((file)=>file.status !== "Approved" && file.status !== "Rejected")
+         .map(file => (
           <li key={file.id}  style={{ marginTop: '20px', }}>
              <div className="card w-75" style={{ border: '1px solid var(--primary-color)',
              borderRadius: '15px',boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
@@ -116,6 +124,7 @@ fetchRecentFiles()
           </li>
         ))}
       </ul>
+    
     </div>
     </div>
   )

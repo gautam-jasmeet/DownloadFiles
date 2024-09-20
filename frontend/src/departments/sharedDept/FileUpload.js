@@ -1,6 +1,7 @@
-import React, {  useEffect, useState } from 'react';
+import React, {  useEffect, useState,useContext } from 'react';
 import axios from 'axios';
 import ViewFiles from '../../component/dashboard/ViewFiles';
+import { AppContext } from '../../appContext/AppContext';
 
 import './FileUpload.css'
 
@@ -19,19 +20,21 @@ function FileUpload() {
 
   const [userRole, setUserRole] = useState("");
  const [accessibleCategories, setAccessibleCategories] = useState([]);
- const [department, setDepartment] = useState("");
+//  const [department, setDepartment] = useState("");
 
 
  const [showUploadForm, setShowUploadForm] = useState(false);
 
+ const {token, designation, department} = useContext(AppContext);
+
 
   useEffect(()=>{
-    const designation = localStorage.getItem("designation");
-    const departmentName = localStorage.getItem("department");
+    // const designation = localStorage.getItem("designation");
+    // const departmentName = localStorage.getItem("department");
     // console.log(departmentName);
     // console.log(designation);
     setUserRole(designation);
-    setDepartment(departmentName);
+    // setDepartment(department);
 
      // Define accessible categories based on role
     const allowedCategories = designation === "Supervisor" ? ['Policies', 'Form Format', 'Work Instructions', 'SOP']
@@ -49,7 +52,7 @@ function FileUpload() {
       try{
         const response = await axios.get(`http://localhost:8080/documents/department`,{
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+            Authorization: `Bearer ${token}`,
           },
         });
         setDocuments(response.data);
@@ -103,7 +106,7 @@ const filteredDocument = documents.filter((doc) => {
     try {
       const response = await axios.post('http://localhost:8080/documents/upload', formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          Authorization: `Bearer ${{token}}`,
           'Content-Type': 'multipart/form-data', // Ensure content type is set correctly
         },
       });
@@ -115,7 +118,7 @@ const filteredDocument = documents.filter((doc) => {
         // Fetch updated documents list
         const updatedDocuments = await axios.get('http://localhost:8080/documents/department', {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -146,7 +149,7 @@ const filteredDocument = documents.filter((doc) => {
     try {
       const response = await axios.delete(`http://localhost:8080/documents/${docId}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       

@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState , useContext} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../dashboard/ViewFiles.css';
 import Footer from '../../shared/Footer';
+import { AppContext } from '../../appContext/AppContext';
 
 function Login() {
   const [employeeID, setEmployeeID] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+
+  // Using the context to set token, department, and designation
+  const {setToken,setDesignation,setDepartment} = useContext(AppContext);
 
 
   // useEffect(()=>{
@@ -27,8 +32,8 @@ function Login() {
     e.preventDefault();
     setError('');
 
-    console.log('Employee ID:', employeeID);
-    console.log('Password:', password);
+    // console.log('Employee ID:', employeeID);
+    // console.log('Password:', password);
 
     try {
       const response = await axios.post('http://localhost:8080/auth/login', {
@@ -38,19 +43,23 @@ function Login() {
 
       if (response.status === 200) {
         const { token, department, designation } = response.data;
-        localStorage.setItem('authToken', token);
-        localStorage.setItem('designation', designation);
-        localStorage.setItem('department', department);
+        // localStorage.setItem('authToken', token);
+        // localStorage.setItem('designation', designation);
+        // localStorage.setItem('department', department);
+        // console.log('Response:', response.data);
+        // console.log("Department:", department);
 
-        console.log('Response:', response.data);
-        console.log("Department:", department);
+        // Setting the token, department, and designation in the context
+        setToken(token);
+        setDesignation(designation);
+        setDepartment(department);
         
-
        // Redirecting  based on the role 
-       console.log('Navigating to:', designation === "Admin" ? '/Admin' : `/${department}`);
+           // console.log('Navigating to:', designation === "Admin" ? '/Admin' : `/${department}`);
        if(designation === "Admin"){
         navigate('/Admin');
-       }else{
+       }
+       else{
         navigate(`/${department}`);
        }
         } else {

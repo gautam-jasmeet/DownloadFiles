@@ -1,3 +1,4 @@
+import { useContext} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import "./App.css";
 import Header from "./shared/Header";
@@ -22,15 +23,16 @@ import FocHP from "./departments/FOC/FocHP";
 import IocHP from "./departments/IOC/IocHP";
 import IpocHP from "./departments/IPOC/IpocHP";
 import Footer from "./shared/Footer";
+import { AppContext } from "./appContext/AppContext";
 
 
 
 function App() {
-  const depart = localStorage.getItem("department");
-  const  role = localStorage.getItem("designation");
-
-  // console.log(role);
+  const {department , designation} = useContext(AppContext);
   
+  // const department = localStorage.getItem("department");
+    // const  role = localStorage.getItem("designation");
+
   return (
     
     <Router>
@@ -43,7 +45,7 @@ function App() {
     <Route path='/logout' element={<Logout/>}></Route>
 
      {/* Admin Access */}
-     {role === "Admin" && (
+     {designation === "Admin" && (
       <>
        <Route path='/Admin' element={<Dashboard/>}></Route>
        <Route path="/Admin/:departmentName" element={<DepartmentDocuments />} />
@@ -51,45 +53,45 @@ function App() {
      )}
 
      {/* Department Access */}
-     {depart === "HR" && (
+     {department === "HR" && (
        <Route path='/HR' element={<HrHomePage/>}></Route>
      )}
     
-    {depart === "Store" && (
+    {department === "Store" && (
     <Route path='/Store' element={<StoreHP/>}></Route>
     )}
-    {depart === "Production" && (
+    {department === "Production" && (
     <Route path='/Production' element={<ProductionHP/>}></Route>
     )}
-    {depart === "Machine" && (
+    {department === "Machine" && (
     <Route path='/Machine' element={<MachineHP/>}></Route>
     )}
-    {depart === "Maintance" && (
+    {department === "Maintance" && (
     <Route path='/Maintance' element={<MentainanceHP/>}></Route>
     )}
-    {depart === "SOP|WI" && (
-    <Route path='/SOP|WI' element={<SopHP/>}></Route>
+    {department === "SOP|WI" && (
+    <Route path='/SOP-WI' element={<SopHP/>}></Route>
     )}
-    {depart === "Logistics" && (
+    {department === "Logistics" && (
     <Route path='/Logistics' element={<LogisticHP/>}></Route>
     )}
-    {depart === "Calibration" && (
+    {department === "Calibration" && (
     <Route path='/Calibration' element={<CalibrationHP/>}></Route>
     )}
-    {depart === "EHS" && (
+    {department === "EHS" && (
     <Route path='/EHS' element={<EhsHP/>}></Route>
     )}
-    {depart === "Quality" && (
+    {department === "Quality" && (
     <Route path='/Quality' element={<QualityHP/>}></Route>
     )}
-    {depart === "FQC" && (
+    {department === "FQC" && (
     <Route path='/FQC' element={<FocHP/>}></Route>
     )}
-    {depart === "IQC" && (
+    {department === "IQC" && (
     <Route path='/IQC' element={<IocHP/>}></Route>
     )}
    
-    {depart === "IPQC" && (
+    {department === "IPQC" && (
     <Route path='/IPQC' element={<IpocHP/>}></Route>
     )}
    
