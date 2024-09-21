@@ -61,7 +61,7 @@ function Register() {
 
   return (
     <div>
-    <div className="container mt-5 w-25 p-3">
+    <div className="container mt-3 w-25 p-3">
     <h2>Sign Up</h2>
     {error && <div className='alert alert-danger bs-danger'>{error}</div> }
     {success && <div className='alert alert-success'>{success}</div> }

@@ -110,7 +110,7 @@ const handleShowuploadbutton = ()=>{
           <div className="form-group">
             <label>File Name:</label>
             <input className="form-control border border-black" type="text" value={fileName} 
-            onChange={(e) => setFileName(e.target.value)} readOnly />
+            onChange={(e) => setFileName(e.target.value)} required />
           </div>
 
           <div className="form-group">

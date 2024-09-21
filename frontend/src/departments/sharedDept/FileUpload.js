@@ -29,12 +29,8 @@ function FileUpload() {
 
 
   useEffect(()=>{
-    // const designation = localStorage.getItem("designation");
-    // const departmentName = localStorage.getItem("department");
-    // console.log(departmentName);
-    // console.log(designation);
+   
     setUserRole(designation);
-    // setDepartment(department);
 
      // Define accessible categories based on role
     const allowedCategories = designation === "Supervisor" ? ['Policies', 'Form Format', 'Work Instructions', 'SOP']
@@ -42,7 +38,7 @@ function FileUpload() {
 
       
      setAccessibleCategories(allowedCategories)
-  },[])
+  },[designation])
 
 
   // console.log(accessibleCategories);
@@ -62,18 +58,37 @@ function FileUpload() {
       }
     };
     fetchDocuments();
-  },[]);
+  },[token]);
   
   // console.log( documents);
   
 // Filter the documents based on the both category and department
-const filteredDocument = documents.filter((doc) => {
-  // console.log("documents", doc);
-  if (documents.length > 0) {
-    return  doc.department === department && accessibleCategories.includes(doc.category) &&
-      (!selectedCategory || doc.category === selectedCategory);
+   const filteredDocument = documents.filter((doc) => {
+         // console.log("documents", doc);
+       if (documents.length > 0) {
+        // For Admin , allowing Pending files regardles who upload them
+        if(designation === "Admin"){
+          return doc.department === department && accessibleCategories.includes(doc.category) &&
+          (doc.status === "Approved" || doc.status === "Pending") &&
+          (!selectedCategory || doc.category === selectedCategory);
+        }
+
+        // For Supervisor, allow Pending files only if they were uploaded by the supervisor
+        if(designation === "Supervisor"){
+          return doc.department === department && accessibleCategories.includes(doc.category) &&
+                 (doc.status === "Approved" || (doc.designation === "Supervisor" && doc.status === "Pending")) &&
+                 (!selectedCategory || doc.category === selectedCategory);
+        }
+
+       // For Workers, exclude all Pending files
+       if(designation === "Worker"){
+        return doc.department === department && accessibleCategories.includes(doc.category) &&
+        (doc.status === "Approved") &&
+        (!selectedCategory || doc.category === selectedCategory);
+      }
   }
 });
+
 
 // console.log("filteredDocument:",filteredDocument);
 // console.log(selectedCategory);
@@ -106,7 +121,7 @@ const filteredDocument = documents.filter((doc) => {
     try {
       const response = await axios.post('http://localhost:8080/documents/upload', formData, {
         headers: {
-          Authorization: `Bearer ${{token}}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data', // Ensure content type is set correctly
         },
       });
@@ -141,31 +156,31 @@ const filteredDocument = documents.filter((doc) => {
   };
 
   // Delete file
-  const handleDelete = async (docId) => {
-    const confirmation = window.confirm('Are you sure you want to delete this document?');
-    if(!confirmation){
-      return;
-    }
-    try {
-      const response = await axios.delete(`http://localhost:8080/documents/${docId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+//   const handleDelete = async (docId) => {
+//     const confirmation = window.confirm('Are you sure you want to delete this document?');
+//     if(!confirmation){
+//       return;
+//     }
+//     try {
+//       const response = await axios.delete(`http://localhost:8080/documents/${docId}`, {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       });
       
 
-      if (response.status === 200) {
-         // Filter out the deleted document immediately in the state
-        setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id !== docId));
-        setMessage('Document deleted successfully');
-      } else {
-        setMessage('Failed to delete document');
-      }
-    } catch (err) {
-      console.error('Error deleting document:', err);
-      setMessage(`Failed to delete document: ${err.message}`);
-    }
-  };
+//       if (response.status === 200) {
+//          // Filter out the deleted document immediately in the state
+//         setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id !== docId));
+//         setMessage('Document deleted successfully');
+//       } else {
+//         setMessage('Failed to delete document');
+//       }
+//     } catch (err) {
+//       console.error('Error deleting document:', err);
+//       setMessage(`Failed to delete document: ${err.message}`);
+//     }
+//   };
 
 // To show files category wise
   const handleCategoryChange = (event) => {
@@ -183,7 +198,7 @@ const handleShowuploadbutton = ()=>{
     <>
     
       <div style={{ display: 'flex' }}>
-
+{/* Showing and hiding upload form */}
        <div className='form'>
        {userRole === "Supervisor" && (
         <button
@@ -198,9 +213,7 @@ const handleShowuploadbutton = ()=>{
         <form className='form_form'
           onSubmit={handleSubmit}
         >
-         
-
-         
+        
           <h5 className='form_h5'>File Upload</h5>
           <div className="form-group">
             <label>Select File:</label>
@@ -210,7 +223,7 @@ const handleShowuploadbutton = ()=>{
           <div className="form-group">
             <label>File Name:</label>
             <input className="form-control border border-black" type="text" value={fileName} 
-            onChange={(e) => setFileName(e.target.value)} readOnly />
+            onChange={(e) => setFileName(e.target.value)} required />
           </div>
 
           <div className="form-group">
@@ -262,6 +275,7 @@ const handleShowuploadbutton = ()=>{
           </div>
       </div>
 
+{/* Showing and hiding categories */}
             
         <div className='cat'>
         < div className="navbar cat-1" >
@@ -314,6 +328,7 @@ const handleShowuploadbutton = ()=>{
                       <p className="card-text cat_ol-7"><b>Status:</b> {file.status}</p>
                     </div>
                     <div >
+                    {/* 
                       {userRole === "Supervisor" ? (
                         
                       
@@ -324,7 +339,7 @@ const handleShowuploadbutton = ()=>{
                       ): (
                         <></>
                       )}
-                     
+                     */ }
                       
                       <ViewFiles className="btn card_btn"
                       file={file} />

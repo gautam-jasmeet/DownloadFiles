@@ -6,7 +6,7 @@ function ViewFiles({file}) {
     const handleViewFile = (file) => {
     
         const fileURL = `http://localhost:8080${file.fileUrl}`; // Ensure full path
-      const fileExtension = file.filename.split('.').pop().toLowerCase();
+      const fileExtension = file.fileUrl.split('.').pop().toLowerCase();
       
       // console.log(fileURL);
         // console.log(fileExtension);
@@ -38,7 +38,7 @@ function ViewFiles({file}) {
     <div>
  <button className="btn btn-primary card_btn "
  onClick={() => handleViewFile(file)}>
-                        View
+         View
      </button>
     </div>
   )

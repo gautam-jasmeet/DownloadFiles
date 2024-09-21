@@ -74,8 +74,34 @@ fetchRecentFiles()
     changeDocumentStatus(documentId, 'Approved')
   }
 
-  const handleReject = (documentId)=>{
-    changeDocumentStatus(documentId, 'Rejected')
+  const handleReject = async (documentId)=>{
+    // changeDocumentStatus(documentId, 'Rejected')
+   
+          const confirmation = window.confirm(`Are you sure you want to reject this document?
+             This will also delete the document from the server. Proceed?`);
+          if(!confirmation){
+            return;
+          }
+          try {
+            const response = await axios.delete(`http://localhost:8080/documents/${documentId}`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            
+      
+            if (response.status === 200) {
+               // Filter out the deleted document immediately in the state
+              setRecentFiles((prevDocs) => prevDocs.filter((doc) => doc.id !== documentId));
+              setMessage('Document deleted successfully');
+            } else {
+              setMessage('Failed to delete document');
+            }
+          } catch (err) {
+            console.error('Error deleting document:', err);
+            setMessage(`Failed to delete document: ${err.message}`);
+          }
+        
   }
 
 

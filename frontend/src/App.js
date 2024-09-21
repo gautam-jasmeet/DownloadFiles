@@ -27,6 +27,8 @@ import { AppContext } from "./appContext/AppContext";
 
 
 
+
+
 function App() {
   const {department , designation} = useContext(AppContext);
   
@@ -40,7 +42,7 @@ function App() {
 
     <Routes>
 
-    <Route path='/signup' element={<Register/>}></Route>
+    <Route path='/signup' element={<Register />}></Route>
     <Route path='/' element={<Login/>}></Route>
     <Route path='/logout' element={<Logout/>}></Route>
 
