@@ -113,6 +113,7 @@ fetchRecentFiles()
          marginBottom:"10px", position:"sticky", top:"4rem", zIndex:"999"}}
       >Recently Added Files :</h3>
       <ul className="list-group" >
+        {message && <p>{message}</p>}
         {recentFiles.filter((file)=>file.status !== "Approved" && file.status !== "Rejected")
          .map(file => (
           <li key={file.id}  style={{ marginTop: '20px', }}>
@@ -143,7 +144,6 @@ fetchRecentFiles()
            <ViewFiles file={file} />
            </div>
             )}
-            {message && <p>{message}</p>}
           </div>
           </div>
           </div>

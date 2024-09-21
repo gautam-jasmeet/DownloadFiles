@@ -156,31 +156,31 @@ function FileUpload() {
   };
 
   // Delete file
-//   const handleDelete = async (docId) => {
-//     const confirmation = window.confirm('Are you sure you want to delete this document?');
-//     if(!confirmation){
-//       return;
-//     }
-//     try {
-//       const response = await axios.delete(`http://localhost:8080/documents/${docId}`, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
+  const handleDelete = async (docId) => {
+    const confirmation = window.confirm('Are you sure you want to delete this document?');
+    if(!confirmation){
+      return;
+    }
+    try {
+      const response = await axios.delete(`http://localhost:8080/documents/${docId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       
 
-//       if (response.status === 200) {
-//          // Filter out the deleted document immediately in the state
-//         setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id !== docId));
-//         setMessage('Document deleted successfully');
-//       } else {
-//         setMessage('Failed to delete document');
-//       }
-//     } catch (err) {
-//       console.error('Error deleting document:', err);
-//       setMessage(`Failed to delete document: ${err.message}`);
-//     }
-//   };
+      if (response.status === 200) {
+         // Filter out the deleted document immediately in the state
+        setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id !== docId));
+        setMessage('Document deleted successfully');
+      } else {
+        setMessage('Failed to delete document');
+      }
+    } catch (err) {
+      console.error('Error deleting document:', err);
+      setMessage(`Failed to delete document: ${err.message}`);
+    }
+  };
 
 // To show files category wise
   const handleCategoryChange = (event) => {
@@ -328,8 +328,8 @@ const handleShowuploadbutton = ()=>{
                       <p className="card-text cat_ol-7"><b>Status:</b> {file.status}</p>
                     </div>
                     <div >
-                    {/* 
-                      {userRole === "Supervisor" ? (
+                     
+                      {(userRole === "Supervisor" && file.status === "Pending")? (
                         
                       
                       <button className="btn btn-primary card_btn"
@@ -339,7 +339,7 @@ const handleShowuploadbutton = ()=>{
                       ): (
                         <></>
                       )}
-                     */ }
+                     
                       
                       <ViewFiles className="btn card_btn"
                       file={file} />
