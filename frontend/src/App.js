@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import "./App.css";
 import Header from "./shared/Header";
 import Dashboard from "./component/dashboard/Dashboard";
-import HrHomePage from "./departments/hrDpartment/HrHomePage";
+
 // import ItHomePage from "./departments/it/ItHomePage";
 // import MarketingHP from "./departments/marketing/MarketingHP"; 
 import StoreHP from "./departments/storeDepartment/StoreHP";
@@ -24,6 +24,10 @@ import IocHP from "./departments/IOC/IocHP";
 import IpocHP from "./departments/IPOC/IpocHP";
 import Footer from "./shared/Footer";
 import { AppContext } from "./appContext/AppContext";
+import HrHomePage from "./departments/HrDepartment/HrDashboard/HrHomePage";
+import JoiningForm1 from "./departments/HrDepartment/JoiningForm/JoiningForm1";
+import JoiningForm2 from "./departments/HrDepartment/JoiningForm/JoiningForm2";
+
 
 
 
@@ -56,7 +60,11 @@ function App() {
 
      {/* Department Access */}
      {department === "HR" && (
+      <>
        <Route path='/HR' element={<HrHomePage/>}></Route>
+       <Route path="/HR/form1" element={<JoiningForm1/>}></Route>
+       <Route path="/HR/form2" element={<JoiningForm2/>}></Route>
+       </>
      )}
     
     {department === "Store" && (

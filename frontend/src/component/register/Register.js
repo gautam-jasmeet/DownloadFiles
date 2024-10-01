@@ -41,7 +41,7 @@ function Register() {
         shift
       });
       // console.log(resposne);
-      console.log(resposne.data);
+      // console.log(resposne.data);
       
       
       if(resposne.status === 201){

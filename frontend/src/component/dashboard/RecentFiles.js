@@ -140,7 +140,7 @@ fetchRecentFiles()
             {file.status === "Approved" || file.status === "Rejected" ? (<span> {file.status}</span>) : (
               <div style={{ display: 'flex' }}>
               <button className="btn btn-primary  card_btn" onClick={() => handleApprove(file.id)}>Approve</button>
-           <button className="btn btn-primary  card_btn" onClick={() => handleReject(file.id)}>Rejected</button>
+           <button className="btn btn-primary  card_btn" onClick={() => handleReject(file.id)}>Reject</button>
            <ViewFiles file={file} />
            </div>
             )}

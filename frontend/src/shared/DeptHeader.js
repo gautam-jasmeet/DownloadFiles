@@ -1,8 +1,10 @@
 import React  from 'react'
 import {NavLink, useNavigate} from 'react-router-dom'
 import "../App.css"
+// import { AppContext } from '../appContext/AppContext';
 
 function DeptHeader({header}) {
+  // const {token} = useContext(AppContext)
  
    const navigate = useNavigate();
    const handleLogout = () => {
