@@ -11,19 +11,22 @@ function HrSidebar() {
        }}> Dashboard</h4>
       <ul>
         <li className="text-center">
-          <NavLink to="/HR/form1"> Joining Form</NavLink>
+          <NavLink to="form1"> Joining Form</NavLink>
         </li>
         <li className="text-center">
-          <NavLink to="/HR/emp"> Employee</NavLink>
+          <NavLink to="documents"> Documents</NavLink>
         </li>
         <li className="text-center">
-          <NavLink to="/HR/training"> Training</NavLink>
+          <NavLink to="emp"> Employee Details</NavLink>
         </li>
         <li className="text-center">
-          <NavLink to="/HR/exam"> Exams</NavLink>
+          <NavLink to="training"> Training</NavLink>
         </li>
         <li className="text-center">
-          <NavLink to="/HR/performance"> Performance</NavLink>
+          <NavLink to="exam"> Exams</NavLink>
+        </li>
+        <li className="text-center">
+          <NavLink to="performance"> Performance</NavLink>
         </li>
       </ul>
     </div>

@@ -195,7 +195,7 @@ const handleShowuploadbutton = ()=>{
 
 
   return (
-    <>
+    <div>
     
       <div style={{ display: 'flex' }}>
 {/* Showing and hiding upload form */}
@@ -277,7 +277,7 @@ const handleShowuploadbutton = ()=>{
 
 {/* Showing and hiding categories */}
             
-        <div className='cat'>
+        <div className='cat' style={{width: '70vw'}} >
         < div className="navbar cat-1" >
   <div className="container-fluid cat-2">
     {/* <h6>Select Category:</h6> */}
@@ -285,7 +285,7 @@ const handleShowuploadbutton = ()=>{
       {(userRole === "Supervisor") && (
         <li className="nav-item cat-list "  key="all-categories">
           <button
-            className={`nav-link ${selectedCategory === "" ? "active" : ""}`}
+            className={`nav-link ${selectedCategory === "" ? "active" : ""}`} 
             onClick={() => handleCategoryChange({ target: { value: "" } })}
             // role='button' //  Indicates that this anchor behaves like a button
           >
@@ -353,7 +353,7 @@ const handleShowuploadbutton = ()=>{
           </ol>
           </div>
           </div>
-    </>
+    </div>
   );
 }
 

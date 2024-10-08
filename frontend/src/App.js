@@ -22,11 +22,20 @@ import QualityHP from "./departments/Quality/QualityHP";
 import FocHP from "./departments/FOC/FocHP";
 import IocHP from "./departments/IOC/IocHP";
 import IpocHP from "./departments/IPOC/IpocHP";
-import Footer from "./shared/Footer";
+// import Footer from "./shared/Footer";
 import { AppContext } from "./appContext/AppContext";
 import HrHomePage from "./departments/HrDepartment/HrDashboard/HrHomePage";
 import JoiningForm1 from "./departments/HrDepartment/JoiningForm/JoiningForm1";
 import JoiningForm2 from "./departments/HrDepartment/JoiningForm/JoiningForm2";
+// import Employee from "./departments/HrDepartment/Employee Details/Employee";
+import EmpDashboard from "./employee/empDashboard/EmpDashboard";
+import PersonalDatail from "./employee/PersonalDatail";
+import Training from "./departments/HrDepartment/Training/Training";
+import Exams from "./departments/HrDepartment/Exams/Exams";
+import Performance from "./departments/HrDepartment/Performance/Performance";
+import FileUpload from "./departments/sharedDept/FileUpload";
+import EmployeeList from "./departments/HrDepartment/Employee Details/Employee1";
+import Employee from "./departments/HrDepartment/Employee Details/Employee";
 
 
 
@@ -36,8 +45,9 @@ import JoiningForm2 from "./departments/HrDepartment/JoiningForm/JoiningForm2";
 function App() {
   const {department , designation} = useContext(AppContext);
   
-  // const department = localStorage.getItem("department");
-    // const  role = localStorage.getItem("designation");
+  // console.log("designation:",designation);
+  
+
 
   return (
     
@@ -55,15 +65,34 @@ function App() {
       <>
        <Route path='/Admin' element={<Dashboard/>}></Route>
        <Route path="/Admin/:departmentName" element={<DepartmentDocuments />} />
+       
       </>
      )}
+
+     {/* Employee Access */}
+     {designation === "Worker" &&(
+      <>
+       <Route path='/Worker' element={<EmpDashboard/>}>
+       <Route path='personal' element={<PersonalDatail/>}></Route>
+       <Route path='documents' element={<FileUpload/>}></Route>
+       </Route>
+      </>
+     )
+
+     }
 
      {/* Department Access */}
      {department === "HR" && (
       <>
-       <Route path='/HR' element={<HrHomePage/>}></Route>
-       <Route path="/HR/form1" element={<JoiningForm1/>}></Route>
-       <Route path="/HR/form2" element={<JoiningForm2/>}></Route>
+       <Route path='/HR' element={<HrHomePage/>}>
+       <Route path="form1" element={<JoiningForm1/>}></Route>
+       <Route path="documents" element={<FileUpload/>}></Route>
+       <Route path="emp" element={<EmployeeList/>}></Route>
+       {/* <Route path="emp" element={<Employee/>}></Route> */}
+       <Route path="training" element={<Training/>}></Route>
+       <Route path="exam" element={<Exams/>}></Route>
+       <Route path="performance" element={<Performance/>}></Route>
+       </Route>
        </>
      )}
     

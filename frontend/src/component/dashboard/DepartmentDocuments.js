@@ -82,13 +82,13 @@ const DepartmentDocuments = () => {
   };
 
   return (
-    <div>
+    <div >
       <DeptHeader header={`${departmentName} Department`} />
 
       <div style={{ display: 'flex' }}>
       
       {/* Category Selection */}
-      <div className='cat'>
+      <div className='cat' >
         <div className="navbar cat-1">
           <div className="container-fluid cat-2">
             <ul className="cat-ul">

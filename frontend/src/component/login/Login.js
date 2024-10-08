@@ -15,7 +15,7 @@ function Login() {
 
 
   // Using the context to set token, department, and designation
-  const {setToken,setDesignation,setDepartment} = useContext(AppContext);
+  const {setToken,setDesignation,setDepartment,setEmployeeId} = useContext(AppContext);
 
 
   // useEffect(()=>{
@@ -55,11 +55,17 @@ function Login() {
         setToken(token);
         setDesignation(designation);
         setDepartment(department);
+        setEmployeeId(employeeID);
+        console.log(response);
+        console.log(response.data);
+        
         
        // Redirecting  based on the role 
            // console.log('Navigating to:', designation === "Admin" ? '/Admin' : `/${department}`);
        if(designation === "Admin"){
         navigate('/Admin');
+       }else if(designation === "Worker"){
+        navigate('/Worker');
        }
        else{
         navigate(`/${department}`);

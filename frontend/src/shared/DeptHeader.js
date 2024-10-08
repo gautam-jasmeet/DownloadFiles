@@ -16,9 +16,10 @@ function DeptHeader({header}) {
    }
 
     return (
-      <div style={{backgroundColor:'var( --main-Dept-header-color)', position:"sticky", top:"55px",zIndex:"999"
+      <div style={{backgroundColor:'var( --main-Dept-header-color)', position:"sticky", top:"65px",zIndex:"999",
+      width:"100%",
       }}>
-          <nav className="navbar" >
+          <nav className="navbar"  >
     <div className="container-fluid" >
       <h2 className="navbar-brand"
        style={{color:"var(--primary-color)", fontWeight:"500" , fontSize:"1.2rem"}}

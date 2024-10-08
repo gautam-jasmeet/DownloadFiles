@@ -93,7 +93,7 @@ function JoiningForm1() {
       
       const formData = new FormData();
       formData.append("full_name",fullName);
-      formData.append("father_name",fatherName);
+      formData.append("fathers_name",fatherName);
       formData.append("date_of_birth",dob); 
       formData.append("gender",gender);
       formData.append("marital_status",maritalStatus);
@@ -136,7 +136,9 @@ function JoiningForm1() {
       formData.append("e_relation1",emergencyContact.relation);
       formData.append("e_address1",emergencyContact.address);
       formData.append("e_contact_no1",emergencyContact.contactNo);
-      formData.append("photo",photo);
+      if (photo && photo instanceof File) {
+        formData.append("photo", photo);
+      }
       formData.append("date",date);
 
       try{
@@ -147,6 +149,8 @@ function JoiningForm1() {
           },
         })
         console.log(response);
+        console.log(response.data);
+
         
         if(response.status === 201){
           setMessage("Form submitted successfully");
@@ -155,7 +159,21 @@ function JoiningForm1() {
       }
 
     }catch(error){
-      setMessage("Form submission failed" , `${error.message}`);
+      if (error.response) {
+        // Server responded with a status other than 2xx
+        console.error("Error response data:", error.response.data);
+        console.error("Error response status:", error.response.status);
+        console.error("Error response headers:", error.response.headers);
+        setMessage(`Form submission failed: ${error.response.data.message || error.message}`);
+      } else if (error.request) {
+        // Request was made but no response received
+        console.error("Error request:", error.request);
+        setMessage("Form submission failed: No response from server.");
+      } else {
+        // Something else caused the error
+        console.error("Error message:", error.message);
+        setMessage(`Form submission failed: ${error.message}`);
+      }
     }
 
     };
@@ -206,50 +224,50 @@ function JoiningForm1() {
     };
   
     // Form Validation
-    const validateForm = () => {
-      const errors = {};
-      if (!fullName) {
-        errors.fullName = "Full Name is required";
-      } else if (fullName.length < 4) {
-        errors.fullName = "Full Name should be atleast 4 characters";
-      }
-      if (!fatherName) {
-        errors.fatherName = "Father Name is required";
-      } else if (fatherName.length < 4) {
-        errors.fatherName = "Father Name should be atleast 4 characters";
-      }
-      if (!dob) {
-        errors.dob = "Date of Birth is required";
-      }
-      if (!gender) {
-        errors.gender = "Gender is required";
-      }
-      if (!maritalStatus) {
-        errors.maritalStatus = "Marital Status is required";
-      }
-      // if (!bloodGroup) {
-      //   errors.bloodGroup = "Blood Group is required";
-      // }
-      // if (!officeEmail) {
-      //   errors.officeEmail = "Office Email is required";
-      // }
-      if (!personalEmail) {
-        errors.personalEmail = "Personal Email is required";
-      }
-      if (!personalContactNo) {
-        errors.personalContactNo = "Personal Contact No. is required";
-      }
-      // if (!officialContactNo) {
-      //   errors.officialContactNo = "Official Contact No. is required";
-      // }
-      // if (!presentAddress.name) {
-      //   errors.presentAddress = "Name is required";
-      // }
-      // if (!permanentAddress) {
-      //   errors.permanentAddress = "Permanent Address is required";
-      // }
-      return errors;
-    };
+    // const validateForm = () => {
+    //   const errors = {};
+    //   if (!fullName) {
+    //     errors.fullName = "Full Name is required";
+    //   } else if (fullName.length < 4) {
+    //     errors.fullName = "Full Name should be atleast 4 characters";
+    //   }
+    //   if (!fatherName) {
+    //     errors.fatherName = "Father Name is required";
+    //   } else if (fatherName.length < 4) {
+    //     errors.fatherName = "Father Name should be atleast 4 characters";
+    //   }
+    //   if (!dob) {
+    //     errors.dob = "Date of Birth is required";
+    //   }
+    //   if (!gender) {
+    //     errors.gender = "Gender is required";
+    //   }
+    //   if (!maritalStatus) {
+    //     errors.maritalStatus = "Marital Status is required";
+    //   }
+    //   // if (!bloodGroup) {
+    //   //   errors.bloodGroup = "Blood Group is required";
+    //   // }
+    //   // if (!officeEmail) {
+    //   //   errors.officeEmail = "Office Email is required";
+    //   // }
+    //   if (!personalEmail) {
+    //     errors.personalEmail = "Personal Email is required";
+    //   }
+    //   if (!personalContactNo) {
+    //     errors.personalContactNo = "Personal Contact No. is required";
+    //   }
+    //   // if (!officialContactNo) {
+    //   //   errors.officialContactNo = "Official Contact No. is required";
+    //   // }
+    //   // if (!presentAddress.name) {
+    //   //   errors.presentAddress = "Name is required";
+    //   // }
+    //   // if (!permanentAddress) {
+    //   //   errors.permanentAddress = "Permanent Address is required";
+    //   // }
+    //   return errors;
+    // };
   
     return (
       <div>
