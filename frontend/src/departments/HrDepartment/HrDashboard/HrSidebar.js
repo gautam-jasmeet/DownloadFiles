@@ -1,17 +1,20 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import "./HrSidebar.css"
 
 function HrSidebar() {
   return (
+    <div className="sidebar-container">
     <div className="sidebar">
+      
       <h4 className="title text-center"
-       style={{ fontWeight:"500" , fontSize:"1.2rem" ,
-        display:"inline-block",
-        borderBottom:"2px solid #000"
-       }}> Dashboard</h4>
+      ><i class="bi bi-person-fill fs-3"></i> HR <br /> Dashboard</h4>
       <ul>
         <li className="text-center">
-          <NavLink to="form1"> Joining Form</NavLink>
+          <NavLink to="jform"> Joining Form</NavLink>
+        </li>
+        <li className="text-center">
+          <NavLink to="/signup"> SignUp</NavLink>
         </li>
         <li className="text-center">
           <NavLink to="documents"> Documents</NavLink>
@@ -29,6 +32,7 @@ function HrSidebar() {
           <NavLink to="performance"> Performance</NavLink>
         </li>
       </ul>
+      </div>
     </div>
   )
 }

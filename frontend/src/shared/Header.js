@@ -8,11 +8,11 @@ import  "../App.css"
 
 const Header = () => {
   return (
-    <div style={{position:"sticky", top:"0",zIndex:"1000" }}> 
+    <div style={{position:"sticky", top:"0",zIndex:"1000"  }}> 
       <nav className="navbar " style={{backgroundColor: 'var(--main-header-color)' }} data-bs-theme="dark">  
       <ul className="nav">
   <li className="nav-item">
-    <NavLink className="nav-link active " aria-current="page" to="/" 
+    <NavLink className="nav-link active" aria-current="page" to="/" 
     style={{ color:"var(--light-color)",fontWeight:"500"}}>
       <img src={GSolarLogo} alt='Gautam Solar Logo' width={"15%"} 
        />
@@ -23,9 +23,16 @@ const Header = () => {
    {/* <li className="nav-item">
     <NavLink className="nav-link" to="/signup">SignUp</NavLink>
   </li>  */}
-  <li className="nav-item">
+  <li className="d-flex">
     {/* <NavLink className="nav-link" to="/"  style={{color:"var(--light-color)", fontWeight:"500"}}>Logout</NavLink> */}
-    <NavLink to={"/signup"} >Signup</NavLink> 
+    <NavLink className="nav-link active " aria-current="page" to={"/signup"} 
+    style={{ color:"var(--light-color)",fontWeight:"600"}}>
+      <span className=' border-bottom border-2 border-light'>SignUp</span>
+        </NavLink> 
+    <NavLink className="nav-link active " aria-current="page" to={"/"} 
+    style={{ color:"var(--light-color)",fontWeight:"600"}} >
+      <span className=' border-bottom border-2 border-light'>LogOut</span>
+      </NavLink> 
   </li> 
  
 </ul>

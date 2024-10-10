@@ -15,7 +15,7 @@ function Dashboard() {
 
   return (
     <div style={{display:"flex" }}>
-      <div  style={{ width: "15%",position:"sticky", top:"75px",zIndex:"999" }}>
+      <div  style={{ width: "15%"}}>
         <Sidebar />
         </div>
         

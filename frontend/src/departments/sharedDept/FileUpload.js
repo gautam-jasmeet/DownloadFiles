@@ -197,7 +197,7 @@ const handleShowuploadbutton = ()=>{
   return (
     <div>
     
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex' ,flexWrap:"wrap" }}>
 {/* Showing and hiding upload form */}
        <div className='form'>
        {userRole === "Supervisor" && (
@@ -320,7 +320,7 @@ const handleShowuploadbutton = ()=>{
             filteredDocument.map((file) => (
               <li className='cat_ol-2' key={file.id} style={{ margin: '10px' }}>
                 <div className="card w-50 cat_ol-3" >
-                  <div className="card-body cat_ol-4" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <div className="card-body cat_ol-4" style={{ display: 'flex', justifyContent: 'space-between',flexWrap:"wrap" }}>
                     <div>
                       <p className="card-title cat_ol-5"><b>File Name:</b> {file.filename}</p>
                       <p className="card-text cat_ol-6" style={{ margin: "0" }}><b>File Version:</b> {file.fileVersion}</p>

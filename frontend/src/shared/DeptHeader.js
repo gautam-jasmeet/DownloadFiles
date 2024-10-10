@@ -22,16 +22,16 @@ function DeptHeader({header}) {
           <nav className="navbar"  >
     <div className="container-fluid" >
       <h2 className="navbar-brand"
-       style={{color:"var(--primary-color)", fontWeight:"500" , fontSize:"1.2rem"}}
+     
        >
-        {header}
+       <spam className=" title fs-4" style={{color:"var(--primary-color)"}}>{header}</spam> 
         </h2>
       {/* <NavLink to={"/"} style={{color:"var(--primary-color)", fontWeight:"500"}}>Logout</NavLink> */}
-      <button type="button" className="btn btn-primary mt-3 card_btn "
+      {/* <button type="button" className="btn btn-primary mt-3 card_btn "
       style={{
         width:"5%",
       }}  
-      onClick={handleLogout}>Logout</button>
+      onClick={handleLogout}>Logout</button> */}
       
     </div>
   </nav>

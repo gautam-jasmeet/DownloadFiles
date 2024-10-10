@@ -6,7 +6,7 @@ function PersonalDatail() {
   const [empData, setEmpData] = useState([])
 
   const {token,employeeId} = useContext(AppContext)
-  console.log(employeeId);
+  // console.log(employeeId);
   
 
   useEffect(()=>{
@@ -39,7 +39,7 @@ function PersonalDatail() {
  const filterEmpData = (employee) => {
     return empData.filter((emp) => emp.employeeID === employeeId);
   };
-  console.log(filterEmpData(empData));
+  // console.log(filterEmpData(empData));
   const personalEmpData = filterEmpData(empData)[0];
   
 
@@ -57,22 +57,22 @@ function PersonalDatail() {
  <img src={personalEmpData?.photo_url} className="img-fluid rounded-start w-25   rounded  " alt="Profile Pic"/>
   
    <div className='px-5'>
-   <p className="lh-1">Name: {personalEmpData?.full_name}</p>
-   <p className="lh-1">Father's Name: {personalEmpData?.fathers_name}</p>
-   <p className="lh-1">Employee ID: {personalEmpData?.employeeID}</p>
+   <p className="lh-1">Name: <span className="fw-medium">{personalEmpData?.full_name}</span> </p>
+   <p className="lh-1">Father's Name:  <span className="fw-medium">{personalEmpData?.fathers_name}</span></p>
+   <p className="lh-1">Employee ID:  <span className="fw-medium">{personalEmpData?.employeeID}</span></p>
    </div>
    </div>
    <div className=' pt-2'>
-   <p className="lh-1">Gender: {personalEmpData?.gender}</p>
-   <p className="lh-1">Marital Status: {personalEmpData?.marital_status}</p>
-   <p className="lh-1">Blood Group: {personalEmpData?.blood_group}</p>
-   <p className="lh-1">Date of Birth: {personalEmpData?.date_of_birth}</p>
+   <p className="lh-1">Gender: <span className="fw-medium">{personalEmpData?.gender}</span></p>
+   <p className="lh-1">Marital Status: <span className="fw-medium">{personalEmpData?.marital_status}</span></p>
+   <p className="lh-1">Blood Group: <span className="fw-medium">{personalEmpData?.blood_group}</span></p>
+   <p className="lh-1">Date of Birth: <span className="fw-medium">{personalEmpData?.date_of_birth}</span></p>
    </div>
    <div className='px-5 pt-2'>
-   <p className="lh-1">Official Contact Number: {personalEmpData?.official_contact_no}</p>
-   <p className="lh-1">Official Email ID: {personalEmpData?.official_mail_id}</p>
-   <p className="lh-1">Personal Contact Number: {personalEmpData?.personal_contact_no}</p>
-   <p className="lh-1">Personal Email ID: {personalEmpData?.personal_mail_id}</p>
+   <p className="lh-1">Official Contact Number: <span className="fw-medium">{personalEmpData?.official_contact_no}</span></p>
+   <p className="lh-1">Official Email ID: <span className="fw-medium">{personalEmpData?.official_mail_id}</span></p>
+   <p className="lh-1">Personal Contact Number: <span className="fw-medium">{personalEmpData?.personal_contact_no}</span></p>
+   <p className="lh-1">Personal Email ID: <span className="fw-medium">{personalEmpData?.personal_mail_id}</span></p>
    </div>
  
  </div>

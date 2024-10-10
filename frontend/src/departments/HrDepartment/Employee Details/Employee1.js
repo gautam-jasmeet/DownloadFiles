@@ -84,7 +84,7 @@ const EmployeeList = () => {
     setSelectedEmployee(employee);
     setIsModalOpen(true);
   };
-  console.log(selectedEmployee);
+  // console.log(selectedEmployee);
   // console.log(selectedEmployee.full_name);
 
   
@@ -134,7 +134,7 @@ const EmployeeList = () => {
           <ul className="cat-ul">
             <li className="nav-item cat-list">
               <button
-                className={`nav-link ${selectedCategory === "" ? "active" : ""}`}
+                className={`nav-link ${selectedCategory === "" ? "active" : ""}  border-2 border-bottom border-black`}
                 onClick={() => handleCategoryChange({ target: { value: "" } })}
               >
                 All Categories
@@ -143,7 +143,8 @@ const EmployeeList = () => {
             {departments.map((category) => (
               <li className="nav-item cat-list" key={category}>
                 <button
-                  className={`nav-link ${selectedCategory === category ? "active" : ""}`}
+                  className={`nav-link ${selectedCategory === category ? "active" : ""} 
+                   `}
                   onClick={() => handleCategoryChange({ target: { value: category } })}
                 >
                   {category}
@@ -156,22 +157,26 @@ const EmployeeList = () => {
       </div>
      
        {/* Employee List */}
-       <div style={{marginTop:"20px"}}>
+       <div style={{marginTop:"20px", marginLeft:"20px"}}>
         {filteredEmployees.length === 0 ?(
           <p>No employees found</p>
         ):(
           Object.keys(groupByDepartment(filteredEmployees)).map((dept) => (
             <div key={dept} style={{ marginBottom: '20px' }}>
-              <h3>{dept}</h3>
-              <ul>
+              <div >
+              <h5 ><span className='m-2 border-2 border-bottom border-black fw-bold'
+              style={{color:"var(--primary-color)"}}
+              >{dept}</span></h5>
+              <ol >
                 {groupByDepartment(filteredEmployees)[dept].map((emp) => (
                   <li key={emp.id} 
                   onClick={() => handleEmployeeClick(emp)}
                   >
-                    {emp.full_name}
+                   <a href='#' >{emp.full_name}</a> 
                   </li>
                 ))}
-              </ul>
+              </ol>
+              </div>
             </div>
           ))
         )
@@ -187,15 +192,15 @@ const EmployeeList = () => {
           content: {
             maxWidth: '80%',
             margin: 'auto',
-            marginLeft: '10%',
-            marginTop: '100px',
-            padding: '10px',
+            marginLeft: '15%',
+            marginTop: '16rem',
+            padding: '0.5rem',
           },
         }}
       >
         {selectedEmployee && (
          
-             <div className="card mb-4 m-2 shadow-sm " >
+             <div className="card mb-4 m-2 shadow-sm "  >
  
  <div className=" d-flex justify-content-evenly  align-items-center">
    <div className="d-flex align-items-center">

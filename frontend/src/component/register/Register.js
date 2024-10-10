@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from "axios";
+import { AppContext } from '../../appContext/AppContext';
 // import Footer from '../../shared/Footer';
 
 function Register() {
@@ -16,6 +17,10 @@ function Register() {
 
 
   const navigate = useNavigate();
+
+  const { token } = useContext(AppContext);
+  console.log(token);
+  
 
 
   const departments =["HR","Store","Production","Machine","Maintance","SOP|WI","Logistics",

@@ -12,17 +12,18 @@
     background-color:var( --secondary-color);
     padding: 10px;
     /* position: fixed; */
-    height: 100%;
-    overflow-y: auto
-}
-/* .sidebar{ */
-    /* position: sticky;
-    top: 65px;
-    z-index: 999; */
     /* height: 100%; */
-    /* width: 250px; */
     /* overflow-y: auto */
-/* } */
+}
+.sidebar{ 
+     position: sticky;
+    top: 65px;
+    z-index: 999; 
+    height: 100vh;
+    width: 250px;
+    overflow-y: auto;
+
+}
 .sidebar{
     border: 1px solid #ccc;
     padding: 10px;

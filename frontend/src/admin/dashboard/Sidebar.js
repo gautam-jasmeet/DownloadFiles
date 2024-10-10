@@ -6,11 +6,11 @@ import './sidebar.css'
 function Sidebar() {
   return (
     <div className='sidebar'>
-      <h3 className='title '>Admin Dashboard</h3>
-      <ul>
-        <li className='text-center'>
-          <NavLink to={"/Admin"}>Dashboard</NavLink>
-        </li>
+      <h3 className='title'> <i class="bi bi-person-fill-gear fs-3"></i> Admin <br /> Dashboard</h3>
+      <ul className='mb-5'>
+        {/* <li className='text-center'>
+          <NavLink to={"/Admin/Emp"}> Employee Data</NavLink>
+        </li> */}
         <li className='text-center  '>
           <NavLink to={"/Admin/HR"}> HR</NavLink>
         </li>

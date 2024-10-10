@@ -2,7 +2,7 @@ import { useContext} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import "./App.css";
 import Header from "./shared/Header";
-import Dashboard from "./component/dashboard/Dashboard";
+import Dashboard from "./admin/dashboard/Dashboard";
 
 // import ItHomePage from "./departments/it/ItHomePage";
 // import MarketingHP from "./departments/marketing/MarketingHP"; 
@@ -10,7 +10,7 @@ import StoreHP from "./departments/storeDepartment/StoreHP";
 import Register from "./component/register/Register";
 import Login from "./component/login/Login";
 import Logout from "./component/logout/Logout";
-import DepartmentDocuments from "./component/dashboard/DepartmentDocuments";
+import DepartmentDocuments from "./admin/department/DepartmentDocuments";
 import ProductionHP from "./departments/Production/ProductionHP";
 import MachineHP from "./departments/Machine/MachineHP";
 import MentainanceHP from "./departments/Mentainance/MentainanceHP";
@@ -26,7 +26,7 @@ import IpocHP from "./departments/IPOC/IpocHP";
 import { AppContext } from "./appContext/AppContext";
 import HrHomePage from "./departments/HrDepartment/HrDashboard/HrHomePage";
 import JoiningForm1 from "./departments/HrDepartment/JoiningForm/JoiningForm1";
-import JoiningForm2 from "./departments/HrDepartment/JoiningForm/JoiningForm2";
+// import JoiningForm2 from "./departments/HrDepartment/JoiningForm/JoiningForm2";
 // import Employee from "./departments/HrDepartment/Employee Details/Employee";
 import EmpDashboard from "./employee/empDashboard/EmpDashboard";
 import PersonalDatail from "./employee/PersonalDatail";
@@ -35,7 +35,9 @@ import Exams from "./departments/HrDepartment/Exams/Exams";
 import Performance from "./departments/HrDepartment/Performance/Performance";
 import FileUpload from "./departments/sharedDept/FileUpload";
 import EmployeeList from "./departments/HrDepartment/Employee Details/Employee1";
-import Employee from "./departments/HrDepartment/Employee Details/Employee";
+// import Employee from "./departments/HrDepartment/Employee Details/Employee";
+import TrainingVideo from "./employee/TrainingVideo";
+import AdEmployee from "./admin/employee/AdEmployee";
 
 
 
@@ -65,6 +67,8 @@ function App() {
       <>
        <Route path='/Admin' element={<Dashboard/>}></Route>
        <Route path="/Admin/:departmentName" element={<DepartmentDocuments />} />
+       {/* <Route path="/Admin/Emp" element={<AdEmployee />} /> */}
+
        
       </>
      )}
@@ -75,6 +79,7 @@ function App() {
        <Route path='/Worker' element={<EmpDashboard/>}>
        <Route path='personal' element={<PersonalDatail/>}></Route>
        <Route path='documents' element={<FileUpload/>}></Route>
+       <Route path='tvideo' element={<TrainingVideo/>}></Route>
        </Route>
       </>
      )
@@ -85,7 +90,7 @@ function App() {
      {department === "HR" && (
       <>
        <Route path='/HR' element={<HrHomePage/>}>
-       <Route path="form1" element={<JoiningForm1/>}></Route>
+       <Route path="jform" element={<JoiningForm1/>}></Route>
        <Route path="documents" element={<FileUpload/>}></Route>
        <Route path="emp" element={<EmployeeList/>}></Route>
        {/* <Route path="emp" element={<Employee/>}></Route> */}

@@ -1,11 +1,13 @@
 import {useContext, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios, { all } from 'axios';
 import { AppContext } from '../../../appContext/AppContext';
 import "./JoiningForm.css"
 
+
 function JoiningForm1() {
     const [step, setStep] = useState(1);
+    const [employeeId, setEmployeeId] = useState("");
     const [fullName, setFullName] = useState("");
     const [fatherName, setFatherName] = useState("");
     const [dob, setDob] = useState("");
@@ -66,6 +68,9 @@ function JoiningForm1() {
     const navigate = useNavigate();
 
     const {token} = useContext(AppContext)
+
+    const allDepartment =["HR","Store","Production","Machine","Maintance","SOP|WI","Logistics",
+      "Quality","Calibration","FQC","IQC","IPQC","EHS"]
   
     // Function to handle Next button
     const handleNext = () => {
@@ -92,7 +97,9 @@ function JoiningForm1() {
       e.preventDefault();
       
       const formData = new FormData();
+
       formData.append("full_name",fullName);
+      formData.append("employeeID",employeeId);
       formData.append("fathers_name",fatherName);
       formData.append("date_of_birth",dob); 
       formData.append("gender",gender);
@@ -148,8 +155,8 @@ function JoiningForm1() {
             // "Content-Type": "multipart/form-data",
           },
         })
-        console.log(response);
-        console.log(response.data);
+        // console.log(response);
+        // console.log(response.data);
 
         
         if(response.status === 201){
@@ -159,22 +166,9 @@ function JoiningForm1() {
       }
 
     }catch(error){
-      if (error.response) {
-        // Server responded with a status other than 2xx
-        console.error("Error response data:", error.response.data);
-        console.error("Error response status:", error.response.status);
-        console.error("Error response headers:", error.response.headers);
         setMessage(`Form submission failed: ${error.response.data.message || error.message}`);
-      } else if (error.request) {
-        // Request was made but no response received
-        console.error("Error request:", error.request);
-        setMessage("Form submission failed: No response from server.");
-      } else {
-        // Something else caused the error
-        console.error("Error message:", error.message);
-        setMessage(`Form submission failed: ${error.message}`);
-      }
-    }
+      } 
+    
 
     };
   
@@ -271,20 +265,33 @@ function JoiningForm1() {
   
     return (
       <div>
-        <form className="gradient-custom " onSubmit={handleSubmit}>
+        
+        <form className="gradient-custom d-flex " onSubmit={handleSubmit}>
+          <div 
+          className=' p-5'
+          style={{width:"10%"}}>
+        <h2
+                    className="text-center mb-2 fw-semibold lh-base"
+                    style={{
+                      display: "inline-block",
+                      // borderBottom: "3px solid ",
+                      borderColor: "var(--primary-color)",
+                      // color: "var(--primary-color)",
+                       position:"sticky", top:"198px",zIndex:"998"
+                    }}
+                  >
+                    <span className='title fs-2 border-3 '>Joining Form <br/> 
+                   
+                    <i class="bi bi-arrow-right"></i>
+                    </span>
+                  </h2>
+                  </div>
+                  <div style={{width:"90%"}}>
           <section>
             <div className="container py-5 h-100">
               <div className="row justify-content-center align-items-center h-100">
                 <div className="col-12 col-lg-9 col-xl-7 ">
-                  {/* <h2
-                    className="text-center mb-2 fw-semibold"
-                    style={{
-                      display: "inline-block",
-                      borderBottom: "3px solid ",
-                    }}
-                  >
-                    Part- l
-                  </h2> */}
+                 
                   <div
                     className="card shadow-2-strong card-registration"
                     style={{
@@ -302,22 +309,45 @@ function JoiningForm1() {
   
                           <div className="row mb-3">
                             <label
+                              htmlFor="employeeId"
+                              className="col-sm-3 col--label text-secondary-emphasis fw-semibold "
+                            >
+                              Employee ID
+                            </label>
+                            <div className="col-sm-9">
+                              <input
+                                type="number"
+                                id="employeeId"
+                                className="form-control "
+                                placeholder="Fill by HR"
+                                value={employeeId}
+                                onChange={(e) => setEmployeeId(e.target.value)}
+                              />
+                              {/* {errors.employeeId && (
+                                <span className="error-message text-danger">
+                                  {errors.employeeId}
+                                </span> */}
+                              {/* )} */}
+                            </div>
+                          </div>
+                          <div className="row mb-3">
+                            <label
                               htmlFor="fullname"
-                              className="col-sm-3 col--label text-secondary-emphasis fw-semibold"
+                              className="col-sm-3 col-form-label text-secondary-emphasis fw-semibold"
                             >
                               Full Name
                             </label>
                             <div className="col-sm-9">
                               <input
                                 type="text"
+                                className="form-control"
                                 id="fullname"
-                                className="form-control "
                                 placeholder="Enter your Full Name"
                                 value={fullName}
                                 onChange={(e) => setFullName(e.target.value)}
                               />
                               {errors.fullName && (
-                                <span className="error-message text-danger">
+                                <span className="error-message text-danger ">
                                   {errors.fullName}
                                 </span>
                               )}
@@ -936,15 +966,19 @@ function JoiningForm1() {
                               Department
                             </label>
                             <div className="col-sm-9">
-                              <input
-                                type="text"
-                                className="form-control text-secondary-emphasis fw-semibold"
-                                id="department"
+                              <select
+                               className="form-control text-secondary-emphasis fw-semibold"
+                               id="department"
                                 name="department"
-                                placeholder="Enter department"
-                                value={department}
-                                onChange={(e) => setDepartment(e.target.value)}
-                              />
+                              value={department}
+                              onChange={(e)=>setDepartment(e.target.value)}
+                              >
+                                <option value="">Select department</option>
+                                {allDepartment.map((dept)=>(
+                                  <option key={dept} value={dept}>{dept}</option>
+                                )                               
+                                )}
+                              </select>
                             </div>
                           </div>
                           <div className="row mb-3">
@@ -1378,6 +1412,7 @@ function JoiningForm1() {
               </div>
             </div>
           </section>
+          </div>
         </form>
       </div>
     );
