@@ -75,22 +75,72 @@ function JoiningForm1() {
     // Function to handle Next button
     const handleNext = () => {
       setStep(step + 1);
-      // const newErrors = validateForm();
-      // setErrors(newErrors);
-      // if (Object.keys(newErrors).length === 0) {
-      //   setStep(step + 1);
-      // } else {
-      //   alert("Please fill all the required fields");
-      // }
+      
     };
     // Function to handle Previous button
     const handlePrevious = () => {
       setStep(step - 1);
     };
-    // const handlePart2 = () => {
-    //   alert("Are you sure? You will be redirected to part 2");
-    //   navigate("/HR/form2");
-    // };
+
+    // Function to reset form
+    const resetForm = () => {
+      setStep(1);
+      setEmployeeId("");
+      setFullName("");
+      setFatherName("");
+      setDob("");
+      setGender("");
+      setMaritalStatus("");
+      setBloodGroup("");
+      setOfficialContactNo("");
+      setOfficeEmail("");
+      setPersonalContactNo("");
+      setPersonalEmail("");
+      setPresentAddress({
+        name: "",
+        relation: "",
+        contactNo: "",
+        fullAddress: "",
+        state: "",
+        city: "",
+        pinCode: "",
+      });
+      setPermanentAddress({
+        name: "",
+        relation: "",
+        contactNo: "",
+        fullAddress: "",
+        state: "",
+        city: "",
+        pincode: "",
+      });
+      setIsSameAddress(false);
+      setDateOfInterview("");
+      setDateOfJoining("");
+      setDepartment("");
+      setDesignation("");
+      setEmployeeType("");
+      setModeOfRecruitment("");
+      setReferenceName("");
+      setPanNo("");
+      setAadharNo("");
+      setBankName("");
+      setAccountNo("");
+      setIfscCode("");
+      setBankBranch("");
+      setUanNo("");
+      setEmergencyContact({
+        name: "",
+        relation: "",
+        address: "",
+        contactNo: "",
+      });
+      setPhoto("");
+      setDate("");
+      setErrors({});
+      setMessage("");
+    };
+    
   
     // Function to handle htmlForm submission
     const handleSubmit = async(e) => {
@@ -161,6 +211,7 @@ function JoiningForm1() {
         
         if(response.status === 201){
           setMessage("Form submitted successfully");
+          resetForm(); // Reset all fields and step
       }else{
         setMessage("Form submission failed");
       }
@@ -216,52 +267,6 @@ function JoiningForm1() {
     const photoUploadOnChange = (e) => {
       setPhoto(e.target.files[0]);
     };
-  
-    // Form Validation
-    // const validateForm = () => {
-    //   const errors = {};
-    //   if (!fullName) {
-    //     errors.fullName = "Full Name is required";
-    //   } else if (fullName.length < 4) {
-    //     errors.fullName = "Full Name should be atleast 4 characters";
-    //   }
-    //   if (!fatherName) {
-    //     errors.fatherName = "Father Name is required";
-    //   } else if (fatherName.length < 4) {
-    //     errors.fatherName = "Father Name should be atleast 4 characters";
-    //   }
-    //   if (!dob) {
-    //     errors.dob = "Date of Birth is required";
-    //   }
-    //   if (!gender) {
-    //     errors.gender = "Gender is required";
-    //   }
-    //   if (!maritalStatus) {
-    //     errors.maritalStatus = "Marital Status is required";
-    //   }
-    //   // if (!bloodGroup) {
-    //   //   errors.bloodGroup = "Blood Group is required";
-    //   // }
-    //   // if (!officeEmail) {
-    //   //   errors.officeEmail = "Office Email is required";
-    //   // }
-    //   if (!personalEmail) {
-    //     errors.personalEmail = "Personal Email is required";
-    //   }
-    //   if (!personalContactNo) {
-    //     errors.personalContactNo = "Personal Contact No. is required";
-    //   }
-    //   // if (!officialContactNo) {
-    //   //   errors.officialContactNo = "Official Contact No. is required";
-    //   // }
-    //   // if (!presentAddress.name) {
-    //   //   errors.presentAddress = "Name is required";
-    //   // }
-    //   // if (!permanentAddress) {
-    //   //   errors.permanentAddress = "Permanent Address is required";
-    //   // }
-    //   return errors;
-    // };
   
     return (
       <div>
@@ -323,11 +328,7 @@ function JoiningForm1() {
                                 value={employeeId}
                                 onChange={(e) => setEmployeeId(e.target.value)}
                               />
-                              {/* {errors.employeeId && (
-                                <span className="error-message text-danger">
-                                  {errors.employeeId}
-                                </span> */}
-                              {/* )} */}
+                              
                             </div>
                           </div>
                           <div className="row mb-3">
