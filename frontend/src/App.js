@@ -139,19 +139,14 @@ function App() {
     <Route path='/IPQC' element={<IpocHP/>}></Route>
     )}
    
-    {/* Default route */}
-    {/* <Route path="*" element={<NotFound />} /> */}
+   
     </Routes >
-    {/* <Footer /> */}
+    
     </Router>
     
   );
 }
 
 
-// Component for 404 Not Found
-// function NotFound() {
-//   return <div>Page Not Found</div>;
-// }
 
 export default App;

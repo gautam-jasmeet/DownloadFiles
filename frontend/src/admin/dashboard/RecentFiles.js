@@ -51,10 +51,7 @@ fetchRecentFiles()
         // console.log(response.data);
 
         if(response.status === 200){
-          setMessage("Document status updated successfully");
-          //   Updating the status in the local state to reflect it in the UI
-          // const updatedFiles = recentFiles.map((file)=>
-          //   file.id === documentId ? {...file,status:status} : file )
+          setMessage("Document status updated successfully")
 
           //  // Filter out the updated file from the recent files list
           const updatedFiles = recentFiles.filter((file)=>{

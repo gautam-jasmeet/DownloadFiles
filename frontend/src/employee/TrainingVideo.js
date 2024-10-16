@@ -32,18 +32,6 @@ function TrainingVideo() {
 
     const filterVideo = allVideo.filter((video)=>video.departmentName === department);
 
-    // console.log(filterVideo);
-  //   const handleViewAllVideos = (file)=>{
-  //       const fileURL = `http://srv617987.hstgr.cloud:8080${file.videoUrl}`; // Ensure full path
-  //       const fileExtension = file.videoUrl.split('.').pop().toLowerCase();
-  //       if (['mp4', 'avi', 'mov', 'wmv', 'mkv'].includes(fileExtension)) {
-  //         // Video files
-  //         window.open(fileURL);
-  //       } else {
-  //         alert('File type not supported for preview');
-  //       }
-  //  }
-
 
    /// video watch completed
    const handleVideoEnd =()=>{
@@ -82,15 +70,6 @@ function TrainingVideo() {
                     </div>
                     <div>
                      
-                    {/* <button className="btn btn-primary card_btn"
-                       onClick={() => handleViewAllVideos(file)}>
-                        View
-                      </button> */}
-                    {/* <button className="btn btn-primary card_btn"
-                       onClick={() => handleDelete(file.id)}>
-                        Delete
-                      </button> */}
-                      {/* <ViewFiles className="btn card_btn" file={file} /> */}
                     </div>
                   </div>
                 </div>
