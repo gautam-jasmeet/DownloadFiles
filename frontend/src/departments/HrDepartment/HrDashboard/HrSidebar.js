@@ -13,9 +13,9 @@ function HrSidebar() {
         <li className="text-center">
           <NavLink to="jform"> Joining Form</NavLink>
         </li>
-        {/* <li className="text-center">
+        <li className="text-center">
           <NavLink to="/signup"> SignUp</NavLink>
-        </li> */}
+        </li>
         <li className="text-center">
           <NavLink to="documents"> Documents</NavLink>
         </li>
