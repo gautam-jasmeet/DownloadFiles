@@ -204,7 +204,7 @@ const EmployeeList = () => {
  
  <div className=" d-flex justify-content-evenly  align-items-center">
    <div className="d-flex align-items-center">
- <img src={selectedEmployee.photo_url} className="img-fluid rounded-start w-25   rounded  " alt="Profile Pic"/>
+ <img src={`http://srv617987.hstgr.cloud:8080${selectedEmployee.photo_url}`} className="img-fluid rounded-start w-25   rounded  " alt="Profile Pic"/>
   
    <div className='px-5'>
    <p className="lh-1">Name: {selectedEmployee.full_name}</p>

@@ -8,7 +8,7 @@
   } */
   .sidebar-container{
     position: sticky;
-    top: 55px;
+    top: 48px;
     z-index: 999;
   }
 
