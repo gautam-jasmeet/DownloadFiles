@@ -18,8 +18,8 @@ function Register() {
 
   const navigate = useNavigate();
 
-  const { token } = useContext(AppContext);
-  console.log(token);
+  // const { token } = useContext(AppContext);
+  // console.log(token);
   
 
 
@@ -37,7 +37,7 @@ function Register() {
     
     try{
       
-      const resposne = await axios.post('http://localhost:8080/auth/signup',{
+      const resposne = await axios.post('http://srv617987.hstgr.cloud:8000/auth/signup',{
         name,
         employeeID,
         department,
@@ -177,12 +177,12 @@ function Register() {
 <section className="background-radial-gradient overflow-hidden ">
   <div className="container  text-center text-lg-start my-4 ">
     <div className="row gx-lg-5 align-items-center mb-5">
-    <div class="col-lg-6 mb-5 mb-lg-0" style={{zIndex: "10"}}>
-        <h1 class="my-5 display-5 fw-bold ls-tight" style={{color:"hsl(218, 81%, 95%)"}}>
+    <div className="col-lg-6 mb-5 mb-lg-0" style={{zIndex: "10"}}>
+        <h1 className="my-5 display-5 fw-bold ls-tight" style={{color:"hsl(218, 81%, 95%)"}}>
          Document Management Application <br />
           {/* <span style={{color:"  hsl(218, 81%, 75%)"}}>for your business</span> */}
         </h1>
-        <p class="mb-4 opacity-70" style={{color:" hsl(218, 81%, 85%)"}}>
+        <p className="mb-4 opacity-70" style={{color:" hsl(218, 81%, 85%)"}}>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit.
           Temporibus, expedita iusto veniam atque, magni tempora mollitia
           dolorum consequatur nulla, neque debitis eos reprehenderit quasi
@@ -210,10 +210,10 @@ function Register() {
               </div>
 
               <div className="form-outline mb-2  ">
-                <label className="form-label  fw-semibold lh-1 ml-2 " htmlFor="form3Example3">Name</label>
+                <label className="form-label  fw-semibold lh-1 ml-2 " htmlFor="name">Name</label>
                 <input 
                   type="text" 
-                  id="form3Example3" 
+                  id="name" 
                   className="form-control  " 
                   name="name"
                   value={name}
@@ -222,10 +222,10 @@ function Register() {
                 />
               </div>
               <div className="form-outline mb-2 ">
-                <label className="form-label fw-semibold lh-1 ml-2 " htmlFor="form3Example3">Employee ID</label>
+                <label className="form-label fw-semibold lh-1 ml-2 " htmlFor="empId">Employee ID</label>
                 <input 
                   type="text" 
-                  id="form3Example3" 
+                  id="empId" 
                   className="form-control" 
                   name="employeeID"
                   value={employeeID}
@@ -253,7 +253,7 @@ function Register() {
               </div>
 
               <div className="form-outline mb-2">
-                <label className="form-label fw-semibold lh-1 ml-2" htmlFor="form3Example3">Designation</label>
+                <label className="form-label fw-semibold lh-1 ml-2" htmlFor="designation">Designation</label>
                 <select
           className="form-control"
           name="designation"
@@ -271,7 +271,7 @@ function Register() {
         </select>
               </div>
               <div className="form-outline mb-2">
-                <label className="form-label fw-semibold lh-1 ml-2" htmlFor="form3Example3">Password</label>
+                <label className="form-label fw-semibold lh-1 ml-2" htmlFor="password">Password</label>
                 <input 
                   type="password" 
                   className="form-control " 
@@ -283,7 +283,7 @@ function Register() {
               </div>
 
               <div className="form-outline mb-4">
-                <label className="form-label fw-semibold lh-1 ml-2" htmlFor="form3Example3">Shift</label>
+                <label className="form-label fw-semibold lh-1 ml-2" htmlFor="shift">Shift</label>
                 <select
           className="form-control"
           name="shift"
@@ -302,11 +302,11 @@ function Register() {
               </div>
               
 
-              <div class="text-center pt-1 mb-5 pb-1">
+              <div className="text-center pt-1 mb-5 pb-1">
                     <button data-mdb-button-init data-mdb-ripple-init 
-                    class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 card_btn" type="submit">
+                    className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 card_btn" type="submit">
                       Sign Up</button>
-                    {/* <a class="text-muted" href="#!">Forgot password?</a> */}
+                    {/* <a className="text-muted" href="#!">Forgot password?</a> */}
                   </div>
             </form>
           </div>

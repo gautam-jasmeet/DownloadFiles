@@ -46,13 +46,13 @@ const handleOnChange = (e) => {
     });
 
     try {
-      const response = await axios.post('http://localhost:8080/documents/upload', formData, {
+      const response = await axios.post('http://srv617987.hstgr.cloud:8000/documents/upload', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data', // Ensure content type is set correctly
         },
       });
-      if (response.status === 200) {
+      if (response.status === 201) {
         setMessage('File uploaded successfully');
         
         

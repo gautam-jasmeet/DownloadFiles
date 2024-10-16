@@ -37,7 +37,7 @@ import FileUpload from "./departments/sharedDept/FileUpload";
 import EmployeeList from "./departments/HrDepartment/Employee Details/Employee1";
 // import Employee from "./departments/HrDepartment/Employee Details/Employee";
 import TrainingVideo from "./employee/TrainingVideo";
-import AdEmployee from "./admin/employee/AdEmployee";
+
 
 
 
@@ -67,7 +67,7 @@ function App() {
       <>
        <Route path='/Admin' element={<Dashboard/>}></Route>
        <Route path="/Admin/:departmentName" element={<DepartmentDocuments />} />
-       {/* <Route path="/Admin/Emp" element={<AdEmployee />} /> */}
+      
 
        
       </>

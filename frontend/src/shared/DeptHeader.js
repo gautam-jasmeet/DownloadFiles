@@ -1,22 +1,22 @@
 import React  from 'react'
-import {NavLink, useNavigate} from 'react-router-dom'
+// import { useNavigate} from 'react-router-dom'
 import "../App.css"
 // import { AppContext } from '../appContext/AppContext';
 
 function DeptHeader({header}) {
   // const {token} = useContext(AppContext)
  
-   const navigate = useNavigate();
-   const handleLogout = () => {
+  //  const navigate = useNavigate();
+  //  const handleLogout = () => {
 
-    // Removing token from localStorage
-    localStorage.removeItem("authToken");
+  //   // Removing token from localStorage
+  //   localStorage.removeItem("authToken");
 
-    navigate("/")
-   }
+  //   navigate("/")
+  //  }
 
     return (
-      <div style={{backgroundColor:'var( --main-Dept-header-color)', position:"sticky", top:"65px",zIndex:"999",
+      <div style={{backgroundColor:'var( --main-Dept-header-color)', position:"sticky", top:"56px",zIndex:"999",
       width:"100%",
       }}>
           <nav className="navbar"  >
@@ -24,7 +24,7 @@ function DeptHeader({header}) {
       <h2 className="navbar-brand"
      
        >
-       <spam className=" title fs-4" style={{color:"var(--primary-color)"}}>{header}</spam> 
+       <span className=" title fs-4" style={{color:"var(--primary-color)"}}>{header}</span> 
         </h2>
       {/* <NavLink to={"/"} style={{color:"var(--primary-color)", fontWeight:"500"}}>Logout</NavLink> */}
       {/* <button type="button" className="btn btn-primary mt-3 card_btn "

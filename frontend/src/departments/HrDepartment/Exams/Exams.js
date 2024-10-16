@@ -2,7 +2,11 @@ import React from 'react'
 
 function Exams() {
   return (
-    <div>Exams</div>
+    <div>
+      <form>
+        
+      </form>
+    </div>
   )
 }
 

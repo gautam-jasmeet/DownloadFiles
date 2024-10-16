@@ -1,6 +1,6 @@
 import {useContext, useState} from 'react'
-import { useNavigate } from 'react-router-dom';
-import axios, { all } from 'axios';
+// import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { AppContext } from '../../../appContext/AppContext';
 import "./JoiningForm.css"
 
@@ -65,7 +65,7 @@ function JoiningForm1() {
     const [errors, setErrors] = useState({});
     const [message, setMessage] = useState("");
   
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const {token} = useContext(AppContext)
 
@@ -149,7 +149,7 @@ function JoiningForm1() {
       formData.append("date",date);
 
       try{
-        const response = await axios.post("http://localhost:8080/joining/fill",formData,{
+        const response = await axios.post("http://srv617987.hstgr.cloud:8000/joining/fill",formData,{
           headers: {
             Authorization: `Bearer ${token}`,
             // "Content-Type": "multipart/form-data",
@@ -282,7 +282,7 @@ function JoiningForm1() {
                   >
                     <span className='title fs-2 border-3 '>Joining Form <br/> 
                    
-                    <i class="bi bi-arrow-right"></i>
+                    <i className="bi bi-arrow-right"></i>
                     </span>
                   </h2>
                   </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Outlet } from 'react-router-dom';
+// import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import RecentFiles from './RecentFiles';
 import AdminFileUpload from './AdminFileUpload';
@@ -19,9 +19,9 @@ function Dashboard() {
         <Sidebar />
         </div>
         
-      <div style={{marginLeft:"50px", padding:"10px", height:"100%", width:"85%" }}>
+      <div style={{ height:"100%", width:"85%" }}>
         {/* <Outlet /> */}
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap",width:"100%",padding:"2rem"}}>
         <div style={{ flex: 1, marginRight: "50px" }}>
         <RecentFiles refresh={refresh}/>
       </div>

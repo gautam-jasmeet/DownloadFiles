@@ -1,6 +1,6 @@
 import React, {  useEffect, useState,useContext } from 'react';
 import axios from 'axios';
-import ViewFiles from '../../component/dashboard/ViewFiles';
+import ViewFiles from '../../admin/dashboard/ViewFiles';
 import { AppContext } from '../../appContext/AppContext';
 
 import './FileUpload.css'
@@ -46,7 +46,7 @@ function FileUpload() {
   useEffect(() => {
     const fetchDocuments = async () => {
       try{
-        const response = await axios.get(`http://localhost:8080/documents/department`,{
+        const response = await axios.get(`http://srv617987.hstgr.cloud:8000/documents/department`,{
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -119,19 +119,21 @@ function FileUpload() {
     });
 
     try {
-      const response = await axios.post('http://localhost:8080/documents/upload', formData, {
+      const response = await axios.post('http://srv617987.hstgr.cloud:8000/documents/upload', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data', // Ensure content type is set correctly
         },
       });
-      if (response.status === 200) {
+      // console.log(response.data);
+      
+      if (response.status === 201) {
         setMessage('File uploaded successfully');
         setUploadedFiles((prevFiles) => [...prevFiles, ...files]);
         // addRecentFiles({ name: filename, timestamp: new Date() });
 
         // Fetch updated documents list
-        const updatedDocuments = await axios.get('http://localhost:8080/documents/department', {
+        const updatedDocuments = await axios.get('http://srv617987.hstgr.cloud:8000/documents/department', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -162,7 +164,7 @@ function FileUpload() {
       return;
     }
     try {
-      const response = await axios.delete(`http://localhost:8080/documents/${docId}`, {
+      const response = await axios.delete(`http://srv617987.hstgr.cloud:8000/documents/${docId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -277,7 +279,7 @@ const handleShowuploadbutton = ()=>{
 
 {/* Showing and hiding categories */}
             
-        <div className='cat' style={{width: '70vw'}} >
+        <div className='cat' style={{width: '70%'}} >
         < div className="navbar cat-1" >
   <div className="container-fluid cat-2">
     {/* <h6>Select Category:</h6> */}

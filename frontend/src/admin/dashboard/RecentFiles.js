@@ -14,7 +14,7 @@ function RecentFiles({refresh}) {
     useEffect(()=>{
         const fetchRecentFiles = async () => {
             try{
-            const response = await axios.get("http://localhost:8080/documents/",{
+            const response = await axios.get("http://srv617987.hstgr.cloud:8000/documents/",{
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -43,7 +43,7 @@ fetchRecentFiles()
 // Changing the document status
     const changeDocumentStatus = async (documentId, status) => {
       try{
-        const response = await axios.put(`http://localhost:8080/documents/${documentId}`, {status: status},{
+        const response = await axios.put(`http://srv617987.hstgr.cloud:8000/documents/${documentId}`, {status: status},{
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -83,7 +83,7 @@ fetchRecentFiles()
             return;
           }
           try {
-            const response = await axios.delete(`http://localhost:8080/documents/${documentId}`, {
+            const response = await axios.delete(`http://srv617987.hstgr.cloud:8000/documents/${documentId}`, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -117,7 +117,7 @@ fetchRecentFiles()
         {recentFiles.filter((file)=>file.status !== "Approved" && file.status !== "Rejected")
          .map(file => (
           <li key={file.id}  style={{ marginTop: '20px', }}>
-             <div className="card w-75" style={{ border: '1px solid var(--primary-color)',
+             <div className="card " style={{ border: '1px solid var(--primary-color)',
              borderRadius: '15px',boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
               backgroundColor:"f9f9f9"  }}>
              <div className="card-body" style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -138,9 +138,9 @@ fetchRecentFiles()
              <div >
             <label><b>Status: </b></label>
             {file.status === "Approved" || file.status === "Rejected" ? (<span> {file.status}</span>) : (
-              <div style={{ display: 'flex' }}>
-              <button className="btn btn-primary  card_btn" onClick={() => handleApprove(file.id)}>Approve</button>
-           <button className="btn btn-primary  card_btn" onClick={() => handleReject(file.id)}>Reject</button>
+              <div style={{ display: 'flex' ,flexWrap:"wrap" ,width:"75%"}}>
+              <button className="btn btn-primary  card_btn " onClick={() => handleApprove(file.id)}>Approve</button>
+           <button className="btn btn-primary  card_btn " onClick={() => handleReject(file.id)}>Reject</button>
            <ViewFiles file={file} />
            </div>
             )}

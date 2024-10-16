@@ -17,11 +17,6 @@ function Login() {
   // Using the context to set token, department, and designation
   const {setToken,setDesignation,setDepartment,setEmployeeId} = useContext(AppContext);
 
-
-  // useEffect(()=>{
-
-  // })
-
   const handleChangeEmployeeID = (e) => {
     setEmployeeID(e.target.value);
   };
@@ -38,7 +33,7 @@ function Login() {
     // console.log('Password:', password);
 
     try {
-      const response = await axios.post('http://localhost:8080/auth/login', {
+      const response = await axios.post('http://srv617987.hstgr.cloud:8000/auth/login', {
         employeeID,
         password,
       });
@@ -56,8 +51,8 @@ function Login() {
         setDesignation(designation);
         setDepartment(department);
         setEmployeeId(employeeID);
-        console.log(response);
-        console.log(response.data);
+        // console.log(response);
+        // console.log(response.data);
         
         
        // Redirecting  based on the role 
@@ -122,12 +117,12 @@ function Login() {
      <section className="background-radial-gradient overflow-hidden" >
   <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5" >
     <div className="row gx-lg-5 align-items-center mb-5">
-    <div class="col-lg-6 mb-5 mb-lg-0" style={{zIndex: "10"}}>
-        <h1 class="my-4 display-5 fw-bold ls-tight" style={{color:"hsl(218, 81%, 95%)"}}>
+    <div className="col-lg-6 mb-5 mb-lg-0" style={{zIndex: "10"}}>
+        <h1 className="my-4 display-5 fw-bold ls-tight" style={{color:"hsl(218, 81%, 95%)"}}>
          Document Management  <br />
           <span style={{color:"  hsl(218, 81%, 90%)"}}>Application</span>
         </h1>
-        <p class="mb-4 opacity-70" style={{color:" hsl(218, 81%, 85%)"}}>
+        <p className="mb-4 opacity-70" style={{color:" hsl(218, 81%, 85%)"}}>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit.
           Temporibus, expedita iusto veniam atque, magni tempora mollitia
           dolorum consequatur nulla, neque debitis eos reprehenderit quasi
@@ -179,11 +174,11 @@ function Login() {
                 />
               </div>
 
-              <div class="text-center pt-1 mb-5 pb-1 ">
+              <div className="text-center pt-1 mb-5 pb-1 ">
                     <button data-mdb-button-init data-mdb-ripple-init 
-                    class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 card_btn" type="submit">Log
+                    className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 card_btn" type="submit">Log
                       In</button>
-                    {/* <a class="text-muted" href="#!">Forgot password?</a> */}
+                    {/* <a className="text-muted" href="#!">Forgot password?</a> */}
                   </div>
             </form>
           </div>

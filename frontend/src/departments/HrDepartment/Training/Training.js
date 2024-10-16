@@ -24,6 +24,30 @@ function Training() {
 
   const { token } = useContext(AppContext);
 
+  // to get all videos
+useEffect(()=>{
+
+  const fetchVideos = async () => {
+   try{
+     const response = await axios.get("http://srv617987.hstgr.cloud:8000/hr/",{
+       headers:{
+         Authorization:`Bearer ${token}`
+       }
+     })
+     // console.log(response.data);
+     if(response.status === 200){
+       setAllVideos(response.data)
+     }else{
+       setError(`Something went wrong. ${response.data.message}` );
+     }
+   }catch(err){
+     setError(`Something went wrong. ${err.message}` );
+   }
+ }
+ fetchVideos();
+ },[token, allVideos]);
+ // console.log(allVideos);
+
 
   // Handle file upload
 const handleOnChange = (e) => {
@@ -50,7 +74,7 @@ const handleSubmit = async (e) => {
   });
 
   try {
-    const response = await axios.post('http://localhost:8080/hr/training-video', formData, {
+    const response = await axios.post('http://srv617987.hstgr.cloud:8000/hr/training-video', formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         // 'Content-Type': 'multipart/form-data', // Ensure content type is set correctly
@@ -74,29 +98,7 @@ const handleSubmit = async (e) => {
   }
 };
 
-// to get all videos
-useEffect(()=>{
 
- const fetchVideos = async () => {
-  try{
-    const response = await axios.get("http://localhost:8080/hr/",{
-      headers:{
-        Authorization:`Bearer ${token}`
-      }
-    })
-    // console.log(response.data);
-    if(response.status === 200){
-      setAllVideos(response.data)
-    }else{
-      setError(`Something went wrong. ${response.data.message}` );
-    }
-  }catch(err){
-    setError(`Something went wrong. ${err.message}` );
-  }
-}
-fetchVideos();
-},[token])
-console.log(allVideos);
 
 
 // to show/hide upload form
@@ -105,7 +107,7 @@ const handleShowuploadbutton = ()=>{
 }
 
 const handleViewAllVideos = (file)=>{
-     const fileURL = `http://localhost:8080${file.videoUrl}`; // Ensure full path
+     const fileURL = `http://srv617987.hstgr.cloud:8000${file.videoUrl}`; // Ensure full path
      const fileExtension = file.videoUrl.split('.').pop().toLowerCase();
      if (['mp4', 'avi', 'mov', 'wmv', 'mkv'].includes(fileExtension)) {
        // Video files
@@ -136,7 +138,7 @@ const handleDelete = async(Id)=>{
     return;
   }
   try{
-    const response = await axios.delete(`http://localhost:8080/hr/training-video/${Id}`,{
+    const response = await axios.delete(`http://srv617987.hstgr.cloud:8000/hr/training-video/${Id}`,{
       headers:{
         Authorization:`Bearer ${token}`
       }
@@ -158,7 +160,7 @@ const handleDelete = async(Id)=>{
   return (
   <>
       
-    <div style={{display:"flex" }}>
+    <div style={{display:"flex",flexWrap:"wrap" }}>
     
       {/* Video Upload */}
     <div >
@@ -243,9 +245,9 @@ const handleDelete = async(Id)=>{
 
 
 
-    <div style={{marginLeft:"50px",marginTop:"1rem", padding:"10px", height:"100%", width:"85%" }}>
+    <div style={{marginTop:"1rem", padding:"10px", height:"100%" }}>
       {/* Category Selection */}
-      <div className='cat' style={{position:"sticky", top:"166px",zIndex:"999",
+      <div className='cat' style={{position:"sticky", top:"119px",zIndex:"999",
         boxShadow:"0px 1px 3px rgba(0,0,0,0.2)",
         borderRadius:"10px",
         padding:"10px",
@@ -284,10 +286,10 @@ const handleDelete = async(Id)=>{
           ) : (
             filterVideos(selectedDept).map((file) => (
               <li className='cat_ol-2' key={file.id} style={{ margin: '10px' }}>
-                <div className="card w-50 cat_ol-3">
-                  <div className="card-body cat_ol-4" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div className="card w-75 cat_ol-3">
+                  <div className="card-body cat_ol-4" style={{ display: 'flex', justifyContent: 'space-between',flexWrap:"wrap" }}>
                     <div>
-                      <p className="card-title cat_ol-5"><b>Video Name:</b> {file.videoName}</p>
+                      <p className="card-title cat_ol-5"><b>Video Name:</b><span> {file.videoName} </span></p>
                       <p className="card-text cat_ol-6" style={{ margin: "0" }}><b>Video Version:</b> {file.videoVersion}</p>
                       <p className="card-text cat_ol-7"><b>Video Description:</b> {file.videoDescription}</p>
                     </div>

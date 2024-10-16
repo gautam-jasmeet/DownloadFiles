@@ -21,7 +21,7 @@ const DepartmentDocuments = () => {
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/documents/`, {
+        const response = await axios.get(`http://srv617987.hstgr.cloud:8000/documents/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -33,7 +33,7 @@ const DepartmentDocuments = () => {
       }
     };
     fetchDocuments();
-  }, []);
+  }, [token]);
 
   // Filter documents by department and category whenever the documents or departmentName change
   useEffect(() => {
@@ -58,7 +58,7 @@ const DepartmentDocuments = () => {
       return;
     }
     try {
-      const response = await axios.delete(`http://localhost:8080/documents/${docId}`, {
+      const response = await axios.delete(`http://srv617987.hstgr.cloud:8000/documents/${docId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -88,7 +88,7 @@ const DepartmentDocuments = () => {
       <div style={{ display: 'flex' }}>
       
       {/* Category Selection */}
-      <div className='cat' >
+      <div className='cat' style={{width:"100%"}}>
         <div className="navbar cat-1">
           <div className="container-fluid cat-2">
             <ul className="cat-ul">
@@ -121,14 +121,14 @@ const DepartmentDocuments = () => {
           ) : (
             filteredDocuments.map((file) => (
               <li className='cat_ol-2' key={file.id} style={{ margin: '10px' }}>
-                <div className="card w-50 cat_ol-3">
-                  <div className="card-body cat_ol-4" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div className="card w-75 cat_ol-3">
+                  <div className="card-body cat_ol-4" style={{ display: 'flex', justifyContent: 'space-between',flexWrap:"wrap" }}>
                     <div>
                       <p className="card-title cat_ol-5"><b>File Name:</b> {file.filename}</p>
                       <p className="card-text cat_ol-6" style={{ margin: "0" }}><b>File Version:</b> {file.fileVersion}</p>
                       <p className="card-text cat_ol-7"><b>Status:</b> {file.status}</p>
                     </div>
-                    <div>
+                    <div >
                     <button className="btn btn-primary card_btn"
                        onClick={() => handleDelete(file.id)}>
                         Delete
@@ -142,8 +142,8 @@ const DepartmentDocuments = () => {
           )}
         </ol>
       </div>
-      {message && <p className='alert alert-danger'>{message}</p>}
     </div>
+      {message && <p className='alert alert-danger'>{message}</p>}
     </div>
   );
 };

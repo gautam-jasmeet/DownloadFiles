@@ -24,7 +24,7 @@ function Employee() {
    const groupedByDepartment = (emplpoyees)=>{
     return emplpoyees.reduce((acc,emp)=>{
       const department = emp.department || "Other";
-      console.log(department);
+      // console.log(department);
       
       if(!acc[department]){
         acc[department] = [];
@@ -36,17 +36,17 @@ function Employee() {
     },{});
   } 
   
-  console.log(groupedByDepartment(empData));
+  // console.log(groupedByDepartment(empData));
   // const departmentEmployees = groupedByDepartment(empData);
 
   useEffect(()=>{
     const fetchEmpData = async()=>{
       try{
-        const response = await axios.get("http://localhost:8080/joining/",{
+        const response = await axios.get("http://srv617987.hstgr.cloud:8000/joining/",{
           headers:{
             Authorization: `Bearer ${token}`}
         });
-        console.log(response.data);
+        // console.log(response.data);
         if(response.status === 200){
           setEmpData(response.data);
         }

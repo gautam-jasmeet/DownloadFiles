@@ -43,13 +43,13 @@ const EmployeeList = () => {
       setError(null);   // Reset previous errors
 
       try {
-        const response = await axios.get("http://localhost:8080/joining/", { 
+        const response = await axios.get("http://srv617987.hstgr.cloud:8000/joining/", { 
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
 
-        console.log(response.data);
+        // console.log(response.data);
 
         if (response.status === 200) {
           setEmployees(response.data);

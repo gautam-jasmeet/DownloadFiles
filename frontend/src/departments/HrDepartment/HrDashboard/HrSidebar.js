@@ -8,14 +8,14 @@ function HrSidebar() {
     <div className="sidebar">
       
       <h4 className="title text-center"
-      ><i class="bi bi-person-fill fs-3"></i> HR <br /> Dashboard</h4>
+      ><i className="bi bi-person-fill fs-3"></i> HR <br /> Dashboard</h4>
       <ul>
         <li className="text-center">
           <NavLink to="jform"> Joining Form</NavLink>
         </li>
-        <li className="text-center">
+        {/* <li className="text-center">
           <NavLink to="/signup"> SignUp</NavLink>
-        </li>
+        </li> */}
         <li className="text-center">
           <NavLink to="documents"> Documents</NavLink>
         </li>

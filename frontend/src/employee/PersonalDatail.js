@@ -12,7 +12,7 @@ function PersonalDatail() {
   useEffect(()=>{
     const fetchEmpData = async()=>{
       try{
-        const response = await axios.get("http://localhost:8080/joining/",{
+        const response = await axios.get("http://srv617987.hstgr.cloud:8000/joining/",{
           headers:{
             Authorization:`Bearer ${token}`
 
@@ -22,7 +22,7 @@ function PersonalDatail() {
           setEmpData(response.data)
           
         }
-        console.log(response.data);
+        // console.log(response.data);
         if(response.status === 200){
           setEmpData(response.data)
           
@@ -52,7 +52,7 @@ function PersonalDatail() {
     </div>
     <div className="card mb-4 m-2 shadow-sm " >
  
- <div className=" d-flex justify-content-evenly  align-items-center">
+ <div className=" d-flex justify-content-evenly  align-items-center" style={{flexWrap:"wrap"}}>
    <div className="d-flex align-items-center">
  <img src={personalEmpData?.photo_url} className="img-fluid rounded-start w-25   rounded  " alt="Profile Pic"/>
   
@@ -98,7 +98,7 @@ function PersonalDatail() {
                 aria-labelledby={`headingTwo`}
                 data-bs-parent={`#accordionExample`}
               >
-                <div className="accordion-body d-flex">
+                <div className="accordion-body d-flex" style={{flexWrap:"wrap"}}>
                 <div className='px-5'>
                   <h5 className='border-bottom border-dark text-center mb-3'>Present Address</h5>
         <p className="lh-1">Name:{personalEmpData?.present_address_name}, Relation: {personalEmpData?.present_address_relation}, Contact: {personalEmpData?.present_address_contact_no}</p>
@@ -135,7 +135,7 @@ function PersonalDatail() {
                 aria-labelledby={`headingThree`}
                 data-bs-parent={`#accordionExample`}
               >
-                 <div className="accordion-body d-flex">
+                 <div className="accordion-body d-flex" style={{flexWrap:"wrap"}}>
                 <div className="px-5">
                 <p className="lh-1">Date Of Interview: {personalEmpData?.date_of_interview} </p>
         <p className="lh-1">Date of Joining: {personalEmpData?.date_of_joining}</p> 
@@ -170,7 +170,7 @@ function PersonalDatail() {
                 aria-labelledby={`headingFour`}
                 data-bs-parent={`#accordionExample`}
               >
-                <div className="accordion-body d-flex">
+                <div className="accordion-body d-flex" style={{flexWrap:"wrap"}}>
                 <div className="px-5">
                 <p className="lh-1">PAN No.: {personalEmpData?.pan_no}, </p>
         <p className="lh-1">Aadhar No.: {personalEmpData?.adhar_no}</p> 
@@ -205,7 +205,7 @@ function PersonalDatail() {
                 aria-labelledby={`headingFive`}
                 data-bs-parent={`#accordionExample`}
               >
-                <div className="accordion-body d-flex ">
+                <div className="accordion-body d-flex " style={{flexWrap:"wrap"}}>
                 <div className="px-5">
                   <h5 className='border-bottom border-dark text-center mb-3'>Contact Details in Case of Emergency<br/>
                   (Family Member Only)</h5>

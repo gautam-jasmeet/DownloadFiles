@@ -6,10 +6,10 @@ import DeptHeader from '../../shared/DeptHeader'
 function EmpDashboard() {
   return (
     <div style={{ display: 'flex' }}>
-      <div>
+      <div style={{ width: '15%' }}>
         <EmpSidebar />
       </div>
-      <div style={{width: '100%'}}>
+      <div style={{width: '85%'}}>
         <DeptHeader header="Employee "/>
          {/* Outlet will render the nested routes here */}
         <Outlet />

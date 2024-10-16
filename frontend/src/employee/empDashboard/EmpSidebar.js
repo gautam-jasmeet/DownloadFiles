@@ -11,7 +11,7 @@ function EmpSidebar() {
     
     }}>
     <h4 className="title text-center"
-     > <i class="bi bi-person-fill fs-3"></i> Employee Dashboard</h4>
+     > <i className="bi bi-person-fill fs-3"></i> Employee Dashboard</h4>
     <ul>
       <li className="text-center">
         <NavLink to="personal"> Personal Details</NavLink>

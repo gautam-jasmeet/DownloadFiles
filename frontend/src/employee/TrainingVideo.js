@@ -13,7 +13,7 @@ function TrainingVideo() {
     useEffect(()=>{
         const fetchAllVideo = async()=>{
             try{
-                const response = await axios.get("http://localhost:8080/hr/",{
+                const response = await axios.get("http://srv617987.hstgr.cloud:8000/hr/",{
                     headers:{
                         Authorization:`Bearer ${token}`
                     }
@@ -28,21 +28,21 @@ function TrainingVideo() {
         fetchAllVideo();
     },[token])
 
-    console.log(allVideo);
+    // console.log(allVideo);
 
     const filterVideo = allVideo.filter((video)=>video.departmentName === department);
 
-    console.log(filterVideo);
-    const handleViewAllVideos = (file)=>{
-        const fileURL = `http://localhost:8080${file.videoUrl}`; // Ensure full path
-        const fileExtension = file.videoUrl.split('.').pop().toLowerCase();
-        if (['mp4', 'avi', 'mov', 'wmv', 'mkv'].includes(fileExtension)) {
-          // Video files
-          window.open(fileURL);
-        } else {
-          alert('File type not supported for preview');
-        }
-   }
+    // console.log(filterVideo);
+  //   const handleViewAllVideos = (file)=>{
+  //       const fileURL = `http://srv617987.hstgr.cloud:8000${file.videoUrl}`; // Ensure full path
+  //       const fileExtension = file.videoUrl.split('.').pop().toLowerCase();
+  //       if (['mp4', 'avi', 'mov', 'wmv', 'mkv'].includes(fileExtension)) {
+  //         // Video files
+  //         window.open(fileURL);
+  //       } else {
+  //         alert('File type not supported for preview');
+  //       }
+  //  }
 
 
    /// video watch completed
@@ -70,7 +70,7 @@ function TrainingVideo() {
                 <div className="card w-100 cat_ol-3">
                   <div>
                  <video className="card-img-top" width="100%" height="320px"  controls onEnded={handleVideoEnd}>
-                        <source src={`http://localhost:8080${file.videoUrl}`}  type="video/mp4" />
+                        <source src={`http://srv617987.hstgr.cloud:8000${file.videoUrl}`}  type="video/mp4" />
                       </video>
                       {isCompleted && <p className='cat_ol-4'>Video Completed</p>}
                       </div>
