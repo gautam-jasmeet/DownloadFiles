@@ -14,7 +14,7 @@ function RecentFiles({refresh}) {
     useEffect(()=>{
         const fetchRecentFiles = async () => {
             try{
-            const response = await axios.get("http://srv617987.hstgr.cloud:8000/documents/",{
+            const response = await axios.get("http://srv617987.hstgr.cloud:8080/documents/",{
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -43,7 +43,7 @@ fetchRecentFiles()
 // Changing the document status
     const changeDocumentStatus = async (documentId, status) => {
       try{
-        const response = await axios.put(`http://srv617987.hstgr.cloud:8000/documents/${documentId}`, {status: status},{
+        const response = await axios.put(`http://srv617987.hstgr.cloud:8080/documents/${documentId}`, {status: status},{
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -83,7 +83,7 @@ fetchRecentFiles()
             return;
           }
           try {
-            const response = await axios.delete(`http://srv617987.hstgr.cloud:8000/documents/${documentId}`, {
+            const response = await axios.delete(`http://srv617987.hstgr.cloud:8080/documents/${documentId}`, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },

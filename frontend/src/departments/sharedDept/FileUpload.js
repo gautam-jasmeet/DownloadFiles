@@ -46,12 +46,13 @@ function FileUpload() {
   useEffect(() => {
     const fetchDocuments = async () => {
       try{
-        const response = await axios.get(`http://srv617987.hstgr.cloud:8000/documents/department`,{
+        const response = await axios.get(`http://srv617987.hstgr.cloud:8080/documents/department`,{
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         setDocuments(response.data);
+
       }catch(err){
         console.error('Error fetching documents', err);
         setMessage(`Error fetching documents: ${err.message}`);
@@ -119,7 +120,7 @@ function FileUpload() {
     });
 
     try {
-      const response = await axios.post('http://srv617987.hstgr.cloud:8000/documents/upload', formData, {
+      const response = await axios.post('http://srv617987.hstgr.cloud:8080/documents/upload', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data', // Ensure content type is set correctly
@@ -133,7 +134,7 @@ function FileUpload() {
         // addRecentFiles({ name: filename, timestamp: new Date() });
 
         // Fetch updated documents list
-        const updatedDocuments = await axios.get('http://srv617987.hstgr.cloud:8000/documents/department', {
+        const updatedDocuments = await axios.get('http://srv617987.hstgr.cloud:8080/documents/department', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -164,7 +165,7 @@ function FileUpload() {
       return;
     }
     try {
-      const response = await axios.delete(`http://srv617987.hstgr.cloud:8000/documents/${docId}`, {
+      const response = await axios.delete(`http://srv617987.hstgr.cloud:8080/documents/${docId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

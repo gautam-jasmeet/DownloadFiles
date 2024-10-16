@@ -29,7 +29,7 @@ useEffect(()=>{
 
   const fetchVideos = async () => {
    try{
-     const response = await axios.get("http://srv617987.hstgr.cloud:8000/hr/",{
+     const response = await axios.get("http://srv617987.hstgr.cloud:8080/hr/",{
        headers:{
          Authorization:`Bearer ${token}`
        }
@@ -74,7 +74,7 @@ const handleSubmit = async (e) => {
   });
 
   try {
-    const response = await axios.post('http://srv617987.hstgr.cloud:8000/hr/training-video', formData, {
+    const response = await axios.post('http://srv617987.hstgr.cloud:8080/hr/training-video', formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         // 'Content-Type': 'multipart/form-data', // Ensure content type is set correctly
@@ -107,7 +107,7 @@ const handleShowuploadbutton = ()=>{
 }
 
 const handleViewAllVideos = (file)=>{
-     const fileURL = `http://srv617987.hstgr.cloud:8000${file.videoUrl}`; // Ensure full path
+     const fileURL = `http://srv617987.hstgr.cloud:8080${file.videoUrl}`; // Ensure full path
      const fileExtension = file.videoUrl.split('.').pop().toLowerCase();
      if (['mp4', 'avi', 'mov', 'wmv', 'mkv'].includes(fileExtension)) {
        // Video files
@@ -138,7 +138,7 @@ const handleDelete = async(Id)=>{
     return;
   }
   try{
-    const response = await axios.delete(`http://srv617987.hstgr.cloud:8000/hr/training-video/${Id}`,{
+    const response = await axios.delete(`http://srv617987.hstgr.cloud:8080/hr/training-video/${Id}`,{
       headers:{
         Authorization:`Bearer ${token}`
       }

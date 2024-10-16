@@ -37,7 +37,7 @@ function Register() {
     
     try{
       
-      const resposne = await axios.post('http://srv617987.hstgr.cloud:8000/auth/signup',{
+      const resposne = await axios.post('http://srv617987.hstgr.cloud:8080/auth/signup',{
         name,
         employeeID,
         department,

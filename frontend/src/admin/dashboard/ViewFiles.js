@@ -5,7 +5,7 @@ import "./ViewFiles.css"
 function ViewFiles({file}) {
     const handleViewFile = (file) => {
     
-        const fileURL = `http://srv617987.hstgr.cloud:8000${file.fileUrl}`; // Ensure full path
+        const fileURL = `http://srv617987.hstgr.cloud:8080${file.fileUrl}`; // Ensure full path
       const fileExtension = file.fileUrl.split('.').pop().toLowerCase();
       
       // console.log(fileURL);

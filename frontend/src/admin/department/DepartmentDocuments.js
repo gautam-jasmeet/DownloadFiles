@@ -21,7 +21,7 @@ const DepartmentDocuments = () => {
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const response = await axios.get(`http://srv617987.hstgr.cloud:8000/documents/`, {
+        const response = await axios.get(`http://srv617987.hstgr.cloud:8080/documents/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -58,7 +58,7 @@ const DepartmentDocuments = () => {
       return;
     }
     try {
-      const response = await axios.delete(`http://srv617987.hstgr.cloud:8000/documents/${docId}`, {
+      const response = await axios.delete(`http://srv617987.hstgr.cloud:8080/documents/${docId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

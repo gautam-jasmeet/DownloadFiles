@@ -42,7 +42,7 @@ function Employee() {
   useEffect(()=>{
     const fetchEmpData = async()=>{
       try{
-        const response = await axios.get("http://srv617987.hstgr.cloud:8000/joining/",{
+        const response = await axios.get("http://srv617987.hstgr.cloud:8080/joining/",{
           headers:{
             Authorization: `Bearer ${token}`}
         });

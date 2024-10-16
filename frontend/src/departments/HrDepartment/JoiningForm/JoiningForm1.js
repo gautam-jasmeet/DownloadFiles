@@ -149,7 +149,7 @@ function JoiningForm1() {
       formData.append("date",date);
 
       try{
-        const response = await axios.post("http://srv617987.hstgr.cloud:8000/joining/fill",formData,{
+        const response = await axios.post("http://srv617987.hstgr.cloud:8080/joining/fill",formData,{
           headers: {
             Authorization: `Bearer ${token}`,
             // "Content-Type": "multipart/form-data",
