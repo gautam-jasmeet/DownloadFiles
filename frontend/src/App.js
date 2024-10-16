@@ -39,17 +39,10 @@ import EmployeeList from "./departments/HrDepartment/Employee Details/Employee1"
 import TrainingVideo from "./employee/TrainingVideo";
 
 
-
-
-
-
-
 function App() {
   const {department , designation} = useContext(AppContext);
   
   // console.log("designation:",designation);
-  
-
 
   return (
     
@@ -146,7 +139,6 @@ function App() {
     
   );
 }
-
 
 
 export default App;
