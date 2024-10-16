@@ -28,17 +28,17 @@ const Header = () => {
    {/* <li className="nav-item">
     <NavLink className="nav-link" to="/signup">SignUp</NavLink>
   </li>  */}
-  <li className="d-flex">
+  {/* <li className="d-flex"> */}
     {/* <NavLink className="nav-link" to="/"  style={{color:"var(--light-color)", fontWeight:"500"}}>Logout</NavLink> */}
-    <NavLink className="nav-link active " aria-current="page" to={"/signup"} 
+    {/* <NavLink className="nav-link active " aria-current="page" to={"/signup"} 
     style={{ color:"var(--light-color)",fontWeight:"600"}}>
       <span className=' border-bottom border-2 border-light'>SignUp</span>
         </NavLink> 
     <NavLink className="nav-link active " aria-current="page" to={"/"} 
     style={{ color:"var(--light-color)",fontWeight:"600"}} >
       <span className=' border-bottom border-2 border-light'>LogOut</span>
-      </NavLink> 
-  </li> 
+      </NavLink>  */}
+  {/* </li>  */}
  
 </ul>
 </nav>
