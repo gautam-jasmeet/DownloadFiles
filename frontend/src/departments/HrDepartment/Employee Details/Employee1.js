@@ -52,7 +52,7 @@ const EmployeeList = () => {
           }
         });
 
-        console.log(response.data);
+        // console.log(response.data);
 
         if (response.status === 200) {
           setEmployees(response.data);
