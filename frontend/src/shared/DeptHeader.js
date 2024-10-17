@@ -1,19 +1,19 @@
 import React  from 'react'
-// import { useNavigate} from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 import "../App.css"
 // import { AppContext } from '../appContext/AppContext';
 
 function DeptHeader({header}) {
   // const {token} = useContext(AppContext)
  
-  //  const navigate = useNavigate();
-  //  const handleLogout = () => {
+   const navigate = useNavigate();
+   const handleLogout = () => {
 
-  //   // Removing token from localStorage
-  //   localStorage.removeItem("authToken");
+    // Removing token from localStorage
+    localStorage.removeItem("authToken");
 
-  //   navigate("/")
-  //  }
+    navigate("/")
+   }
 
     return (
       <div style={{backgroundColor:'var( --main-Dept-header-color)', position:"sticky", top:"56px",zIndex:"999",
@@ -27,11 +27,12 @@ function DeptHeader({header}) {
        <span className=" title fs-4" style={{color:"var(--primary-color)"}}>{header}</span> 
         </h2>
       {/* <NavLink to={"/"} style={{color:"var(--primary-color)", fontWeight:"500"}}>Logout</NavLink> */}
-      {/* <button type="button" className="btn btn-primary mt-3 card_btn "
+      <button type="button" className="btn btn-primary mt-3 card_btn p-1 rounded-4"
       style={{
-        width:"5%",
+        width:"8%",
+        height:"10%",
       }}  
-      onClick={handleLogout}>Logout</button> */}
+      onClick={handleLogout}>LogOut</button>
       
     </div>
   </nav>

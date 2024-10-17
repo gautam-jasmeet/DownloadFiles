@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AppContext } from '../../../appContext/AppContext';
+import useGet from '../../../customHooks/useGet';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
-  // const [departments, setDepartments] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+   // for editing
+   const [isEditing, setIsEditing] = useState(false);
+   const [updatedEmployee,setUpdatedEmployee] = useState(null);
 
   const [selectedCategory, setSelectedCategory] = useState('');
   const [filteredEmployees, setFilteredEmployees] = useState([]);
@@ -24,8 +26,8 @@ const EmployeeList = () => {
   
 
   // Function to group employees by department
-  const groupByDepartment = (employees) => {
-    return employees.reduce((acc, employee) => {
+  const groupByDepartment = (data) => {
+    return data.reduce((acc, employee) => {
       const dept = employee.department || 'Others';
       if (!acc[dept]) {
         acc[dept] = [];
@@ -36,48 +38,10 @@ const EmployeeList = () => {
     }, {});
   };
 
+ 
   // Fetch employee data
-  useEffect(() => {
-    const fetchEmpData = async () => {
-      setLoading(true); // Start loading
-      setError(null);   // Reset previous errors
-
-      try {
-        const response = await axios.get("http://srv617987.hstgr.cloud:8080/joining/", { 
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-
-        // console.log(response.data);
-
-        if (response.status === 200) {
-          setEmployees(response.data);
-          // setDepartments(groupByDepartment(response.data));
-          setFilteredEmployees(response.data); // Initialize filteredEmployees
-        
-        } else {
-          // Handle non-200 responses
-          setError(`Unexpected response status: ${response.status}`);
-        }
-      } catch (err) {
-        // Handle errors (network issues, server errors, etc.)
-        console.error('Error fetching employee data:', err);
-        setError(err.response?.data?.message || err.message || 'An error occurred');
-      } finally {
-        // Stop loading in both success and error cases
-        setLoading(false);
-      }
-    };
-
-    // Only fetch if token is available
-    if (token) {
-      fetchEmpData();
-    } else {
-      setError('Authentication token is missing.');
-      setLoading(false);
-    }
-  }, [token]); // Add token as a dependency
+ const {data, error,loading} = useGet("http://srv617987.hstgr.cloud:8080/joining/");
+ 
 
   // Handle employee click to open modal
   const handleEmployeeClick = (employee) => {
@@ -95,6 +59,48 @@ const EmployeeList = () => {
     setSelectedEmployee(null);
   };
 
+   // Edit employee's data
+   const handleEditClick = () =>{
+    setIsEditing(true);
+    setUpdatedEmployee({...selectedEmployee});
+  }
+
+  // handle input change
+  const handleInputChange = (event)=>{
+    const {name,value} = event.target;
+    setUpdatedEmployee((prev)=>({...prev,
+      [name]:value
+    }));
+  }
+
+  // Save Changes
+  const handleSaveClick = async()=>{
+    try{
+      const response = await axios.put(`http://srv617987.hstgr.cloud:8080/joining/${updatedEmployee.id}`,updatedEmployee,{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      })
+      if(response.status === 200){
+        setEmployees((prevEmployees)=>prevEmployees.map((emp)=>
+        emp.id === updatedEmployee.id ? updatedEmployee : emp
+        ))
+        setSelectedEmployee(updatedEmployee);
+        setIsEditing(false);
+      }else{
+        alert("Fail to update employee details");
+      }
+    }catch(error){
+      console.log(error);
+      alert("An error occurred while updating employee details.");
+    }
+  }
+
+  // handel cancel edit
+  const handleCancelEdit = ()=>{
+    setIsEditing(false);
+    setUpdatedEmployee(null);
+  }
   
   // handle category change
   const handleCategoryChange = (event) => {
@@ -104,10 +110,10 @@ const EmployeeList = () => {
   // Filter employees based on selected category
   useEffect(() => {
     if(selectedCategory ===""){
-      setFilteredEmployees(employees);
+      setFilteredEmployees(data);
     }else{
       const filtered = employees.filter((emp)=>emp.department === selectedCategory)
-      setFilteredEmployees(filtered);
+      setFilteredEmployees(data);
     }
   }, [employees, selectedCategory]);
   
@@ -202,17 +208,65 @@ const EmployeeList = () => {
          
              <div className="card mb-4 m-2 shadow-sm "  >
  
- <div className=" d-flex justify-content-evenly  align-items-center">
+ <div className=" d-flex justify-content-between  align-items-center">
    <div className="d-flex align-items-center">
- <img src={`http://srv617987.hstgr.cloud:8080${selectedEmployee.photo_url}`} className="img-fluid rounded-start w-25   rounded  " alt="Profile Pic"/>
+ <img src={`http://srv617987.hstgr.cloud:8080${selectedEmployee.photo_url}`} 
+ className='rounded-3'
+  alt="Profile Pic"
+ style={{width:"200px", height:"150px", margin:"2px"}}
+ />
   
    <div className='px-5'>
-   <p className="lh-1">Name: {selectedEmployee.full_name}</p>
-   <p className="lh-1">Father's Name: {selectedEmployee.fathers_name}</p>
-   <p className="lh-1">Date of Birth: {selectedEmployee.date_of_birth}</p>
+     {/* Name */}
+     {isEditing ?(
+      <div>
+      <label>Name: </label>
+      <input
+      className="form-control"
+      type='text'
+      name='full_name'
+      value={updatedEmployee.full_name}
+      onChange={handleInputChange}
+      /> 
+      </div>):(
+        <p className="lh-1">Name: {selectedEmployee.full_name}</p>
+      )
+  }
+     {/* Father Name */}
+     {isEditing ?(
+      <div>
+      <label> Father's Name: </label>
+      <input
+      className="form-control"
+      type='text'
+      name='fathers_name'
+      value={updatedEmployee.fathers_name}
+      onChange={handleInputChange}
+      /> 
+      </div>):(
+        <p className="lh-1">Father's Name: {selectedEmployee.fathers_name}</p>
+      )
+  }
+     {/* Name */}
+     {isEditing ?(
+      <div>
+      <label>Employee ID: </label>
+      <input
+      className="form-control"
+      type='text'
+      name='employeeID'
+      value={updatedEmployee.employeeID}
+      onChange={handleInputChange}
+      /> 
+      </div>):(
+       <p className="lh-1">Employee ID: {selectedEmployee.employeeID}</p>
+      )
+  }
+   
    </div>
    </div>
    <div>
+   <p className="lh-1">Date of Birth: {selectedEmployee.date_of_birth}</p>
    <p className="lh-1">Gender: {selectedEmployee.gender}</p>
    <p className="lh-1">Marital Status: {selectedEmployee.marital_status}</p>
    <p className="lh-1">Blood Group: {selectedEmployee.blood_group}</p>
@@ -367,12 +421,44 @@ const EmployeeList = () => {
                   </div>
                 </div>
               </div>
-            {/* </div> */}
-          {/* </div> */}
+           
 </div>
+{/* Save and Cancel Button */}
+{isEditing && (
+  <div className='d-flex justify-content-center mb-1'>
+    <button onClick={handleSaveClick} 
+    className='rounded-2 w-50  '
+    >
+      Save
+    </button>
+    <button onClick={handleCancelEdit}
+     className=' rounded-2 w-50 '
+     >
+      Cancel
+      </button>
+  </div>
+)}
+ <div className='d-flex justify-content-center'>
+
+<button 
+  className='rounded-2 w-100 '
+  onClick={closeModal} >
+    Close
+</button>
+
+{/* Edit Button */}
+{!isEditing &&(
+        <button 
+        className='rounded-2 w-100'
+        onClick={handleEditClick} >
+          Edit
+        </button>
+
+)}
+</div>       
 
           </div>
-          <button onClick={closeModal} style={{ marginTop: '20px' }}>Close</button>
+          {/* <button onClick={closeModal} style={{ marginTop: '20px' }}>Close</button> */}
           </div>
         )}
       </Modal>
