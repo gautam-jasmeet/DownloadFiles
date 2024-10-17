@@ -41,6 +41,8 @@ const EmployeeList = () => {
  
   // Fetch employee data
  const {data, error,loading} = useGet("http://srv617987.hstgr.cloud:8080/joining/");
+ console.log(data);
+ 
  
 
   // Handle employee click to open modal
