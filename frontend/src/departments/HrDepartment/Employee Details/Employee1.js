@@ -1,20 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AppContext } from '../../../appContext/AppContext';
-import useGet from '../../../customHooks/useGet';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
+  
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-   // for editing
-   const [isEditing, setIsEditing] = useState(false);
-   const [updatedEmployee,setUpdatedEmployee] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [updatedEmployee, setUpdatedEmployee] = useState(null);
 
   const [selectedCategory, setSelectedCategory] = useState('');
   const [filteredEmployees, setFilteredEmployees] = useState([]);
@@ -26,8 +27,8 @@ const EmployeeList = () => {
   
 
   // Function to group employees by department
-  const groupByDepartment = (data) => {
-    return data.reduce((acc, employee) => {
+  const groupByDepartment = (employees) => {
+    return employees.reduce((acc, employee) => {
       const dept = employee.department || 'Others';
       if (!acc[dept]) {
         acc[dept] = [];
@@ -38,12 +39,49 @@ const EmployeeList = () => {
     }, {});
   };
 
- 
   // Fetch employee data
- const {data, error,loading} = useGet("http://srv617987.hstgr.cloud:8080/joining/");
- console.log(data);
- 
- 
+  useEffect(() => {
+    const fetchEmpData = async () => {
+      setLoading(true); // Start loading
+      setError(null);   // Reset previous errors
+
+      try {
+        const response = await axios.get("http://srv617987.hstgr.cloud:8080/joining/", { 
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        console.log(response.data);
+
+        if (response.status === 200) {
+          setEmployees(response.data);
+          // setDepartments(groupByDepartment(response.data));
+          setFilteredEmployees(response.data); // Initialize filteredEmployees
+        
+        } else {
+          // Handle non-200 responses
+          setError(`Unexpected response status: ${response.status}`);
+        }
+      } catch (err) {
+        // Handle errors (network issues, server errors, etc.)
+        console.error('Error fetching employee data:', err);
+        setError(err.response?.data?.message || err.message || 'An error occurred');
+      } finally {
+        // Stop loading in both success and error cases
+        setLoading(false);
+      }
+    };
+
+    // Only fetch if token is available
+    if (token) {
+      fetchEmpData();
+    } else {
+      setError('Authentication token is missing.');
+      setLoading(false);
+    }
+  }, [token]); // Add token as a dependency
+
 
   // Handle employee click to open modal
   const handleEmployeeClick = (employee) => {
@@ -112,10 +150,10 @@ const EmployeeList = () => {
   // Filter employees based on selected category
   useEffect(() => {
     if(selectedCategory ===""){
-      setFilteredEmployees(data);
+      setFilteredEmployees(employees);
     }else{
       const filtered = employees.filter((emp)=>emp.department === selectedCategory)
-      setFilteredEmployees(data);
+      setFilteredEmployees(filtered);
     }
   }, [employees, selectedCategory]);
   
