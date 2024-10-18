@@ -81,41 +81,10 @@ function Login() {
 
   return (
     <div>
-    {/* <div className="container mt-5 w-25 p-3" >
-      <h2>Login</h2>
-      {error && <div className="alert alert-danger">{error}</div>}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Employee ID</label>
-          <input
-            type="text"
-            className="form-control border border-black"
-            value={employeeID}
-            onChange={handleChangeEmployeeID}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control border border-black"
-            value={password}
-            onChange={handleChangePassword}
-            required
-          />
-        </div>
-
-        <button type="submit" className="btn btn-primary mt-3 card_btn" style={{ width: '25%' }}>
-          Login
-        </button>
-      </form>
-    </div>
-    <Footer/> */}
+   
      {/* <!-- Section: Design Block --> */}
-     <section className="background-radial-gradient overflow-hidden" >
-  <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5" >
+     <section className="background-radial-gradient overflow-hidden" style={{height:"100vh",zIndex:"1"}} >
+  <div className="container  text-center text-lg-start my-4 mt-5" >
     <div className="row gx-lg-5 align-items-center mb-5">
     <div className="col-lg-6 mb-5 mb-lg-0" style={{zIndex: "10"}}>
         <h1 className="my-4 display-5 fw-bold ls-tight" style={{color:"hsl(218, 81%, 95%)"}}>
@@ -128,12 +97,9 @@ function Login() {
           dolorum consequatur nulla, neque debitis eos reprehenderit quasi
           ab ipsum nisi dolorem modi. Quos?
         </p>
-        {/* <img src={DocController} alt="DocController Image" style={{opacity:"0.4" ,borderRadius:"50%"}}></img> */}
+       
       </div>
-      <div className="col-lg-6 mb-5 mb-lg-0 position-relative" >
-        {/* <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong"></div> */}
-        {/* <div id="radius-shape-2" className="position-absolute shadow-5-strong"></div> */}
-
+      <div className="col-lg-6 mb-5 mt-5 mb-lg-0 position-relative"> 
         {error && <div className="alert alert-danger">{error}</div>}
         <div className="card bg-glass" style={{boxShadow:"0 4px 6px -1px rgba(0, 0, 0, 0.5)"}}>
           <div className="card-body px-4 py-5 px-md-5">
@@ -178,7 +144,7 @@ function Login() {
                     <button data-mdb-button-init data-mdb-ripple-init 
                     className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 card_btn" type="submit">Log
                       In</button>
-                    {/* <a className="text-muted" href="#!">Forgot password?</a> */}
+                    
                   </div>
             </form>
           </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AppContext } from '../../../appContext/AppContext';
+import useGet from '../../../customHooks/useGet';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
@@ -8,8 +9,8 @@ Modal.setAppElement('#root');
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
   
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
 
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,8 +28,8 @@ const EmployeeList = () => {
   
 
   // Function to group employees by department
-  const groupByDepartment = (employees) => {
-    return employees.reduce((acc, employee) => {
+  const groupByDepartment = (data) => {
+    return data.reduce((acc, employee) => {
       const dept = employee.department || 'Others';
       if (!acc[dept]) {
         acc[dept] = [];
@@ -40,47 +41,50 @@ const EmployeeList = () => {
   };
 
   // Fetch employee data
-  useEffect(() => {
-    const fetchEmpData = async () => {
-      setLoading(true); // Start loading
-      setError(null);   // Reset previous errors
 
-      try {
-        const response = await axios.get("http://srv617987.hstgr.cloud:8080/joining/", { 
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+  const {data, error,loading} = useGet("http://srv617987.hstgr.cloud:8080/joining/");
 
-        // console.log(response.data);
+  // useEffect(() => {
+  //   const fetchEmpData = async () => {
+  //     setLoading(true); // Start loading
+  //     setError(null);   // Reset previous errors
 
-        if (response.status === 200) {
-          setEmployees(response.data);
-          // setDepartments(groupByDepartment(response.data));
-          setFilteredEmployees(response.data); // Initialize filteredEmployees
+  //     try {
+  //       const response = await axios.get("http://srv617987.hstgr.cloud:8080/joining/", { 
+  //         headers: {
+  //           Authorization: `Bearer ${token}`
+  //         }
+  //       });
+
+  //       // console.log(response.data);
+
+  //       if (response.status === 200) {
+  //         setEmployees(response.data);
+  //         // setDepartments(groupByDepartment(response.data));
+  //         setFilteredEmployees(response.data); // Initialize filteredEmployees
         
-        } else {
-          // Handle non-200 responses
-          setError(`Unexpected response status: ${response.status}`);
-        }
-      } catch (err) {
-        // Handle errors (network issues, server errors, etc.)
-        console.error('Error fetching employee data:', err);
-        setError(err.response?.data?.message || err.message || 'An error occurred');
-      } finally {
-        // Stop loading in both success and error cases
-        setLoading(false);
-      }
-    };
+  //       } else {
+  //         // Handle non-200 responses
+  //         setError(`Unexpected response status: ${response.status}`);
+  //       }
+  //     } catch (err) {
+  //       // Handle errors (network issues, server errors, etc.)
+  //       console.error('Error fetching employee data:', err);
+  //       setError(err.response?.data?.message || err.message || 'An error occurred');
+  //     } finally {
+  //       // Stop loading in both success and error cases
+  //       setLoading(false);
+  //     }
+  //   };
 
-    // Only fetch if token is available
-    if (token) {
-      fetchEmpData();
-    } else {
-      setError('Authentication token is missing.');
-      setLoading(false);
-    }
-  }, [token]); // Add token as a dependency
+  //   // Only fetch if token is available
+  //   if (token) {
+  //     fetchEmpData();
+  //   } else {
+  //     setError('Authentication token is missing.');
+  //     setLoading(false);
+  //   }
+  // }, [token]); // Add token as a dependency
 
 
   // Handle employee click to open modal
@@ -150,12 +154,12 @@ const EmployeeList = () => {
   // Filter employees based on selected category
   useEffect(() => {
     if(selectedCategory ===""){
-      setFilteredEmployees(employees);
+      setFilteredEmployees(data);
     }else{
-      const filtered = employees.filter((emp)=>emp.department === selectedCategory)
+      const filtered = data.filter((emp)=>emp.department === selectedCategory)
       setFilteredEmployees(filtered);
     }
-  }, [employees, selectedCategory]);
+  }, [data, selectedCategory]);
   
   // Conditional Rendering based on state
   if (loading) {
@@ -287,7 +291,7 @@ const EmployeeList = () => {
         <p className="lh-1">Father's Name: {selectedEmployee.fathers_name}</p>
       )
   }
-     {/* Name */}
+     {/* Employee ID */}
      {isEditing ?(
       <div>
       <label>Employee ID: </label>
@@ -306,16 +310,124 @@ const EmployeeList = () => {
    </div>
    </div>
    <div>
-   <p className="lh-1">Date of Birth: {selectedEmployee.date_of_birth}</p>
-   <p className="lh-1">Gender: {selectedEmployee.gender}</p>
-   <p className="lh-1">Marital Status: {selectedEmployee.marital_status}</p>
-   <p className="lh-1">Blood Group: {selectedEmployee.blood_group}</p>
+   {isEditing ?(
+      <div>
+      <label>Date of Birth: </label>
+      <input
+      className="form-control"
+      type='text'
+      name='date_of_birth'
+      value={updatedEmployee.date_of_birth}
+      onChange={handleInputChange}
+      /> 
+      </div>):(
+      <p className="lh-1">Date of Birth: {selectedEmployee.date_of_birth}</p>
+      )
+  }
+   {isEditing ?(
+      <div>
+      <label>Marital Status: </label>
+      <input
+      className="form-control"
+      type='text'
+      name='marital_status'
+      value={updatedEmployee.marital_status}
+      onChange={handleInputChange}
+      /> 
+      </div>):(
+       <p className="lh-1">Marital Status: {selectedEmployee.marital_status}</p>
+      )
+  }
+   {isEditing ?(
+      <div>
+      <label>Gender: </label>
+      <input
+      className="form-control"
+      type='text'
+      name='gender'
+      value={updatedEmployee.gender}
+      onChange={handleInputChange}
+      /> 
+      </div>):(
+      <p className="lh-1">Gender: {selectedEmployee.gender}</p>
+      )
+  }
+   {isEditing ?(
+      <div>
+      <label>Blood Group: </label>
+      <input
+      className="form-control"
+      type='text'
+      name='blood_group'
+      value={updatedEmployee.blood_group}
+      onChange={handleInputChange}
+      /> 
+      </div>):(
+       <p className="lh-1">Blood Group: {selectedEmployee.blood_group}</p>
+      )
+  }
+   
+  
+  
+  
    </div>
    <div className='px-5 pt-2'>
-   <p className="lh-1">Official Contact Number: {selectedEmployee.official_contact_no}</p>
-   <p className="lh-1">Official Email ID: {selectedEmployee.official_mail_id}</p>
-   <p className="lh-1">Personal Contact Number: {selectedEmployee.personal_contact_no}</p>
-   <p className="lh-1">Personal Email ID: {selectedEmployee.personal_mail_id}</p>
+   {isEditing ?(
+      <div>
+      <label>Official Contact Number:</label>
+      <input
+      className="form-control"
+      type='text'
+      name='official_contact_no'
+      value={updatedEmployee.official_contact_no}
+      onChange={handleInputChange}
+      /> 
+      </div>):(
+       <p className="lh-1">Official Contact Number: {selectedEmployee.official_contact_no}</p>
+      )
+  }
+  {isEditing ?(
+      <div>
+      <label>Official Email ID: </label>
+      <input
+      className="form-control"
+      type='text'
+      name='official_mail_id'
+      value={updatedEmployee.official_mail_id}
+      onChange={handleInputChange}
+      /> 
+      </div>):(
+      <p className="lh-1">Official Email ID: {selectedEmployee.official_mail_id}</p>
+      )
+  }
+  {isEditing ?(
+      <div>
+      <label>Personal Contact Number:</label>
+      <input
+      className="form-control"
+      type='text'
+      name='personal_contact_no'
+      value={updatedEmployee.personal_contact_no}
+      onChange={handleInputChange}
+      /> 
+      </div>):(
+       <p className="lh-1">Personal Contact Number: {selectedEmployee.personal_contact_no}</p>
+      )
+  }
+  {isEditing ?(
+      <div>
+      <label>Personal Email ID: </label>
+      <input
+      className="form-control"
+      type='text'
+      name='personal_mail_id'
+      value={updatedEmployee.personal_mail_id}
+      onChange={handleInputChange}
+      /> 
+      </div>):(
+       <p className="lh-1">Personal Email ID: {selectedEmployee.personal_mail_id}</p>
+      )
+  }
    </div>
  
  </div>
@@ -344,17 +456,141 @@ const EmployeeList = () => {
                 <div className="accordion-body d-flex">
                 <div className='px-5'>
                   <h5 className='border-bottom border-dark text-center mb-3'>Present Address</h5>
-        <p className="lh-1">Name:{selectedEmployee.present_address_name}, Relation: {selectedEmployee.present_address_relation}, Contact: {selectedEmployee.present_address_contact_no}</p>
-        <p className="lh-1">Full Address: {selectedEmployee.present_address_full_address}</p> 
+                  {isEditing ? (
+                          <>
+                          <label>Name: </label>
+                            <input className="form-control"
+                              type="text"
+                              name="present_address_name"
+                              value={updatedEmployee.present_address_name}
+                              onChange={handleInputChange}
+                            />
+                             <label>Relation: </label>
+                            <input className="form-control"
+                              type="text"
+                              name="present_address_relation"
+                              value={updatedEmployee.present_address_relation}
+                              onChange={handleInputChange}
+                            />
+                             <label>Contact: </label>
+                            <input className="form-control"
+                              type="text"
+                              name="present_address_contact_no"
+                              value={updatedEmployee.present_address_contact_no}
+                              onChange={handleInputChange}
+                            />
+                             <label>Full Address: </label>
+                            <input className="form-control"
+                              type="text"
+                              name="present_address_full_address"
+                              value={updatedEmployee.present_address_full_address}
+                              onChange={handleInputChange}
+                            />
+                             <label>State: </label>
+                            <input className="form-control"
+                              type="text"
+                              name="present_address_state"
+                              value={updatedEmployee.present_address_state}
+                              onChange={handleInputChange}
+                            />
+                             <label>District/City: </label>
+                            <input className="form-control"
+                              type="text"
+                              name="present_address_district_city"
+                              value={updatedEmployee.present_address_district_city}
+                              onChange={handleInputChange}
+                            />
+                             <label>Pincode: </label>
+                            <input className="form-control"
+                              type="text"
+                              name="present_address_pin_code"
+                              value={updatedEmployee.present_address_pin_code}
+                              onChange={handleInputChange}
+                            />
+                           
+                          </>
+                        ) : (
+                          <>
+                            <p className="lh-1">
+                              Name: {selectedEmployee.present_address_name}, Relation:{' '}
+                              {selectedEmployee.present_address_relation}, Contact:{' '}
+                              {selectedEmployee.present_address_contact_no}
+                            </p>
+                            <p className="lh-1">Full Address: {selectedEmployee.present_address_full_address}</p> 
         <p className="lh-1">State: {selectedEmployee.present_address_state}, District/City: {selectedEmployee.present_address_district_city} </p>
         <p className="lh-1">Pincode: {selectedEmployee.present_address_pin_code}</p>
+                            
+                          </>
+                        )}
         </div>
                 <div className='px-5'>
                   <h5 className='border-bottom border-dark text-center mb-3'>Permanent Address</h5>
-        <p className="lh-1">Name: {selectedEmployee.present_address_name}, Relation: {selectedEmployee.present_address_relation}, Contact: {selectedEmployee.present_address_contact_no}</p>
-        <p className="lh-1">Full Address: {selectedEmployee.present_address_full_address}</p> 
-        <p className="lh-1">State: {selectedEmployee.present_address_state}, District/City: {selectedEmployee.present_address_district_city} </p>
-        <p className="lh-1">Pincode: {selectedEmployee.present_address_pin_code}</p>
+                  {isEditing ? (
+                          <>
+                          <label>Name: </label>
+                            <input className="form-control"
+                              type="text"
+                              name="permanent_address_name"
+                              value={updatedEmployee.permanent_address_name}
+                              onChange={handleInputChange}
+                            />
+                             <label>Relation: </label>
+                            <input className="form-control"
+                              type="text"
+                              name="permanent_address_relation"
+                              value={updatedEmployee.permanent_address_relation}
+                              onChange={handleInputChange}
+                            />
+                             <label>Contact: </label>
+                            <input className="form-control"
+                              type="text"
+                              name="permanent_address_contact_no"
+                              value={updatedEmployee.permanent_address_contact_no}
+                              onChange={handleInputChange}
+                            />
+                             <label>Full Address: </label>
+                            <input className="form-control"
+                              type="text"
+                              name="permanent_address_full_address"
+                              value={updatedEmployee.permanent_address_full_address}
+                              onChange={handleInputChange}
+                            />
+                             <label>State: </label>
+                            <input className="form-control"
+                              type="text"
+                              name="permanent_address_state"
+                              value={updatedEmployee.permanent_address_state}
+                              onChange={handleInputChange}
+                            />
+                             <label>District/City: </label>
+                            <input className="form-control"
+                              type="text"
+                              name="permanent_address_district_city"
+                              value={updatedEmployee.permanent_address_district_city}
+                              onChange={handleInputChange}
+                            />
+                             <label>Pincode: </label>
+                            <input className="form-control"
+                              type="text"
+                              name="permanent_address_pin_code"
+                              value={updatedEmployee.permanent_address_pin_code}
+                              onChange={handleInputChange}
+                            />
+                           
+                          </>
+                        ) : (
+                          <>
+                            <p className="lh-1">Name: {selectedEmployee.permanent_address_name}, 
+                              Relation: {selectedEmployee.permanent_address_relation},
+                               Contact: {selectedEmployee.permanent_address_contact_no}</p>
+        <p className="lh-1">Full Address: {selectedEmployee.permanent_address_full_address}</p> 
+        <p className="lh-1">State: {selectedEmployee.permanent_address_state},
+           District/City: {selectedEmployee.permanent_address_district_city} </p>
+        <p className="lh-1">Pincode: {selectedEmployee.permanent_address_pin_code}</p>
+                            
+                          </>
+                        )}
+        
         </div>
                 </div>
               </div>
@@ -380,16 +616,98 @@ const EmployeeList = () => {
               >
                  <div className="accordion-body d-flex">
                 <div className="px-5">
-                <p className="lh-1">Date Of Interview: {selectedEmployee.date_of_interview} </p>
+                  {isEditing ? (
+                          <>
+                          <label>Date Of Interview: </label>
+                         <input
+                          className="form-control"
+                           type="text"
+                           name="date_of_interview"
+                           value={updatedEmployee.date_of_interview}
+                           onChange={handleInputChange}
+                         />
+                          <label>Joining Date: </label>
+                            <input
+                             className="form-control"
+                              type="text"
+                              name="date_of_joining"
+                              value={updatedEmployee.date_of_joining}
+                              onChange={handleInputChange}
+                            />
+                             <label>Company Name: </label>
+                            <input
+                             className="form-control"
+                              type="text"
+                              name="company_name"
+                              value={updatedEmployee.company_name}
+                              onChange={handleInputChange}
+                            />
+                             <label>Department:  </label>
+                            <input
+                             className="form-control"
+                              type="text"
+                              name="department"
+                              value={updatedEmployee.department}
+                              onChange={handleInputChange}
+                            />
+                            
+                          </>
+                        ) : (
+                          <>
+                           <p className="lh-1">Date Of Interview: {selectedEmployee.date_of_interview} </p>
         <p className="lh-1">Date of Joining: {selectedEmployee.date_of_joining}</p> 
         <p className="lh-1">Company Name: {selectedEmployee.company_name} </p>
         <p className="lh-1">Department: {selectedEmployee.department}</p>
+        </>
+                  )}
+               
         </div>
                 <div className="px-5">
-                <p className="lh-1">Designation: {selectedEmployee.designation} </p>
+                {isEditing ? (
+                          <>
+                          <label>Designation: </label>
+                         <input
+                          className="form-control"
+                           type="text"
+                           name="designation"
+                           value={updatedEmployee.designation}
+                           onChange={handleInputChange}
+                         />
+                          <label>Employee Type: </label>
+                            <input
+                             className="form-control"
+                              type="text"
+                              name="employee_type"
+                              value={updatedEmployee.employee_type}
+                              onChange={handleInputChange}
+                            />
+                             <label>Mode Of Recruitment: </label>
+                            <input
+                             className="form-control"
+                              type="text"
+                              name="mode_of_recruitment"
+                              value={updatedEmployee.mode_of_recruitment}
+                              onChange={handleInputChange}
+                            />
+                             <label>Reference/Consultency:  </label>
+                            <input
+                             className="form-control"
+                              type="text"
+                              name="reference_consultency"
+                              value={updatedEmployee.reference_consultency}
+                              onChange={handleInputChange}
+                            />
+                            
+                          </>
+                        ) : (
+                          <>
+                           <p className="lh-1">Designation: {selectedEmployee.designation} </p>
         <p className="lh-1">Employee Type: {selectedEmployee.employee_type}</p> 
         <p className="lh-1">Mode Of Recruitment: {selectedEmployee.mode_of_recruitment} </p>
         <p className="lh-1">Reference/Consultency: {selectedEmployee.reference_consultency}</p>
+        </>
+                  )}
+               
                 </div>
               </div>
               </div>
@@ -415,16 +733,89 @@ const EmployeeList = () => {
               >
                 <div className="accordion-body d-flex">
                 <div className="px-5">
-                <p className="lh-1">PAN No.: {selectedEmployee.pan_no}, </p>
+                {isEditing ? (
+                          <>
+                          <label>PAN No.: </label>
+                         <input
+                          className="form-control"
+                           type="text"
+                           name="pan_no"
+                           value={updatedEmployee.pan_no}
+                           onChange={handleInputChange}
+                         />
+                          <label>Aadhar No.: </label>
+                            <input
+                             className="form-control"
+                              type="text"
+                              name="adhar_no"
+                              value={updatedEmployee.adhar_no}
+                              onChange={handleInputChange}
+                            />
+                             <label>Bank Name: </label>
+                            <input
+                             className="form-control"
+                              type="text"
+                              name="bank"
+                              value={updatedEmployee.bank}
+                              onChange={handleInputChange}
+                            />
+                             <label>Account No.:  </label>
+                            <input
+                             className="form-control"
+                              type="text"
+                              name="account_no"
+                              value={updatedEmployee.account_no}
+                              onChange={handleInputChange}
+                            />
+                            
+                          </>
+                        ) : (
+                          <>
+                           <p className="lh-1">PAN No.: {selectedEmployee.pan_no}, </p>
         <p className="lh-1">Aadhar No.: {selectedEmployee.adhar_no}</p> 
         <p className="lh-1">Bank Name: {selectedEmployee.bank} </p>
         <p className="lh-1">Account No.: {selectedEmployee.account_no}</p>
+        </>
+                  )}
+               
                 </div>
                 <div className="px-5">
-                <p className="lh-1">IFSC Code: {selectedEmployee.designation}, </p>
+                {isEditing ? (
+                          <>
+                          <label>IFSC Code: </label>
+                         <input
+                          className="form-control"
+                           type="text"
+                           name="ifsc_code"
+                           value={updatedEmployee.ifsc_code}
+                           onChange={handleInputChange}
+                         />
+                          <label>Branch Address: </label>
+                            <input
+                             className="form-control"
+                              type="text"
+                              name="branch_address"
+                              value={updatedEmployee.branch_address}
+                              onChange={handleInputChange}
+                            />
+                             <label>UAN No.:</label>
+                            <input
+                             className="form-control"
+                              type="text"
+                              name="uan_no"
+                              value={updatedEmployee.uan_no}
+                              onChange={handleInputChange}
+                            />
+                            
+                          </>
+                        ) : (
+                          <>
+                          <p className="lh-1">IFSC Code: {selectedEmployee.ifsc_code}, </p>
         <p className="lh-1">Branch Address: {selectedEmployee.branch_address}</p> 
-        <p className="lh-1">UAN No.: {selectedEmployee.mode_of_recruitment} </p>
-        
+        <p className="lh-1">UAN No.: {selectedEmployee.uan_no} </p>
+        </>
+                  )}
+               
                 </div>
                 </div>
               </div>
@@ -452,12 +843,61 @@ const EmployeeList = () => {
                 <div className="px-5">
                   <h5 className='border-bottom border-dark text-center mb-3'>Contact Details in Case of Emergency<br/>
                   (Family Member Only)</h5>
-                  <p className="lh-1 ">Name: {selectedEmployee.e_name1} </p>
+                  {isEditing ? (
+                          <>
+                          <label>Name: </label>
+                         <input
+                          className="form-control"
+                           type="text"
+                           name="e_name1"
+                           value={updatedEmployee.e_name1}
+                           onChange={handleInputChange}
+                         />
+                          <label>Relation: </label>
+                            <input
+                             className="form-control"
+                              type="text"
+                              name="e_relation1"
+                              value={updatedEmployee.e_relation1}
+                              onChange={handleInputChange}
+                            />
+                             <label>Address:</label>
+                            <input
+                             className="form-control"
+                              type="text"
+                              name="e_address1"
+                              value={updatedEmployee.e_address1}
+                              onChange={handleInputChange}
+                            />
+                            
+                          </>
+                        ) : (
+                          <>
+                         <p className="lh-1 ">Name: {selectedEmployee.e_name1} </p>
                   <p className="lh-1">Relation: {selectedEmployee.e_relation1} </p>
                   <p className="lh-1">Address: {selectedEmployee.e_address1}  </p>
+        </>
+                  )}
+               
+                 
                 </div>
                 <div className="px-5">
-                  <p className="lh-1">Form Submission Date: {selectedEmployee.date} </p>
+                {isEditing ? (
+                  <>
+                         <label>Form Submission Date: </label>
+                         <input
+                             className="form-control"
+                              type="text"
+                              name="date"
+                              value={updatedEmployee.date}
+                              onChange={handleInputChange}
+                            />
+                         </>
+                        ) : (
+                          <p className="lh-1">Form Submission Date: {selectedEmployee.date} </p>
+                        )
+                }
+                 
                   </div>
                 </div>
               </div>

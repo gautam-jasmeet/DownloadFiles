@@ -269,7 +269,7 @@ function JoiningForm1() {
     };
   
     return (
-      <div>
+      <div >
         
         <form className="gradient-custom d-flex " onSubmit={handleSubmit}>
           <div 
@@ -292,7 +292,7 @@ function JoiningForm1() {
                   </h2>
                   </div>
                   <div style={{width:"90%"}}>
-          <section>
+          <section >
             <div className="container py-5 h-100">
               <div className="row justify-content-center align-items-center h-100">
                 <div className="col-12 col-lg-9 col-xl-7 ">
@@ -1374,29 +1374,36 @@ function JoiningForm1() {
   
   
                     <div className="d-flex justify-content-end mb-1 mx-1">
+                      {/* Previous button */}
                       {step > 1 && (
                         <button
                           type="button"
-                          className="btn btn-primary btn-lg mx-1"
+                          className="btn  mx-1"
+                          style={{backgroundColor:"var(--primary-color)", color:"var(--light-color)", width:"10%"}}
                           onClick={handlePrevious}
                         >
-                          Previous
+                          <i class="bi bi-arrow-left"></i>
                         </button>
                       )}
+                      {/* Next button */}
                       {step < 6 && (
                         <button
                           type="button"
-                          className="btn btn-primary btn-lg"
+                          className="btn "
+                          style={{backgroundColor:"var(--primary-color)",
+                             color:"var(--light-color)", width:"10%"
+                           }}
                           onClick={handleNext}
                         >
-                          {/* {step < 3 ? "Next" : " Part-2"} */}
-                          Next
+                         
+                           <i className="bi bi-arrow-right"></i>
                         </button>
                       )}
                       {step === 6 && (
                         <button
                           type="button"
-                          className="btn btn-primary btn-lg"
+                          className="btn "
+                          style={{backgroundColor:"var(--primary-color)", color:"var(--light-color)"}}
                           onClick={handleSubmit}
                         >
                          Submit

@@ -4,8 +4,8 @@ import "./HrSidebar.css"
 
 function HrSidebar() {
   return (
-    <div className="sidebar-container">
-    <div className="sidebar">
+    <div className="hrSidebar-container">
+    <div className="hrSidebar">
       
       <h4 className="title text-center"
       ><i className="bi bi-person-fill fs-3"></i> HR <br /> Dashboard</h4>

@@ -52,9 +52,13 @@ function PersonalDatail() {
     </div>
     <div className="card mb-4 m-2 shadow-sm " >
  
- <div className=" d-flex justify-content-evenly  align-items-center" style={{flexWrap:"wrap"}}>
+ <div className=" d-flex justify-content-between  align-items-center" style={{flexWrap:"wrap"}}>
    <div className="d-flex align-items-center">
- <img src={personalEmpData?.photo_url} className="img-fluid rounded-start w-25   rounded  " alt="Profile Pic"/>
+ <img src={`http://srv617987.hstgr.cloud:8080${personalEmpData?.photo_url}`} 
+  className='rounded-3'
+  alt="Profile Pic"
+ style={{width:"200px", height:"150px", margin:"2px"}}
+ />
   
    <div className='px-5'>
    <p className="lh-1">Name: <span className="fw-medium">{personalEmpData?.full_name}</span> </p>

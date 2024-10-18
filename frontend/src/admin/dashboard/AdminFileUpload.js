@@ -97,7 +97,7 @@ const handleShowuploadbutton = ()=>{
        
 
       {showUploadForm  ? (
-        <form className='form_form'
+        <form className='form_form w-75 '
           onSubmit={handleSubmit}
         >
          

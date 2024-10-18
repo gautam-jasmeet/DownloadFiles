@@ -177,7 +177,7 @@ const handleDelete = async(Id)=>{
     
 
    {showUploadForm  ? (
-     <form className='form_form'
+     <form className='form_form w-75'
        onSubmit={handleSubmit}
      >
       
@@ -286,7 +286,7 @@ const handleDelete = async(Id)=>{
           ) : (
             filterVideos(selectedDept).map((file) => (
               <li className='cat_ol-2' key={file.id} style={{ margin: '10px' }}>
-                <div className="card w-75 cat_ol-3">
+                <div className="card w-100 cat_ol-3">
                   <div className="card-body cat_ol-4" style={{ display: 'flex', justifyContent: 'space-between',flexWrap:"wrap" }}>
                     <div>
                       <p className="card-title cat_ol-5"><b>Video Name:</b><span> {file.videoName} </span></p>

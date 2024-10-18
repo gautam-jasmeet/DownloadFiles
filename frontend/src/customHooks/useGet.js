@@ -1,29 +1,26 @@
-import { useState,useEffect,useContext } from "react";
+import { useState,useEffect,useContext,useMemo } from "react";
 import axios from "axios";
 import { AppContext } from "../appContext/AppContext";
 
 function useGet(url){
-    const [data,setData] = useState(null);
+    const [data,setData] = useState([]);
     const [loading,setLoading] = useState(true);
-    const [error,setError] = useState(false);
+    const [error,setError] = useState(null);
 
     const {token} = useContext(AppContext);
     
-     //  Memoizing the headers to prevent re-triggering the effect unnecessarily
-    //  const headers = useMemo(()=>{
-    //     return {
-    //         Authorization:`Bearer ${token}`
-    //     }
-    //  },[token])
+    //   Memoizing the headers to prevent re-triggering the effect unnecessarily
+     const headers = useMemo(()=>{
+        return {
+            Authorization:`Bearer ${token}`
+        }
+     },[token])
 
      useEffect(()=>{
         const fetchData = async()=>{
+            setLoading(true);
             try{
-                const response = await axios.get(url,{
-                    headers:{
-                         Authorization:`Bearer ${token}`
-                    }
-                })
+                const response = await axios.get(url,{headers});
                 setData(response.data);
                 setLoading(false);
                 setError(null);
@@ -33,7 +30,7 @@ function useGet(url){
             }
         }
         fetchData();
-     },[url,token])
+     },[url])
 
      return {data,loading,error}
 }

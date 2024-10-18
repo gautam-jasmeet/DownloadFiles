@@ -213,7 +213,7 @@ const handleShowuploadbutton = ()=>{
        )}
 
       {showUploadForm && userRole === "Supervisor" ? (
-        <form className='form_form'
+        <form className='form_form w-75'
           onSubmit={handleSubmit}
         >
         
@@ -322,7 +322,7 @@ const handleShowuploadbutton = ()=>{
           ) : (   
             filteredDocument.map((file) => (
               <li className='cat_ol-2' key={file.id} style={{ margin: '10px' }}>
-                <div className="card w-50 cat_ol-3" >
+                <div className="card w-75 cat_ol-3" >
                   <div className="card-body cat_ol-4" style={{ display: 'flex', justifyContent: 'space-between',flexWrap:"wrap" }}>
                     <div>
                       <p className="card-title cat_ol-5"><b>File Name:</b> {file.filename}</p>

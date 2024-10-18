@@ -60,9 +60,6 @@ function App() {
       <>
        <Route path='/Admin' element={<Dashboard/>}></Route>
        <Route path="/Admin/:departmentName" element={<DepartmentDocuments />} />
-      
-
-       
       </>
      )}
 

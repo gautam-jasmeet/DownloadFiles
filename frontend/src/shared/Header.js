@@ -8,9 +8,9 @@ import  "../App.css"
 
 const Header = () => {
   return (
-    <div style={{position:"sticky", top:"0",zIndex:"1000" ,width:"100%" }}> 
+    <div style={{position:"sticky", top:"0",zIndex:"1000" ,width:"100%" ,height:"60px"}}> 
       <nav className="navbar  navbar-expand-lg " 
-      style={{backgroundColor: 'var(--main-header-color)' }} 
+      style={{backgroundColor: 'var(--main-header-color)',height:"100%" }} 
       data-bs-theme="dark">  
      
   <div className=" m-1" 
