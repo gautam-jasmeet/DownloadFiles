@@ -40,11 +40,6 @@ function Login() {
 
       if (response.status === 200) {
         const { token, department, designation } = response.data;
-        // localStorage.setItem('authToken', token);
-        // localStorage.setItem('designation', designation);
-        // localStorage.setItem('department', department);
-        // console.log('Response:', response.data);
-        // console.log("Department:", department);
 
         // Setting the token, department, and designation in the context
         setToken(token);

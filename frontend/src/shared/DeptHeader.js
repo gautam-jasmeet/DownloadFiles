@@ -1,5 +1,5 @@
 import React  from 'react'
-import { useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import "../App.css"
 // import { AppContext } from '../appContext/AppContext';
 
@@ -7,12 +7,16 @@ function DeptHeader({header}) {
   // const {token} = useContext(AppContext)
  
    const navigate = useNavigate();
+  // const history = useHistory();
    const handleLogout = () => {
-
     // Removing token from localStorage
     localStorage.removeItem("authToken");
+    
+    // Redirect to login page
+    navigate('/',{replace:true}); // Replace history to prevent going back
 
-    navigate("/")
+     // Optional: reload the page to ensure the old state is fully cleared
+     window.location.reload();
    }
 
     return (
@@ -32,8 +36,7 @@ function DeptHeader({header}) {
         width:"8%",
         height:"10%",
       }}  
-      onClick={handleLogout}>LogOut</button>
-      
+      onClick={handleLogout}>LogOut</button> 
     </div>
   </nav>
       </div>

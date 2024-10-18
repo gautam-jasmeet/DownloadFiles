@@ -26,7 +26,8 @@ function TrainingVideo() {
             }
         }
         fetchAllVideo();
-    },[token])
+    },[token,allVideo])
+
 
     // console.log(allVideo);
 

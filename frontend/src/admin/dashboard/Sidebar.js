@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import './sidebar.css'
+import Logout from '../../component/logout/Logout'
 
 
 function Sidebar() {
@@ -51,8 +52,9 @@ function Sidebar() {
           <NavLink to={"/signup"}>Sign Up</NavLink>
         </li>
         
-      <li className="nav-item text-center">
-    <NavLink className="nav-link" to="/">Logout</NavLink>
+      <li className=" text-center">
+
+    <Logout className="btn card_btn"/>
   </li>
       </ul>
 
