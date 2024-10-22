@@ -1,10 +1,9 @@
-import { useState,useContext } from 'react'
+import {useState,useContext} from 'react'
 import axios from 'axios';
-import { AppContext } from '../../appContext/AppContext';
-import "../../departments/sharedDept/FileUpload.css"
+import { AppContext } from '../../../appContext/AppContext';
+import "../../sharedDept/FileUpload.css"
 
-
-function AdminFileUpload({onFileUpload}) {
+function QualityFileUpload() {
     const [files, setFiles] = useState([]);
     const [fileName, setFileName] = useState('');
     const [fileVersion, setFileVersion] = useState('');
@@ -14,12 +13,23 @@ function AdminFileUpload({onFileUpload}) {
     const [message, setMessage] = useState('');
     const [showUploadForm, setShowUploadForm] = useState(false);
 
+    const accessibleDepartments = [ 'Quality', 'FQC', 'IQC', 'IPQC'];
     const accessibleCategories = ['Policies', 'Form Format', 'Work Instructions & SOP'];
-    const accessibleDepartments = ['Store', 'HR', 'Production', 'Machine', 'Maintance', 'SOP|WI', 
-        'Logistics', 'Quality', 'Calibration', 'FQC', 'IQC', 'IPQC', 'EHS'];
+    const [filteredCategories,setFilteredCategories] = useState(accessibleCategories)
 
     const { token } = useContext(AppContext);
 
+
+    // Handle accessibleCategories change
+    const handleCategoryChange = (e)=>{
+        const selectedDepartment = e.target.value
+        setDepartmentName(selectedDepartment)
+        if(selectedDepartment === 'Quality' ){
+            setFilteredCategories(['Policies', 'Form Format']) 
+        }else if(["FQC","IQC","IPQC"].includes(selectedDepartment)){
+            setFilteredCategories([ 'Work Instructions & SOP'])
+        }
+    }
 
     // Handle file upload
 const handleOnChange = (e) => {
@@ -65,9 +75,9 @@ const handleOnChange = (e) => {
         setDepartmentName('');
 
            // Trigger the onFileUpload callback to refresh the list
-           if (onFileUpload) {
-            onFileUpload();  // Notify the parent component about the file upload
-          }
+        //    if (onFileUpload) {
+        //     onFileUpload();  // Notify the parent component about the file upload
+        //   }
           
       } else {
         setMessage('File upload failed');
@@ -135,26 +145,12 @@ const handleShowuploadbutton = ()=>{
               required
             />
           </div>
-             <div className="form-group">
-            <label>File Categories:</label>
-             <select
-            className="form-control border border-black" 
-            value={category} onChange={(e) => setCategory(e.target.value)} required>
-               <option value="">Select Category</option> 
-                  {accessibleCategories.map((cat) => (
-                 <option key={cat} value={cat}>
-                   {cat}
-                 </option>
-               ))}
-             </select>
-           </div> 
-
-           <div className="form-group">
+          <div className="form-group">
             <label>Department Name:</label>
              <select
             className="form-control border border-black" 
             value={departmentName} 
-            onChange={(e) => setDepartmentName(e.target.value)} required>
+            onChange={handleCategoryChange} required>
                <option value="">Select Department</option> 
                   {accessibleDepartments.map((dept) => (
                  <option key={dept} value={dept}>
@@ -163,6 +159,22 @@ const handleShowuploadbutton = ()=>{
                ))}
              </select>
            </div>
+
+             <div className="form-group">
+            <label>File Categories:</label>
+             <select
+            className="form-control border border-black" 
+            value={category} onChange={(e) => setCategory(e.target.value)} required>
+               <option value="">Select Category</option> 
+                  {filteredCategories.map((cat) => (
+                 <option key={cat} value={cat}>
+                   {cat}
+                 </option>
+               ))}
+             </select>
+           </div> 
+
+          
           
           <button className="btn btn-primary form_btn_upload" type="submit">Upload</button>
         </form> 
@@ -179,8 +191,7 @@ const handleShowuploadbutton = ()=>{
       </div>
 
        </div>
-    
   )
 }
 
-export default AdminFileUpload
+export default QualityFileUpload

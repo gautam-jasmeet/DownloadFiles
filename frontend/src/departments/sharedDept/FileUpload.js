@@ -26,15 +26,15 @@ function FileUpload() {
  const [showUploadForm, setShowUploadForm] = useState(false);
 
  const {token, designation, department} = useContext(AppContext);
-
+// console.log(department);
 
   useEffect(()=>{
    
     setUserRole(designation);
 
      // Define accessible categories based on role
-    const allowedCategories = designation === "Supervisor" ? ['Policies', 'Form Format', 'Work Instructions', 'SOP']
-     :['Work Instructions', 'SOP'] ;
+    const allowedCategories = designation === "Supervisor" ? ['Policies', 'Form Format', 'Work Instructions & SOP']
+     :['Work Instructions & SOP'] ;
 
       
      setAccessibleCategories(allowedCategories)
@@ -46,7 +46,7 @@ function FileUpload() {
   useEffect(() => {
     const fetchDocuments = async () => {
       try{
-        const response = await axios.get(`http://srv617987.hstgr.cloud:8080/documents/department`,{
+        const response = await axios.get(`http://srv617987.hstgr.cloud:8080/documents/${department}`,{
           headers: {
             Authorization: `Bearer ${token}`,
           },

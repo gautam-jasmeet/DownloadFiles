@@ -1,10 +1,20 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink,useNavigate } from 'react-router-dom'
 import './sidebar.css'
 import Logout from '../../component/logout/Logout'
 
 
 function Sidebar() {
+
+  // const navigate = useNavigate()
+
+  // const handleQualityChange = (e)=>{
+  //     const value = e.target.value
+  //     if(value){
+  //       navigate(`/Admin/${value}`)
+  //     }
+  // }
+
   return (
     <div className='sidebar'>
       <h3 className='title'> <i className="bi bi-person-fill-gear fs-3"></i> Admin <br /> Dashboard</h3>
@@ -37,8 +47,21 @@ function Sidebar() {
           <NavLink to={"/Admin/EHS"}>EHS</NavLink>
         </li>
         <li className='text-center'>
-          <NavLink to={"/Admin/Quality"}>Quality</NavLink>
-        </li>
+           <NavLink to={"/Admin/Quality"}>Quality</NavLink>
+          {/* <label htmlFor='quality'>Quality: </label>
+          <select name='quality' id='quality' onChange={handleQualityChange}>
+            <option>select:</option>
+            <option value="FQC">
+            FQC
+            </option>
+            <option value="FQC">
+            FQC
+            </option>
+            <option value="IPQC">
+            IPQC
+            </option>
+          </select>*/} 
+        </li> 
         <li className='text-center'>
           <NavLink to={"/Admin/FQC"}>FQC</NavLink>
         </li>

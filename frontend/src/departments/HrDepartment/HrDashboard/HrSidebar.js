@@ -26,7 +26,10 @@ function HrSidebar() {
           <NavLink to="training"> Training</NavLink>
         </li>
         <li className="text-center">
-          <NavLink to="exam"> Exams</NavLink>
+          <NavLink to="exam">Create Exam's Papers</NavLink>
+        </li>
+        <li className="text-center">
+          <NavLink to="exampaper"> Exam's Papers</NavLink>
         </li>
         <li className="text-center">
           <NavLink to="performance"> Performance</NavLink>

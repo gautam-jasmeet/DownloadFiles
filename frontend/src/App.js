@@ -18,10 +18,7 @@ import SopHP from "./departments/SOP/SopHP";
 import LogisticHP from "./departments/Logistic/LogisticHP";
 import CalibrationHP from "./departments/Calibration/CalibrationHP";
 import EhsHP from "./departments/EHS/EhsHP";
-import QualityHP from "./departments/Quality/QualityHP";
-import FocHP from "./departments/FOC/FocHP";
-import IocHP from "./departments/IOC/IocHP";
-import IpocHP from "./departments/IPOC/IpocHP";
+// import QualityHP from "./departments/Quality/QualityHP";
 // import Footer from "./shared/Footer";
 import { AppContext } from "./appContext/AppContext";
 import HrHomePage from "./departments/HrDepartment/HrDashboard/HrHomePage";
@@ -37,6 +34,13 @@ import FileUpload from "./departments/sharedDept/FileUpload";
 import EmployeeList from "./departments/HrDepartment/Employee Details/Employee1";
 // import Employee from "./departments/HrDepartment/Employee Details/Employee";
 import TrainingVideo from "./employee/TrainingVideo";
+import QualityDashboard from "./departments/Quality/QualityDashboard/QualityDashboard";
+import QualityFileUpload from "./departments/Quality/SharedQualityDept/QualityFileUpload";
+import Quality from "./departments/Quality/QualityHead/Quality";
+import Fqc from "./departments/Quality/FQC/Fqc";
+import Ipqc from "./departments/Quality/IPQC/Ipqc";
+import Iqc from "./departments/Quality/IQC/Iqc";
+import ExamPapers from "./departments/HrDepartment/Exams/ExamPapers";
 
 
 function App() {
@@ -86,10 +90,22 @@ function App() {
        {/* <Route path="emp" element={<Employee/>}></Route> */}
        <Route path="training" element={<Training/>}></Route>
        <Route path="exam" element={<Exams/>}></Route>
+       <Route path="exampaper" element={<ExamPapers/>}></Route>
        <Route path="performance" element={<Performance/>}></Route>
        </Route>
        </>
      )}
+
+    {department === "Quality" && (
+    // <Route path='/Quality' element={<QualityHP/>}></Route>
+    <Route path='/Quality' element={<QualityDashboard/>}>
+      <Route path='QualityFile' element={<QualityFileUpload/>}></Route>
+      <Route path='QualityHead' element={<Quality/>}></Route>
+      <Route path='FQC' element={<Fqc/>}></Route>
+      <Route path='IQC' element={<Iqc/>}></Route>
+      <Route path='IPQC' element={<Ipqc/>}></Route>
+    </Route>
+    )}
     
     {department === "Store" && (
     <Route path='/Store' element={<StoreHP/>}></Route>
@@ -115,10 +131,7 @@ function App() {
     {department === "EHS" && (
     <Route path='/EHS' element={<EhsHP/>}></Route>
     )}
-    {department === "Quality" && (
-    <Route path='/Quality' element={<QualityHP/>}></Route>
-    )}
-    {department === "FQC" && (
+    {/* {department === "FQC" && (
     <Route path='/FQC' element={<FocHP/>}></Route>
     )}
     {department === "IQC" && (
@@ -127,7 +140,7 @@ function App() {
    
     {department === "IPQC" && (
     <Route path='/IPQC' element={<IpocHP/>}></Route>
-    )}
+    )} */}
    
    
     </Routes >

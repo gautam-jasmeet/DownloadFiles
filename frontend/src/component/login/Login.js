@@ -1,6 +1,6 @@
 import React, { useState , useContext} from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
 // import '../dashboard/ViewFiles.css';
 import "../login/Login.css"
 // import Footer from '../../shared/Footer';
@@ -87,10 +87,9 @@ function Login() {
           <span style={{color:"  hsl(218, 81%, 90%)"}}>Application</span>
         </h1>
         <p className="mb-4 opacity-70" style={{color:" hsl(218, 81%, 85%)"}}>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-          Temporibus, expedita iusto veniam atque, magni tempora mollitia
-          dolorum consequatur nulla, neque debitis eos reprehenderit quasi
-          ab ipsum nisi dolorem modi. Quos?
+        Gautam Solar (www.gautamsolar.com). <br/>
+        Leading Solar Module Manufacturer using cutting-edge, automated machinery to manufacture
+         high-efficiency Solar Modules & Provider of Solar Power Plants.
         </p>
        
       </div>

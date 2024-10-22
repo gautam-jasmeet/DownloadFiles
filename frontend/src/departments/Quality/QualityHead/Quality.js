@@ -1,58 +1,35 @@
-import React, { useState, useEffect,useContext } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import ViewFiles from '../dashboard/ViewFiles';  // Import your ViewFiles component
-import DeptHeader from '../../shared/DeptHeader';
-import { AppContext } from '../../appContext/AppContext';
-import  '../../departments/sharedDept/FileUpload.css'; // If you're using a custom header
+import React, { useContext, useState,useEffect } from 'react'
+import axios from 'axios'
+import { AppContext } from '../../../appContext/AppContext'
+import useGet from '../../../customHooks/useGet'
+import ViewFiles from '../../../admin/dashboard/ViewFiles'
 
-const DepartmentDocuments = () => {
-  const { departmentName } = useParams(); // Capture the department name from URL
-  const [documents, setDocuments] = useState([]);
+function Quality() {
+  const [selectedCategory,setSelectedCategory] = useState('')
+  const [message,setMessage] = useState('')
   const [filteredDocuments, setFilteredDocuments] = useState([]);
-  const [message, setMessage] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const accessibleCategories = ['Policies', 'Form Format', 'Work Instructions & SOP']; // Admin's categories
+  const accessibleCategories =['Policies', 'Form Format']
 
-  const { token } = useContext(AppContext);
- 
+  const {token,department} = useContext(AppContext)
 
-  // Fetch all documents for the selected department
-  useEffect(() => {
-    const fetchDocuments = async () => {
-      try {
-        const response = await axios.get(`http://srv617987.hstgr.cloud:8080/documents/`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setDocuments(response.data);
-      } catch (error) {
-        console.error('Error fetching documents', error);
-        setMessage(`Error fetching documents: ${error.message}`);
-      }
-    };
-    fetchDocuments();
-  }, [token]);
-
-  // Filter documents by department and category whenever the documents or departmentName change
-  useEffect(() => {
-    const filtered = documents.filter(doc => doc.department === departmentName && 
-      (!selectedCategory || doc.category === selectedCategory));
-    setFilteredDocuments(filtered);
-  }, [documents, departmentName, selectedCategory]);
-
-
-
-  // Handle category selection change
-  const handleCategoryChange = (event) => {
+     // Fetch employee data
+  const {data, error,loading} = useGet(`http://srv617987.hstgr.cloud:8080/documents/${department}`);
+  // console.log(data);
+  
+   // Handle category selection change
+   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
 
+  // Filter documents by department and category whenever the documents or departmentName change
+  useEffect(() => {
+    const filtered = data.filter(doc => 
+      (!selectedCategory || doc.category === selectedCategory));
+    setFilteredDocuments(filtered);
+  }, [data, selectedCategory]);
 
-
-  // Delete file
-  const handleDelete = async (docId) => {
+   // Delete file
+   const handleDelete = async (docId) => {
     const confirmation = window.confirm('Are you sure you want to delete this document?');
     if(!confirmation){
       return;
@@ -62,30 +39,27 @@ const DepartmentDocuments = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
-      
-
+      })
       if (response.status === 200) {
-          // Directly update both the documents and filteredDocuments state
-      setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id !== docId));
-      setFilteredDocuments((prevFilteredDocs) =>
-        prevFilteredDocs.filter((doc) => doc.id !== docId)
-      );
-        setMessage('Document deleted successfully');
-      } else {
-        setMessage('Failed to delete document');
-      }
-    } catch (err) {
-      console.error('Error deleting document:', err);
-      setMessage(`Failed to delete document: ${err.message}`);
+        // Directly update both the documents and filteredDocuments state
+    // setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id !== docId));
+    // setFilteredDocuments((prevFilteredDocs) =>
+    //   prevFilteredDocs.filter((doc) => doc.id !== docId)
+    // );
+      setMessage('Document deleted successfully');
+    } else {
+      setMessage('Failed to delete document');
     }
-  };
+  } catch (err) {
+    console.error('Error deleting document:', err);
+    setMessage(`Failed to delete document: ${err.message}`);
+  }
+};
 
+  
   return (
-    <div >
-      <DeptHeader header={`${departmentName} Department`} />
-
-      <div style={{ display: 'flex' }}>
+    <div>
+          <div style={{ display: 'flex' }}>
       
       {/* Category Selection */}
       <div className='cat' style={{width:"100%"}}>
@@ -142,10 +116,11 @@ const DepartmentDocuments = () => {
           )}
         </ol>
       </div>
-    </div>
+ 
       {message && <p className='alert alert-danger'>{message}</p>}
     </div>
-  );
-};
+    </div>
+  )
+}
 
-export default DepartmentDocuments;
+export default Quality

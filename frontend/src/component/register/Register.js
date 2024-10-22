@@ -25,10 +25,25 @@ function Register() {
 
   const departments =["HR","Store","Production","Machine","Maintance","SOP|WI","Logistics",
     "Quality","Calibration","FQC","IQC","IPQC","EHS"]
-  const designations = ["Admin","Supervisor","Worker"]
-  const shifts = ["A","B"]
+    const shifts = ["A","B"]
+    
+    // Default Designations
+    const defaultDesignations = ["Admin","Supervisor","Worker"]
+    const [filteredDesignations,setFilteredDesignations] = useState(defaultDesignations)
+    
+    // Handle Department Change
+    const handleDepartmentChange = (e)=>{
+      const selectedDepartment = e.target.value;
+      setDepartment(selectedDepartment);
 
- 
+      if(selectedDepartment === 'Quality'){
+        setFilteredDesignations(["Admin","Supervisor"])
+      }else if(["FQC","IQC","IPQC"].includes(selectedDepartment)){
+        setFilteredDesignations(["Worker"])
+      }else{
+        setFilteredDesignations(defaultDesignations)
+      }
+    };
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -76,10 +91,9 @@ function Register() {
           {/* <span style={{color:"  hsl(218, 81%, 75%)"}}>for your business</span> */}
         </h1>
         <p className="mb-4 opacity-70" style={{color:" hsl(218, 81%, 85%)"}}>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-          Temporibus, expedita iusto veniam atque, magni tempora mollitia
-          dolorum consequatur nulla, neque debitis eos reprehenderit quasi
-          ab ipsum nisi dolorem modi. Quos?
+        Gautam Solar (www.gautamsolar.com). <br/>
+        Leading Solar Module Manufacturer using cutting-edge, automated machinery to manufacture
+         high-efficiency Solar Modules & Provider of Solar Power Plants.
         </p>
         {/* <img src={DocController} alt="DocController" style={{opacity:"0.4",borderRadius:"50%"}} /> */}
       </div>
@@ -132,7 +146,7 @@ function Register() {
           className="form-control "
           name="department"
           value={department}
-          onChange={(e)=>setDepartment(e.target.value)}
+          onChange={handleDepartmentChange}
           required
          
         >
@@ -156,7 +170,7 @@ function Register() {
           
         >
           <option value="">Select Designation</option>
-          {designations.map((des) => (
+          {filteredDesignations.map((des) => (
             <option key={des} value={des}>
               {des}
             </option>
