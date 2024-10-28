@@ -72,7 +72,7 @@ const TestPaperForm = () => {
     })
 
     try{
-        const response = await axios.post('http://srv617987.hstgr.cloud:8000/hr/create-question-paper',formData,
+        const response = await axios.post('http://srv617987.hstgr.cloud:8080/hr/create-question-paper',formData,
             {
                 headers:{
                     Authorization:`Bearer${token}`

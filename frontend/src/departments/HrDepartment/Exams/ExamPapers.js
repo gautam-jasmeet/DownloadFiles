@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import useGet from '../../../customHooks/useGet';
 
 function ExamPapers() {
-  const { data, loading, error } = useGet('http://srv617987.hstgr.cloud:8000/hr/get-question-paper');
-  const baseURL = 'http://srv617987.hstgr.cloud:8000'
+  const { data, loading, error } = useGet('http://srv617987.hstgr.cloud:8080/hr/get-question-paper');
+  const baseURL = 'http://srv617987.hstgr.cloud:8080'
 
   // Log the fetched data to inspect its structure
   // useEffect(() => {

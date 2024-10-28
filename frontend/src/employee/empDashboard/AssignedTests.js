@@ -1,17 +1,20 @@
 import React, { useEffect,useState } from 'react'
-import { getAssignedTests } from '../../departments/HrDepartment/Exams/ExamApi'
+// import { getAssignedTests } from '../../departments/HrDepartment/Exams/ExamApi'
+import useGet from '../../customHooks/useGet'
 import axios from 'axios'
 
 function AssignedTests({employeeId}) {
     const [assignedTests,setAssignedTests] = useState([])
-    useEffect(()=>{
-        //// fetching the test of loggedIn employee
-        const fetchTests = async()=>{
-            const response = await getAssignedTests(employeeId)
-            setAssignedTests(response.data)
-        }
-        fetchTests()
-    },[employeeId])
+
+    const {data,loading,error} = useGet()
+    // useEffect(()=>{
+    //     //// fetching the test of loggedIn employee
+    //     const fetchTests = async()=>{
+    //         const response = await getAssignedTests(employeeId)
+    //         setAssignedTests(response.data)
+    //     }
+    //     fetchTests()
+    // },[employeeId])
   return (
     <div>
     <h2>Assigned Tests</h2>
