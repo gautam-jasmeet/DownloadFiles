@@ -41,6 +41,10 @@ import Fqc from "./departments/Quality/FQC/Fqc";
 import Ipqc from "./departments/Quality/IPQC/Ipqc";
 import Iqc from "./departments/Quality/IQC/Iqc";
 import ExamPapers from "./departments/HrDepartment/Exams/ExamPapers";
+import TestPaperForm from "./departments/HrDepartment/Exams/TestPaperForm";
+import AssignTest from "./departments/HrDepartment/Exams/AssignTest";
+import AssignedTests from "./employee/empDashboard/AssignedTests";
+import TestPage from "./departments/HrDepartment/Exams/TestPage";
 
 
 function App() {
@@ -58,6 +62,7 @@ function App() {
     <Route path='/signup' element={<Register />}></Route>
     <Route path='/' element={<Login/>}></Route>
     <Route path='/logout' element={<Logout/>}></Route>
+    <Route path='/test/:testPaperId' element={<TestPage/>}></Route>
 
      {/* Admin Access */}
      {designation === "Admin" && (
@@ -74,6 +79,7 @@ function App() {
        <Route path='personal' element={<PersonalDatail/>}></Route>
        <Route path='documents' element={<FileUpload/>}></Route>
        <Route path='tvideo' element={<TrainingVideo/>}></Route>
+       <Route path='assignedTests' element={<AssignedTests/>}></Route>
        </Route>
       </>
      )
@@ -89,8 +95,10 @@ function App() {
        <Route path="emp" element={<EmployeeList/>}></Route>
        {/* <Route path="emp" element={<Employee/>}></Route> */}
        <Route path="training" element={<Training/>}></Route>
-       <Route path="exam" element={<Exams/>}></Route>
-       <Route path="exampaper" element={<ExamPapers/>}></Route>
+       {/* <Route path="exam" element={<Exams/>}></Route> */}
+       <Route path="createExamPapers" element={<ExamPapers/>}></Route>
+       <Route path="assign" element={<AssignTest/>}></Route>
+       <Route path="examPapers" element={<TestPaperForm/>}></Route>
        <Route path="performance" element={<Performance/>}></Route>
        </Route>
        </>

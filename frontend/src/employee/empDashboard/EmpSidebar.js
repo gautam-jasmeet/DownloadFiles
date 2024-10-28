@@ -22,6 +22,9 @@ function EmpSidebar() {
       <li className="text-center">
         <NavLink to="tvideo"> Training Videoes</NavLink>
       </li>
+      <li className="text-center">
+        <NavLink to="assignedTests"> Assigned Tests</NavLink>
+      </li>
      
     </ul>
   </div>
