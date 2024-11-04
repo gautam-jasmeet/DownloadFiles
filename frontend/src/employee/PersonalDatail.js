@@ -23,10 +23,10 @@ function PersonalDatail() {
           
         }
         // console.log(response.data);
-        if(response.status === 200){
-          setEmpData(response.data)
+        // if(response.status === 200){
+        //   setEmpData(response.data)
           
-        }
+        // }
 
       }catch(err){
         console.log(err);

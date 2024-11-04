@@ -4,7 +4,7 @@ import axios from 'axios';
 import { AppContext } from '../../../appContext/AppContext';
 // let assignTestPaper ; /// this is api u have to fetch it
 
-async function assignTestPaper(employeeId,paperId,token){
+async function assignTestPaper(employeeId,paperId,token,setSuccessMessage,setError){
     
     try{
         const response = await axios.post("http://srv617987.hstgr.cloud:8080/hr/assign-paper",{
@@ -14,11 +14,14 @@ async function assignTestPaper(employeeId,paperId,token){
 
         }})
         if(response.status === 201){
-            console.log("Test paper assygn  successfully to empl.");
-            
+           setSuccessMessage(`Test paper -${paperId} assign  successfully to employee - ${employeeId}.`);  
+        }
+        else{
+            setError(`Fail to assign Test paper -${paperId} to employee - ${employeeId}.`)
         }
     }catch(err){
         console.error("Error in assigning", err);
+        setError("Error in assigning", err)
         
     }
 
@@ -29,6 +32,8 @@ function AssignTest() {
     // const [testPapers, setTestPapers] = useState([])
     const [selectedEmployee,setSelectedEmployee] = useState('')
     const [selectedTestPaper,setSelectedTestPaper] = useState('')
+    const [successMessage,setSuccessMessage] = useState('')
+    const [error,setError] = useState('')
 
     const {token} = useContext(AppContext)
 
@@ -42,10 +47,15 @@ function AssignTest() {
     const handleAssign= async()=>{
         if(selectedEmployee && selectedTestPaper){
             try{
-                await assignTestPaper(selectedEmployee,selectedTestPaper)
-                alert('Test paper assigned successfully')
+                await assignTestPaper(selectedEmployee,selectedTestPaper,token,setError,setSuccessMessage)
+                // alert('Test paper assigned successfully')
+                // setSuccessMessage('Test paper assigned successfully')
+                setSelectedEmployee('')
+                setSelectedTestPaper('')
+                
             }catch(error){
                 console.error('Error assigning test:', error);
+                setError('Error assigning test:', error)
                 
             }
         }else{
@@ -58,14 +68,14 @@ function AssignTest() {
   return (
     <div>
         <h2>Assign Test Paper </h2>
-        <label>Employee :</label>
+        <label className='m-2'>Employee :</label>
         <select onChange={(e)=>setSelectedEmployee(e.target.value)}>
             <option value=''>Select employee</option>
             {employees?.map((emp)=>(
-                <option key={emp.id} value={emp.id}>{emp.employeeID}</option>
+                <option key={emp.id} value={emp.employeeID}>{emp.employeeID} {emp.full_name}</option>
             ))}
         </select>
-        <label>Test Paper :</label>
+        <label className='m-2'>Test Paper :</label>
         <select onChange={(e)=>setSelectedTestPaper(e.target.value)}>
         <option value=''>Select test paper</option>
                 {errorTestPapers ? (
@@ -73,14 +83,23 @@ function AssignTest() {
                 ) : (
                     Array.isArray(testPapers?.data) && testPapers.data.length > 0 ? (
                         testPapers.data.map((test) => (
-                            <option key={test.PaperId} value={test.PaperId}>{test.PaperId}</option>
+                            <option key={test.PaperId} value={test.PaperId}>{test.PaperId} {test.Department}</option>
                         ))
                     ) : (
                         <option disabled>No test papers available</option>
                     )
                 )}
         </select>
-        <button onClick={handleAssign}>Assign Test</button>
+        <button 
+        className='m-2'
+        onClick={handleAssign}
+        >
+            Assign Test
+            </button>
+            <div>
+                {successMessage && <p  className='alert alert-success bg-success-subtle'>{successMessage}</p>}
+                {error && <p  className='alert alert-danger'>{error}</p>}
+            </div>
     </div>
   )
 }
