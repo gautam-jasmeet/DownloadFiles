@@ -7,7 +7,8 @@ import Questions from './assignedTests/Questions'
 
 function AssignedTests() {
   const [testPaper, setTestPaper] = useState()
-  const [options,setOptions] = useState([])
+  const [selectedAnswers,setSelectedAnswers] = useState({})
+  const [score, setScore] = useState({correct:0,incorrect :0 });
        const {token,employeeId} = useContext(AppContext)
        const baseURL = `http://srv617987.hstgr.cloud:8080`
 //  const {data:testPaper,loading,error} = useGet(`http://srv617987.hstgr.cloud:8080/hr/assign-paper/001`)
@@ -36,13 +37,35 @@ useEffect(()=>{
     }
     fetchData();
   },[token])
-  console.log(testPaper);
+  // console.log(testPaper);
 
-  const handleSubmit = ()=>{
-    console.log();
-    
+  const handleOptionChange  = (questionNo,selectedOptionIndex)=>{
+    setSelectedAnswers((prevAnswer)=>({
+      ...prevAnswer,
+      [questionNo]:selectedOptionIndex   // Store selected option as a direct value
+    }))
+    // console.log(questionNo,selectedOptionIndex);
   }
   
+ ///// Calculating score
+ const calculateScore = ()=>{
+  let correct = 0;
+  let incorrect = 0;
+
+  testPaper.data.Papers.forEach((paper)=>{
+    paper.Questions.forEach((question)=>{
+      const selectedAnswer = selectedAnswers[question.questionNo];
+      const correctAnswer = parseInt(question.correctOption,10) 
+      if(selectedAnswer === correctAnswer){
+        correct += 1;
+      }else if(selectedAnswer !== undefined){
+        incorrect += 1;
+      }
+    })
+  })    
+setScore({correct,incorrect})
+
+}
 
     
   return (
@@ -51,79 +74,51 @@ useEffect(()=>{
     <div key={paper.PaperId}> 
     <h4 className='text-center'>Test Paper : {paper.PaperId}</h4>
      {paper.Questions.map((question)=>(
-      <>
+      <div key={question.questionNo}>
       <p>Q{question.questionNo}: {question.questionText}</p>
       {question.questionImg && (
         <img
-          src={`${baseURL}${question.questionimg}`}
+          src={`${baseURL}${question.questionImg}`}
           alt={`Question${question.questionNo}`}
           className="img-fluid mb-2"
           style={{ maxHeight: '200px', objectFit: 'contain' }}
         />
       )}
        <ul className="list-unstyled ms-3">
-       
-            <li> <input type='checkbox'
-             id='option1text' 
-            name='option1text'
-            value={question.options.option1text} /> 1. {question.options.option1text}
-              {question.options.option1img && (
+       {['option1text', 'option2text', 'option3text', 'option4text'].map((option,index)=>(
+        <li key={option}>
+          <input type='radio'
+            name={`question${question.questionNo}`}
+            checked ={selectedAnswers[question.questionNo] === index +1 }
+           onChange={()=>handleOptionChange(question.questionNo, index + 1,question.correctOption)}
+           />
+           {index + 1}. {question.options[option]}
+              {question.options[`${option}img`] && (
                 <img
-                  src={`${baseURL}${question.options.option1img}`}
-                  alt='Option Image - 1'
-                  className="img-fluid "
-                  style={{ maxHeight: '200px', height: '150px', width: "150px", objectFit: 'contain' }}
+                src={`${baseURL}${question.options[`${option}img`]}`}
+                alt={`Option Image - ${index + 1}`}
+                className="img-fluid "
+                style={{ maxHeight: '200px', height: '150px', width: "150px", objectFit: 'contain' }}
                 />
               )}
-            </li>
-           
-            <li> <input type='checkbox'
-             id='option1text' 
-            name='option1text'
-            value={question.options.option1text}/> 2. {question.options.option2text }
-              {question.options.option2img && (
-                <img
-                  src={`${baseURL}${question.options.option2img}`}
-                  alt='Option Image - 2 '
-                  className="img-fluid "
-                  style={{ maxHeight: '200px', height: '150px', width: "150px", objectFit: 'contain' }}
-                />
-              )}
-            </li>
-            <li> <input type='checkbox'
-             id='option1text' 
-            name='option1text'
-            value={question.options.option1text}/> 3. {question.options.option3text }
-              {question.options.option3img && (
-                <img
-                  src={`${baseURL}${question.options.option3img}`}
-                  alt='Option Image - 3 '
-                  className="img-fluid "
-                  style={{ maxHeight: '200px', height: '150px', width: "150px", objectFit: 'contain' }}
-                />
-              )}
-            </li>
-            <li> <input type='checkbox'
-             id='option1text' 
-            name='option1text'
-            value={question.options.option1text}/> 4. {question.options.option4text }
-              {question.option4img && (
-                <img
-                  src={`${baseURL}${question.options.option4img}`}
-                  alt='Option Image - 4 '
-                  className="img-fluid "
-                  style={{ maxHeight: '200px', height: '150px', width: "150px", objectFit: 'contain' }}
-                />
-              )}
-            </li>
+              </li>
+       ))}
+             
           </ul>
-</>
+</div>
       ))} 
     </div>
-    ))):(
+    ))
+  ):(
       <p>Loding ...</p>
     )}
-     
+     <button onClick={calculateScore} className="btn btn-primary mt-3">Submit </button>
+     {score.correct + score.incorrect > 0 && (
+      <div className='p-5'>
+        <p>Correct Attempts: {score.correct}</p>
+        <p>Incorrect Attempts: {score.incorrect}</p>
+      </div>
+     )}
   </div>
   )
 }

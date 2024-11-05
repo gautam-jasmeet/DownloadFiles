@@ -4,7 +4,7 @@ import "../../departments/HrDepartment/HrDashboard/HrSidebar.css"
 
 function EmpSidebar() {
   return (
-    <div className="sidebar" style={{position:"sticky", top:"65px",zIndex:"999",
+    <div className="sidebar" style={{position:"sticky", top:"60px",zIndex:"999",
      height:"100vh",
      width:"100%",
      overflowY:"auto",
