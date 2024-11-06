@@ -9,6 +9,7 @@ function Quality() {
   const [message,setMessage] = useState('')
   const [filteredDocuments, setFilteredDocuments] = useState([]);
   const accessibleCategories =['Policies', 'Form Format']
+  const [searchTerm, setSearchTerm] = useState('')
 
   const {token,department} = useContext(AppContext)
 
@@ -24,9 +25,12 @@ function Quality() {
   // Filter documents by department and category whenever the documents or departmentName change
   useEffect(() => {
     const filtered = data.filter(doc => 
-      (!selectedCategory || doc.category === selectedCategory));
+      (!selectedCategory || doc.category === selectedCategory) &&(
+        doc.filename.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        doc.fileNo.toLowerCase().includes(searchTerm.toLowerCase())
+      ));
     setFilteredDocuments(filtered);
-  }, [data, selectedCategory]);
+  }, [data, selectedCategory,searchTerm]);
 
    // Delete file
    const handleDelete = async (docId) => {
@@ -85,6 +89,14 @@ function Quality() {
                 </li>
               ))}
             </ul>
+             {/* Search Field */}
+             <input
+                type="text"
+                placeholder="Search by filename or fileNo"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{ padding: '5px', margin: '10px 0', width: '50%' }}
+              />
           </div>
         </div>
 

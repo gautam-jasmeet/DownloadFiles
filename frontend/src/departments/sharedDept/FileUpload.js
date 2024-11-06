@@ -22,6 +22,8 @@ function FileUpload() {
  const [accessibleCategories, setAccessibleCategories] = useState([]);
 //  const [department, setDepartment] = useState("");
 
+const [searchTerm, setSearchTerm] = useState('')
+
 
  const [showUploadForm, setShowUploadForm] = useState(false);
 
@@ -78,14 +80,18 @@ function FileUpload() {
         if(designation === "Supervisor"){
           return doc.department === department && accessibleCategories.includes(doc.category) &&
                  (doc.status === "Approved" || (doc.designation === "Supervisor" && doc.status === "Pending")) &&
-                 (!selectedCategory || doc.category === selectedCategory);
+                 (!selectedCategory || doc.category === selectedCategory) && 
+                  (doc.filename.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                 doc.fileNo.toLowerCase().includes(searchTerm.toLowerCase()));
         }
 
        // For Workers, exclude all Pending files
        if(designation === "Worker"){
         return doc.department === department && accessibleCategories.includes(doc.category) &&
         (doc.status === "Approved") &&
-        (!selectedCategory || doc.category === selectedCategory);
+        (!selectedCategory || doc.category === selectedCategory) && 
+         (doc.filename.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        doc.fileNo.toLowerCase().includes(searchTerm.toLowerCase()));
       }
   }
 });
@@ -196,6 +202,11 @@ const handleShowuploadbutton = ()=>{
   setShowUploadForm(!showUploadForm);
 }
 
+// user based width
+const userBasedWidthStyle ={
+  width: designation === "Worker" ? '100%' : '70%'
+}
+
 
   return (
     <div>
@@ -280,7 +291,10 @@ const handleShowuploadbutton = ()=>{
 
 {/* Showing and hiding categories */}
             
-        <div className='cat' style={{width: '70%'}} >
+        <div className='cat' style={userBasedWidthStyle} >
+          {/* <div className='mt-4 text-center'>
+       
+        </div> */}
         < div className="navbar cat-1" >
   <div className="container-fluid cat-2">
     {/* <h6>Select Category:</h6> */}
@@ -307,6 +321,14 @@ const handleShowuploadbutton = ()=>{
           </button>
         </li>
       ))}
+       <input
+          type="text"
+          placeholder="Search by filename or file number"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ padding: '8px', width: '50%', maxWidth: '400px',
+             marginBottom: '1px' }}
+        />
     </ul>
   </div>
   </div>

@@ -73,6 +73,8 @@ setScore({correct,incorrect})
    {testPaper ? (testPaper.data.Papers.map((paper)=>(
     <div key={paper.PaperId}> 
     <h4 className='text-center'>Test Paper : {paper.PaperId}</h4>
+    {console.log(paper)
+    }
      {paper.Questions.map((question)=>(
       <div key={question.questionNo}>
       <p>Q{question.questionNo}: {question.questionText}</p>

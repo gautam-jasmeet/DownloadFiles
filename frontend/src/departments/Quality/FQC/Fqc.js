@@ -1,43 +1,45 @@
-import React, { useContext } from 'react'
+import React, { useState } from 'react'
 import useGet from '../../../customHooks/useGet'
 import { AppContext } from '../../../appContext/AppContext'
 import ViewFiles from '../../../admin/dashboard/ViewFiles'
 
 function Fqc() {
 
-    // const {department} = useContext(AppContext)
+  const [searchTerm, setSearchTerm] = useState('');
     const {data,error,loading} = useGet(`http://srv617987.hstgr.cloud:8080/documents/FQC`)
+
+    // Filter documents based on search term
+  const filteredData = data.filter((file) =>
+    file.filename.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (file.fileNo && file.fileNo.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
     
   return (
     <div>
          <div style={{ display: 'flex' }}>
       
       {/* Category Selection */}
-      <div className='cat' style={{width:"100%"}}>
-        <div className="navbar cat-1">
-          <div className="container-fluid cat-2">
-            <ul className="cat-ul">
-              <li className="nav-item cat-list">
-                <button
-                //   className={`nav-link ${selectedCategory === "" ? "active" : ""}`}
-                //   onClick={() => handleCategoryChange({ target: { value: "" } })}
-                >
-                 Work Instructions & SOP
-                </button>
-              </li>
-              {/* {accessibleCategories.map((category) => (
-                <li className="nav-item cat-list" key={category}>
-                  <button
-                    className={`nav-link ${selectedCategory === category ? "active" : ""}`}
-                    onClick={() => handleCategoryChange({ target: { value: category } })}
-                  >
-                    {category}
-                  </button>
-                </li> */}
-              {/* ))} */}
-            </ul>
+      <div className="cat" style={{ width: '100%' }}>
+          <div className="navbar cat-1">
+            <div className="container-fluid cat-2">
+             
+              {/* <ul className="cat-ul">
+                <li className="nav-item cat-list"> */}
+                  <div className="nav-item cat-list nav-link">
+                    Work Instructions & SOP
+                  </div>
+                {/* </li>
+              </ul> */}
+               {/* Search Field */}
+               <input
+                type="text"
+                placeholder="Search by filename or fileNo"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{ padding: '5px', margin: '10px 0', width: '50%' }}
+              />
+            </div>
           </div>
-        </div>
 
         {/* List of filtered documents */}
         <ol className='cat_ol'>
