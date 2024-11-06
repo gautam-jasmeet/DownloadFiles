@@ -107,7 +107,7 @@ fetchRecentFiles()
          <div>
       <h3
       style={{fontSize:"1.7rem", fontWeight:"bold", color:"#333",
-         marginBottom:"10px", position:"sticky", top:"4rem", zIndex:"999"}}
+         marginBottom:"10px"}}
       >Recently Added Files :</h3>
       <ul className="list-group" >
         {message && <p>{message}</p>}
