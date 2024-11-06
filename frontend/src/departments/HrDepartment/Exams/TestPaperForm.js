@@ -196,7 +196,7 @@ const TestPaperForm = () => {
         <p><strong>Department:</strong> {selectedDepartment}</p>
         {questions.map((question, qIndex) => (
           <div className="card mb-4" key={qIndex}>
-            <h5 className="card-title">Question {qIndex + 1}</h5>
+            <h5 className="card-title">Question {questionNumber}</h5>
             <p>{question.text}</p>
             {question.image && <img src={URL.createObjectURL(question.image)} alt="Question" 
             style={{height:"200px", width:"350px", margin:"4px", borderRadius:"10px"}}
