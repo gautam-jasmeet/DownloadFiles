@@ -31,12 +31,12 @@ function DeptHeader({header}) {
        <span className=" title fs-4" style={{color:"var(--primary-color)"}}>{header}</span> 
         </h2>
       {/* <NavLink to={"/"} style={{color:"var(--primary-color)", fontWeight:"500"}}>Logout</NavLink> */}
-      <button type="button" className="btn btn-primary mt-3 card_btn p-1 rounded-4"
+      {/* <button type="button" className="btn btn-primary mt-3 card_btn p-1 rounded-4"
       style={{
         width:"8%",
         height:"10%",
       }}  
-      onClick={handleLogout}>LogOut</button> 
+      onClick={handleLogout}>LogOut</button>  */}
     </div>
   </nav>
       </div>

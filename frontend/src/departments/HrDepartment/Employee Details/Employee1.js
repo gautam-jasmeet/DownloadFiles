@@ -172,13 +172,13 @@ const EmployeeList = () => {
 
   return (
     <div className='m-1 '>
-      <div  style={{position:"sticky", top:"140px",zIndex:"998", backgroundColor:"var(--main-Dept-header-color)"}}>
+      <div  style={{position:"sticky", top:"76px",zIndex:"998", backgroundColor:"var(--main-Dept-header-color)"}}>
       <h3 className='title border-2 border-bottom border-black mx-5' >
         Employee Directory
         </h3>
         </div>
        {/* Category Selection */}
-      <div className='cat'  style={{position:"sticky", top:"170px",zIndex:"997", backgroundColor:"var(--main-Dept-header-color)"}}>
+      <div className='cat'  style={{position:"sticky", top:"123px", backgroundColor:"var(--main-Dept-header-color)"}}>
       <div className="navbar cat-1">
         <div className="container-fluid cat-2">
           <ul className="cat-ul">
@@ -191,7 +191,7 @@ const EmployeeList = () => {
               </button>
             </li>
             {departments.map((category) => (
-              <li className="nav-item cat-list" key={category}>
+              <li className="nav-item cat-list " key={category}>
                 <button
                   className={`nav-link ${selectedCategory === category ? "active" : ""} 
                    `}
@@ -243,7 +243,7 @@ const EmployeeList = () => {
             maxWidth: '80%',
             margin: 'auto',
             marginLeft: '15%',
-            marginTop: '16rem',
+            marginTop: '6rem',
             padding: '0.5rem',
           },
         }}

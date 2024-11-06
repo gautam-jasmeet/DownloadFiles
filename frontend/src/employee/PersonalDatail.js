@@ -46,7 +46,7 @@ function PersonalDatail() {
   return (
     <>
     <div className=' m-5'>
-      <h3 className="title border-bottom border-2 border-dark">
+      <h3 className="title border-bottom border-2 border-dark p-1">
         Personal Details
       </h3>
     </div>

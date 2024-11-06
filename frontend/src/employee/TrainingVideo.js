@@ -43,8 +43,8 @@ function TrainingVideo() {
 
   return (
     <div>
-        <h4 
-        style={{position:"sticky", top:"128px",zIndex:"999", backgroundColor:"var(--main-Dept-header-color)",
+        <h4  className='p-3'
+        style={{position:"sticky", top:"60px",zIndex:"999", backgroundColor:"var(--main-Dept-header-color)",
         // color:"var(--main-header-color)"
         display:"flex", justifyContent:"center",
         }}

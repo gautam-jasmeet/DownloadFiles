@@ -5,6 +5,7 @@ import ViewFiles from '../dashboard/ViewFiles';  // Import your ViewFiles compon
 import DeptHeader from '../../shared/DeptHeader';
 import { AppContext } from '../../appContext/AppContext';
 import  '../../departments/sharedDept/FileUpload.css'; // If you're using a custom header
+import SearchDocuments from './SearchDocuments';
 
 const DepartmentDocuments = () => {
   const { departmentName } = useParams(); // Capture the department name from URL
@@ -80,10 +81,13 @@ const DepartmentDocuments = () => {
       setMessage(`Failed to delete document: ${err.message}`);
     }
   };
+  // console.log(documents);
+  
 
   return (
     <div >
       <DeptHeader header={`${departmentName} Department`} />
+      {/* <SearchDocuments docs={documents}/> */}
 
       <div style={{ display: 'flex' }}>
       
@@ -113,6 +117,7 @@ const DepartmentDocuments = () => {
             </ul>
           </div>
         </div>
+       
 
         {/* List of filtered documents */}
         <ol className='cat_ol'>

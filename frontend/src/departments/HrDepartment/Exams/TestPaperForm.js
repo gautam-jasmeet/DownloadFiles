@@ -174,7 +174,7 @@ const TestPaperForm = () => {
           >
               <option value=''>Select Currect Answer</option>
               {question.options.map((opt,optIndex)=>(
-                  <option key={optIndex} value={optIndex}>
+                  <option key={optIndex} value={optIndex + 1}>
                      {`Option ${optIndex + 1}`}
                   </option>
               ))}

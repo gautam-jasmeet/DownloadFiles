@@ -69,7 +69,7 @@ setScore({correct,incorrect})
 
     
   return (
-    <div className='container'> 
+    <div className='container mt-2 m-4'> 
    {testPaper ? (testPaper.data.Papers.map((paper)=>(
     <div key={paper.PaperId}> 
     <h4 className='text-center'>Test Paper : {paper.PaperId}</h4>

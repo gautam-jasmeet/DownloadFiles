@@ -75,10 +75,10 @@ function Sidebar() {
           <NavLink to={"/signup"}>Sign Up</NavLink>
         </li>
         
-      <li className=" text-center">
+      {/* <li className=" text-center">
 
     <Logout className="btn card_btn"/>
-  </li>
+  </li> */}
       </ul>
 
 

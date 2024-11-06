@@ -10,7 +10,7 @@ function EmpDashboard() {
         <EmpSidebar />
       </div>
       <div style={{width: '85%'}}>
-        <DeptHeader header="Employee "/>
+        {/* <DeptHeader header="Employee "/> */}
          {/* Outlet will render the nested routes here */}
         <Outlet />
       </div>

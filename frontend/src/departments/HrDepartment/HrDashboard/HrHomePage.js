@@ -13,7 +13,7 @@ function HrHomePage() {
     </div>
 
     <div style={{width: '85%'}}>
-      <DeptHeader header="HR Department" />
+      {/* <DeptHeader header="HR Department" /> */}
       
       <Outlet />
     </div>

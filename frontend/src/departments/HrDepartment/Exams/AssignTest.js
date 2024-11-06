@@ -67,7 +67,8 @@ function AssignTest() {
 
   return (
     <div>
-        <h2>Assign Test Paper </h2>
+        <h3 className='text-center m-2  mb-4'> <b className="border-bottom border-dark border-2">
+        Assign Test Paper</b> </h3>
         <label className='m-2'>Employee :</label>
         <select onChange={(e)=>setSelectedEmployee(e.target.value)}>
             <option value=''>Select employee</option>

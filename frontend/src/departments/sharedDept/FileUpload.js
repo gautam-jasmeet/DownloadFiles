@@ -202,7 +202,7 @@ const handleShowuploadbutton = ()=>{
     
       <div style={{ display: 'flex' ,flexWrap:"wrap" }}>
 {/* Showing and hiding upload form */}
-       <div className='form'>
+       <div className='form' style={{width:"30%"}}>
        {userRole === "Supervisor" && (
         <button
         className='btn btn-primary form_btn'

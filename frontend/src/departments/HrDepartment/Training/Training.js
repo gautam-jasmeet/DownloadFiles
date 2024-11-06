@@ -163,9 +163,9 @@ const handleDelete = async(Id)=>{
     <div style={{display:"flex",flexWrap:"wrap" }}>
     
       {/* Video Upload */}
-    <div >
+    <div style={{width:"30%"}}>
          
-    <div className='form' style={{position:'sticky',top:"165px", zIndex:"999"}}>
+    <div className='form' style={{position:'sticky',top:"60px", zIndex:"999"}}>
     
     
      <button
@@ -245,9 +245,9 @@ const handleDelete = async(Id)=>{
 
 
 
-    <div style={{marginTop:"1rem", padding:"10px", height:"100%" }}>
+    <div style={{marginTop:"1rem", padding:"10px", height:"100%" ,width:"70%"}}>
       {/* Category Selection */}
-      <div className='cat' style={{position:"sticky", top:"119px",zIndex:"999",
+      <div className='cat' style={{position:"sticky", top:"86px",zIndex:"999",
         boxShadow:"0px 1px 3px rgba(0,0,0,0.2)",
         borderRadius:"10px",
         padding:"10px",
@@ -285,8 +285,8 @@ const handleDelete = async(Id)=>{
             <p className='cat_ol-1'>No files available for the selected category.</p>
           ) : (
             filterVideos(selectedDept).map((file) => (
-              <li className='cat_ol-2' key={file.id} style={{ margin: '10px' }}>
-                <div className="card w-100 cat_ol-3">
+              <li className='cat_ol-2 ' key={file.id} style={{ margin: '10px' }}>
+                <div className="card w-75  cat_ol-3">
                   <div className="card-body cat_ol-4" style={{ display: 'flex', justifyContent: 'space-between',flexWrap:"wrap" }}>
                     <div>
                       <p className="card-title cat_ol-5"><b>Video Name:</b><span> {file.videoName} </span></p>
