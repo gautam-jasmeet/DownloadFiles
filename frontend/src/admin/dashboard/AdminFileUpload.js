@@ -84,12 +84,13 @@ const handleShowuploadbutton = ()=>{
   }
 
   return (
-    <div style={{position:'sticky',top:"4rem"}}>
+    <div style={{position:'sticky',top:"60px"}}>
          
        <div className='form'>
        
         <button
-        className='btn btn-primary form_btn'
+        className='btn btn-primary form_btn' 
+        // style={{marginTop:"15px"}}
         onClick={handleShowuploadbutton}
         >
           {showUploadForm ? 'Add Document' : 'Add Document'}

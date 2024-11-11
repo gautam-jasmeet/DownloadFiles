@@ -140,7 +140,7 @@ const [searchTerm, setSearchTerm] = useState('')
         // addRecentFiles({ name: filename, timestamp: new Date() });
 
         // Fetch updated documents list
-        const updatedDocuments = await axios.get('http://srv617987.hstgr.cloud:8080/documents/department', {
+        const updatedDocuments = await axios.get(`http://srv617987.hstgr.cloud:8080/documents/${department}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -342,13 +342,14 @@ const userBasedWidthStyle ={
           {filteredDocument.length === 0 ? (
             <p className='cat_ol-1'>No files available for the selected category.</p>
           ) : (   
-            filteredDocument.map((file) => (
+            filteredDocument.reverse().map((file) => (
               <li className='cat_ol-2' key={file.id} style={{ margin: '10px' }}>
                 <div className="card w-75 cat_ol-3" >
                   <div className="card-body cat_ol-4" style={{ display: 'flex', justifyContent: 'space-between',flexWrap:"wrap" }}>
                     <div>
                       <p className="card-title cat_ol-5"><b>File Name:</b> {file.filename}</p>
                       <p className="card-text cat_ol-6" style={{ margin: "0" }}><b>File Version:</b> {file.fileVersion}</p>
+                      <p className="card-text cat_ol-6" style={{ margin: "0" }}><b>File Number:</b> {file.fileNo}</p>
                       {/* <p className="card-text"><b>File Type:</b> {file.filetype}</p> */}
                       <p className="card-text cat_ol-7"><b>Status:</b> {file.status}</p>
                     </div>

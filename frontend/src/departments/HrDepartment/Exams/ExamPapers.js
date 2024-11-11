@@ -8,7 +8,7 @@ function ExamPapers() {
 
   const [isModalOpen,setIsModalOpen] = useState(false)
   const [selectedTestPaper,setSelectedTestPaper] = useState(null)
-  console.log(data);
+  // console.log(data);
   // console.log(data.data[0].Department);
   // console.log(data.data[0].PaperId);
   
@@ -44,14 +44,14 @@ const closeModal = ()=>{
       maxWidth: '80%',
       margin: 'auto',
       marginLeft: '15%',
-      marginTop: '10rem',
+      marginTop: '4rem',
       padding: '0.5rem',
     },}}
     >
      {selectedTestPaper ? (
   <div>
-    <h3 className='text-center'>Paper ID: {selectedTestPaper.PaperId}</h3>
-    <h4 className='text-center'>Department: {selectedTestPaper.Department}</h4>
+    <h3 className='text-center'><b className='border-bottom border-2'>Paper ID:</b> {selectedTestPaper.PaperId}</h3>
+    <h4 className='text-center'><b className='border-bottom border-2'>Department:</b> {selectedTestPaper.Department}</h4>
     <div className='mt-3 p-4'>
       {selectedTestPaper.Questions.map((question, index) => (
         <div key={question.id} className="mb-3 border-bottom pb-3">
@@ -120,7 +120,7 @@ const closeModal = ()=>{
     </Modal>
     <div className="container mt-5 p-4 bg-secondary-subtle rounded shadow-lg">
         <h6 className="text-center mb-4 fw-bold display-5">Question Papers</h6>
-        <div className='d-flex  '>
+        <div className='d-flex flex-wrap '>
         {data.data && data.data.length > 0 ? (
           data.data.map((paper) => (
             <div

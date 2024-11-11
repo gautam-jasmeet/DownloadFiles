@@ -23,7 +23,7 @@ function HrSidebar() {
           <NavLink to="emp"> Employee Details</NavLink>
         </li>
         <li className="text-center">
-          <NavLink to="training"> Training</NavLink>
+          <NavLink to="training"> Training Videos</NavLink>
         </li>
         <li className="text-center">
           <NavLink to="examPapers">Create Exam's Papers</NavLink>

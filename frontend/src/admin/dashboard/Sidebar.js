@@ -17,7 +17,10 @@ function Sidebar() {
 
   return (
     <div className='sidebar'>
-      <h3 className='title'> <i className="bi bi-person-fill-gear fs-3"></i> Admin <br /> Dashboard</h3>
+    <NavLink to={"/Admin"}  style={{backgroundColor:"var( --secondary-color)"}}>
+      <h3 className='title' > <i className="bi bi-person-fill-gear fs-3"> </i> Admin <br /> Dashboard  </h3>
+      </NavLink>
+      <div className='scrollable-links'>
       <ul className='mb-5'>
         <li className='text-center  '>
           <NavLink to={"/Admin/HR"}> HR</NavLink>
@@ -81,7 +84,7 @@ function Sidebar() {
   </li> */}
       </ul>
 
-
+      </div>
  
     </div>
   )

@@ -83,7 +83,13 @@ const handleSubmit = async (e) => {
     if (response.status === 201) {
       setMessage('File uploaded successfully');
       
-      
+      // Fetch updated videos
+      const updatedVideos = await axios.get("http://srv617987.hstgr.cloud:8080/hr/",{
+       headers:{
+         Authorization:`Bearer ${token}`
+       }
+     })
+     setAllVideos(updatedVideos.data.reverse())
 
       setFiles([]); // Clear files after upload
       setVideoName('');
@@ -117,14 +123,13 @@ const handleViewAllVideos = (file)=>{
      }
 }
 
+
+// Function to filter and order videos
 const filterVideos = (deptName) => {
-  if (!deptName) {
-    return allVideos;
-  }else{
-    
-    return allVideos.filter((video)=>video.departmentName === deptName);
-  }
-}
+  const videos = allVideos || []; // Ensure videos is an array
+  const filteredVideos = deptName ? videos.filter(video => video.departmentName === deptName) : videos;
+  return filteredVideos; // Reverse to show most recent uploads first
+};
 // console.log(filterVideos(selectedDept));
 
 const handleSelectDepartment = (e) => {

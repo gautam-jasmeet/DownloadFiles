@@ -41,6 +41,7 @@ function JoiningForm1() {
     const [dateOfInterview, setDateOfInterview] = useState("");
     const [dateOfJoining, setDateOfJoining] = useState("");
     const [companyName, setCompanyName] = useState("Udamandi Services Pvt. Ltd");
+    // const [selectedPlant, setSelectedPlant] = useState('')
     const [department, setDepartment] = useState("");
     const [designation, setDesignation] = useState("");
     const [employeeType, setEmployeeType] = useState("");
@@ -71,6 +72,7 @@ function JoiningForm1() {
 
     const allDepartment =["HR","Store","Production","Machine","Maintance","SOP|WI","Logistics",
       "Quality","Calibration","FQC","IQC","IPQC","EHS"]
+      const plantLocations = ["Unit-1","Unit-2","Unit-3"]
   
     // Function to handle Next button
     const handleNext = () => {
@@ -269,9 +271,9 @@ function JoiningForm1() {
     };
   
     return (
-      <div >
+      <div style={{height:"100%"}}>
         
-        <form className="gradient-custom d-flex " onSubmit={handleSubmit}>
+        <form className="gradient-custom d-flex " onSubmit={handleSubmit} style={{height:"100%"}}>
           <div 
           className=' p-5'
           style={{width:"10%"}}>
@@ -959,6 +961,30 @@ function JoiningForm1() {
                               />
                             </div>
                           </div>
+                          {/* <div className="row mb-3">
+                            <label
+                              htmlFor="plantLocation"
+                              className="col-sm-3 col-form-label text-secondary-emphasis fw-semibold"
+                            >
+                              Plant Location
+                            </label>
+                            <div className="col-sm-9">
+                             <select 
+                              className="col-sm-12"
+                             id='plantLocation'
+                             value={selectedPlant}
+                             onChange={(e)=>setSelectedPlant(e.target.value)}
+                             required
+                             >
+                              <option value='' disabled> Select a plant location</option>
+                              {plantLocations.map((location,index)=>(
+                                <option key={index} value={location}>
+                                  {location}
+                                </option>
+                              ))}
+                             </select>
+                            </div>
+                          </div> */}
                           <div className="row mb-3">
                             <label
                               htmlFor="department"

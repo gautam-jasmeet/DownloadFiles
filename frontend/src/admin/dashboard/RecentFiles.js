@@ -105,16 +105,16 @@ fetchRecentFiles()
   return (
     <div>
          <div>
-      <h3
-      style={{fontSize:"1.7rem", fontWeight:"bold", color:"#333",
+      <h3 
+      style={{fontSize:"1.7rem", fontWeight:"bold", color:"var(--primary-color)", margin:"10px",
          marginBottom:"10px"}}
-      >Recently Added Files :</h3>
+      > <span className='border-bottom border-2 '>Recently Added Files <i class="bi bi-reception-0"></i> </span> </h3>
       <ul className="list-group" >
         {message && <p>{message}</p>}
         {recentFiles.filter((file)=>file.status !== "Approved" && file.status !== "Rejected")
          .map(file => (
           <li key={file.id}  style={{ marginTop: '20px', }}>
-             <div className="card " style={{ border: '1px solid var(--primary-color)',
+             <div className="card m-2 w-75" style={{ border: '1px solid var(--primary-color)',
              borderRadius: '15px',boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
               backgroundColor:"f9f9f9"  }}>
              <div className="card-body" style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -127,6 +127,9 @@ fetchRecentFiles()
             </p>
             <p className="card-text" style={{margin:"0"}}>
               <b>File Version: </b> {file.fileVersion}
+            </p>
+            <p className="card-text" style={{margin:"0"}}>
+              <b>File Number: </b> {file.fileNo}
             </p>
             <p className="card-text">
               <b> Uploaded On:</b>  {new Date(file.createdAt).toLocaleString()}

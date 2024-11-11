@@ -8,6 +8,7 @@ const TestPaperForm = () => {
   const [questionNumber, setQuestionNumber] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [previewMode, setPreviewMode] = useState(false);
+  const [message,setMessage] = useState('')
 
   const departments =["HR","Store","Production","Machine","Maintance","SOP|WI","Logistics",
     "Quality","Calibration","FQC","IQC","IPQC","EHS"]
@@ -16,9 +17,11 @@ const TestPaperForm = () => {
 
 
   const handleAddQuestion = () => {
-    setQuestions([...questions, { text: '', image: '', options: [{ text: '', image: '' },{ text: '', image: '' },
+   if(questions.length === 0){
+     setQuestions([...questions, { text: '', image: '', options: [{ text: '', image: '' },{ text: '', image: '' },
       { text: '', image: '' },{ text: '', image: '' }
     ],correctAnswer: ''  }]);
+  }
   };
 
   const handleQuestionChange = (index, field, value) => {
@@ -79,7 +82,16 @@ const TestPaperForm = () => {
                 }
             }
     )
-    console.log(response);
+    // console.log(response);
+    if(response.status === 201){
+      setMessage("Question added successfully");
+      setTestName('');
+      setQuestions([]);
+      setQuestionNumber('');
+      setSelectedDepartment('');
+      setPreviewMode(false)
+
+    }
     
     }catch(err){
         console.error("Error",err);
@@ -184,7 +196,9 @@ const TestPaperForm = () => {
           </div>
         ))}
         <div className="mb-3">
+          {questions.length === 0 && 
         <button className="btn btn-primary" onClick={handleAddQuestion}>Add Question</button>
+      }
         <button className="btn btn-secondary ms-2" onClick={() => setPreviewMode(true)}>Preview</button>
         </div>
       </>

@@ -1,6 +1,6 @@
 import React, { useState , useContext} from 'react';
 import axios from 'axios';
-import { useNavigate ,Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import '../dashboard/ViewFiles.css';
 import "../login/Login.css"
 // import Footer from '../../shared/Footer';
@@ -53,13 +53,19 @@ function Login() {
        // Redirecting  based on the role 
            // console.log('Navigating to:', designation === "Admin" ? '/Admin' : `/${department}`);
        if(designation === "Admin"){
-        navigate('/Admin');
+        navigate('/Admin',{replace:true});
        }else if(designation === "Worker"){
-        navigate('/Worker');
+        navigate('/Worker',{replace:true});
        }
        else{
-        navigate(`/${department}`);
+        navigate(`/${department}`,{replace:true});
        }
+
+       //   // Clearing history stack to prevent going back to login
+      //  window.history.pushState(null,null,window.location.href)
+      //  window.addEventListener('popstate', ()=>{
+      //   window.history.pushState(null,null,window.location.href)
+      //  })
         } else {
         setError(response.data.message || 'Login failed');
       }
@@ -78,8 +84,8 @@ function Login() {
     <div>
    
      {/* <!-- Section: Design Block --> */}
-     <section className="background-radial-gradient overflow-hidden" style={{height:"100vh",zIndex:"1"}} >
-  <div className="container  text-center text-lg-start my-4 mt-5" >
+     <section className="background-radial-gradient overflow-hidden" >
+  <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5" >
     <div className="row gx-lg-5 align-items-center mb-5">
     <div className="col-lg-6 mb-5 mb-lg-0" style={{zIndex: "10"}}>
         <h1 className="my-4 display-5 fw-bold ls-tight" style={{color:"hsl(218, 81%, 95%)"}}>
@@ -87,13 +93,17 @@ function Login() {
           <span style={{color:"  hsl(218, 81%, 90%)"}}>Application</span>
         </h1>
         <p className="mb-4 opacity-70" style={{color:" hsl(218, 81%, 85%)"}}>
-        Gautam Solar (www.gautamsolar.com). <br/>
-        Leading Solar Module Manufacturer using cutting-edge, automated machinery to manufacture
-         high-efficiency Solar Modules & Provider of Solar Power Plants.
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+          Temporibus, expedita iusto veniam atque, magni tempora mollitia
+          dolorum consequatur nulla, neque debitis eos reprehenderit quasi
+          ab ipsum nisi dolorem modi. Quos?
         </p>
-       
+        {/* <img src={DocController} alt="DocController Image" style={{opacity:"0.4" ,borderRadius:"50%"}}></img> */}
       </div>
-      <div className="col-lg-6 mb-5 mt-5 mb-lg-0 position-relative"> 
+      <div className="col-lg-6 mb-5 mb-lg-0 position-relative" >
+        {/* <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong"></div> */}
+        {/* <div id="radius-shape-2" className="position-absolute shadow-5-strong"></div> */}
+
         {error && <div className="alert alert-danger">{error}</div>}
         <div className="card bg-glass" style={{boxShadow:"0 4px 6px -1px rgba(0, 0, 0, 0.5)"}}>
           <div className="card-body px-4 py-5 px-md-5">
@@ -138,7 +148,7 @@ function Login() {
                     <button data-mdb-button-init data-mdb-ripple-init 
                     className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 card_btn" type="submit">Log
                       In</button>
-                    
+                    {/* <a className="text-muted" href="#!">Forgot password?</a> */}
                   </div>
             </form>
           </div>
